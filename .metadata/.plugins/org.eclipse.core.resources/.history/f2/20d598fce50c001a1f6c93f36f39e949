@@ -1,0 +1,28 @@
+package com.ojas.exp;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+
+public class RegExpImpl {
+
+	public static void main(String[] args) {
+
+		// Pattern compile = Pattern.compile("^a");
+
+		List<String> asList = Arrays.asList("abc", "def", "ghi");
+		System.out.println(asList);
+		List<String> collect = asList.stream().filter(x -> x.matches("^abc")).collect(Collectors.toList());
+		collect.forEach(a -> System.out.println(a));
+		String text    =
+		        "This is the text to be searched " +
+		        "for occurrences of the http:// pattern.";
+
+		String regex = "^This";
+
+		boolean matches = Pattern.matches(regex, text);
+
+		System.out.println("matches = " + matches);
+	}
+}

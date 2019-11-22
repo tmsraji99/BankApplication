@@ -1,0 +1,91 @@
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+
+<div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Offer Latter Preview </h3>
+        </li>
+      </ol>
+      <div class="container" id="offerLetter" ng-init="getOfferDetails()">
+
+	<h2>
+		<b> <u>OFFER-LETTER</u></b>
+	</h2>
+	<div class="col-md-12">
+		<h3 style="text-align: right">DATE: {{date | date:'dd-MM-yyyy'}}</h3>
+	</div>
+	<div class="col-md-12">
+		<h3>
+			To,<br> Empolyee Name: <b><em>{{candidateDetails.firstName}}</em> <em>{{candidateDetails.lastName}}</em></b>
+			
+		</h3>
+	</div>
+	<div class="col-md-12">
+		<h3 class="text-left text-success">
+			<em>Congratulations!!!</em>
+		</h3>
+	</div>
+	<div class="col-sm-12">
+	<br><br>
+	
+		<p class="lead">
+			With great pleasure we would like to inform you that you've been
+			selected for the position of       <b>"Software Engineer" </b>with <b>Ojas
+				Innovative Technologies</b> and your base location would be Hyderabad.
+
+			<br><br>Your Date of Joining would be on <u><em>{{candidateDetails.doj1}}</em></u>
+			</p>
+	</div>
+	<div class="col-sm-12">
+		<p class="lead">Note : Please bring the documents in Original and submit
+			one set of Photo Copies of the same for verification.</p>
+	</div>
+	
+	<div class="clearfix"></div>
+	
+	<div class="col-sm-6">
+	        <h4>
+				Best Regards,<br> | HR - TAG<br> Off: 040-41430000 /
+				7337392403
+			</h4>
+	</div>
+	<div class="col-sm-6">
+	        <h4>
+				<b>Signature
+			</h4>
+			<img src="images\sign.jpg" height="150px" width="150px"/>
+	</div>
+	
+	</div>
+      </div>
+      </div>
+       
+
+<!-- 
+
+		<div class="col-sm-8">
+			<h4>
+
+				Best Regards,<br> | HR - TAG<br> Off: 040-41430000 /
+				7337392403
+			</h4>
+		</div>
+		<div class="col-sm-4">
+			<h4>
+				<b>Signature
+			</h4>
+			</b>
+		</div>
+
+		<div class="col-sm-offset-5">
+			<img src="images\sign.jpg" height="150px" width="150px"/>
+		</div>
+			<button class="btn btn-info pull-right" ng-click="download();">Download</button>
+	
+
+
+ -->
+
+

@@ -1,0 +1,121 @@
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;">
+
+		<!-- new existin code here -->
+		<!-- Breadcrumbs-->
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>Add Bank Details</h3>
+			</li>
+
+		</ol>
+		<form name="bankForm" class="myForm" required novalidate>
+			<div class="row">
+<!-- 				<div class="form-group col-lg-4">
+					<label for="user_fname">Account Holder Name*</label> <input type="text"
+						name="name" placeholder="Enter Name"
+						ng-model="target" required class="form-control" />
+					<div ng-messages="bankForm.target.$error"
+						ng-if="bankForm.target.$touched">
+						<div ng-message="required">This field is required</div>
+					</div>
+				</div> -->
+				<div class="form-group col-lg-4">
+					<label for="accountNumber">Account Number*</label> <input type="text"
+						name="accountNumber" numbers-only placeholder="Enter Account Number"
+						ng-model="bankdetails.accountNumber" required class="form-control" />
+					<div ng-messages="bankForm.accountNumber.$error"
+						ng-if="bankForm.accountNumber.$touched">
+						<div ng-message="required">This field is required</div>
+					</div>
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="address">Address*</label> <input type="text"
+						name="address" placeholder="Enter Address"
+						ng-model="bankdetails.address" required class="form-control" />
+					<div ng-messages="bankForm.address.$error"
+						ng-if="bankForm.address.$touched">
+						<div ng-message="required">This field is required</div>
+					</div>
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="bankName">Bank Name*</label> <input type="text"
+						name="bankName" placeholder="Enter Branch Name"
+						ng-model="bankdetails.bankName" required class="form-control" />
+					<div ng-messages="bankForm.bankName.$error"
+						ng-if="bankForm.bankName.$touched">
+						<div ng-message="required">This field is required</div>
+					</div>
+				</div>
+				<!-- <div class="form-group col-lg-4">
+					<label for="cheque">Cheque No*</label> <input type="text"
+						name="cheque" placeholder="Enter Cheque Number"
+						ng-model="bankdetails.cheque" required class="form-control" />
+					<div ng-messages="bankForm.cheque.$error"
+						ng-if="bankForm.cheque.$touched">
+						<div ng-message="required">This field is required</div>
+					</div>
+				</div> -->
+		       <div class="form-group col-lg-4">
+					<label for="ifsc">IFSC Code*</label> <input type="text"
+						name="ifsc" placeholder="Enter IFSC Code"
+						ng-pattern="/^[A-Za-z]{4}0[A-Z0-9]{6}$/" ng-model="bankdetails.iFSC" required class="form-control" maxlength="11" />
+						<span style="color: red"
+									ng-show="bankForm.ifsc.$dirty && bankForm.ifsc.$error.required && bankForm.ifsc.$error.maxlength">Not
+									a valid IFSC</span> <span style="color: red"
+									ng-show="bankForm.ifsc.$error.pattern">Enter
+									a valid IFSC</span>
+								<div ng-messages="bankForm.ifsc.$error"
+									ng-if="bankForm.ifsc.$touched">
+									<div ng-message="required">Required IFSC</div>
+								</div>
+					<!-- <div ng-messages="bankForm.ifsc.$error"
+						ng-if="bankForm.ifsc.$touched">
+						<div ng-message="required">This field is required</div>
+					</div> -->
+				</div>
+				   <div class="form-group col-lg-4">
+					<label for="branchName">Branch Name*</label> <input type="text"
+						name="branchName" placeholder="Enter Branch Name"
+						 ng-model="bankdetails.branchName" required class="form-control" />
+						<!-- <span style="color: red"
+									ng-show="bankForm.branch.$dirty && bankForm.branch.$error.required">Not
+									a valid IFSC</span> <span style="color: red"
+									ng-show="bankForm.branch.$error.pattern">Enter
+									a valid IFSC</span> -->
+								<div ng-messages="bankForm.branchName.$error"
+									ng-if="bankForm.branchName.$touched">
+									<div ng-message="required">Required Branch Name</div>
+					</div>
+					<!-- <div ng-messages="bankForm.ifsc.$error"
+						ng-if="bankForm.ifsc.$touched">
+						<div ng-message="required">This field is required</div>
+					</div> -->
+				</div>
+			</div>
+
+			<div class="row">
+				<!--  ng-disabled="userForm.$invalid"  -->
+				<div class="form-group col-lg-12">
+					<button class="btn btn-success pull-right" data-toggle="modal"
+						data-target="#response" ng-disabled="bankForm.$invalid"
+						ng-click="addbankDetails(bankdetails)">Register</button>
+					<a href="#!/bankDetails" type="button"
+						class="btn btn-info pull-left">Cancel</a>
+					<div class="form-group col-lg-4">
+						<button type='reset' class="btn btn-info pull-left">Reset</button>
+					</div>
+				</div>
+
+
+			</div>
+
+		</form>
+	</div>
+
+</div>
+
+
+

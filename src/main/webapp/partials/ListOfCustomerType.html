@@ -1,0 +1,255 @@
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div ng-show="isLoading" class="Applicationloader">
+	<img src="images/rpoloader.gif">
+</div>
+
+<div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Customer Type</h3>
+        </li>
+      </ol>
+       <ol class="breadcrumb">
+    <div class="col-md-10">
+    <input class="form-control" style="width:25%" type="search" ng-model="test" placeholder="Search">
+    </div>
+    <div class="col-md-2 pull-right">
+     <a href="#!/AddCustomerType"  type="button"  class="btn btn-info btn-md pull-center"><span class="glyphicon glyphicon-plus"></span>Add</a>	 
+		
+    </div>
+   
+    </ol>
+    	<table class="table table-striped table-bordered" id="rec_List">
+		<thead>
+			<tr>
+				<th>Customer Type</th>
+				<th>Amount</th>
+				<th>Commission Rate</th>
+				<th>Edit</th>
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr dir-paginate="items in CustomerTypelist|filter:test|itemsPerPage:5">
+				<td>{{::items.customerType}}</td>
+				<td>{{::items.dropdown1}} {{::items.amount}} {{::items.dropdown2}}</td>
+				<td>{{::items.commissionRate}}</td>
+				<td><a class="btn btn-primary"
+					class="modal-dialog modal-lg" data-toggle="modal" data-target="#myModal" ng-click="customerTypeDetails(items)"
+					><span class="glyphicon glyphicon-pencil"></span></a></td>
+			</tr>
+		</tbody>
+	</table>
+	<div class="col-md-12 text-center">
+	<p><b>{{noData}}</b></p></div>
+	<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+    </div>
+    <div class="modal fade" id="myModal" >
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+
+			<div class="modal-content">
+				<div class="modal-header"><h4 class="modal-title">Update Amount </h4></div>
+
+			
+			<div class="modal-body">
+				<form class="form-horizontal" 
+					name="myForm" onsubmit="return myFun()">
+					<div class="form-group" id="mod">
+						<label class="control-label col-sm-4" for="mode">Enter Amount </label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="mode" placeholder="enter Amount" name="des" ng-model="newCustomerTypelist.amount" numbers-only required maxlength="8">
+							<span style="color:red" ng-show="myForm.des.$touched && myForm.des.$invalid" >This Field is required</span>
+							
+						</div>
+					</div>
+					
+				<div class="modal-footer">
+				<button class="btn btn-success pull-right" data-dismiss="modal" ng-click="updateCustomerTypelist()"  data-dismiss="modal" ng-disabled="myForm.$invalid">Update</button>
+						<button class="btn btn-danger pull-left" data-dismiss="modal">Cancel</button>
+
+					</div>
+				</form>
+
+			
+			</div>
+
+			</div>
+		</div>
+	</div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+<!DOCTYPE html>
+<html>
+<!-- <head>
+<script type='text/javascript'
+	src='http://code.jquery.com/jquery-1.10.1.js'></script>
+<link rel="stylesheet" type="text/css"
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css"
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<script type='text/javascript'
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+<script type='text/javascript'>
+$(window).load(function(){
+$(function () {
+    $("table#rec_List").on("click", ".remove", function () {
+        $(this).closest('tr').remove();
+    });
+});
+$(function () {
+    $(".show_tip").tooltip({
+        container: 'body'
+    });
+});
+$(document).click(function () {
+    $('.tooltip').remove();
+    $('[title]').tooltip();
+});
+});
+
+$(document).ready(function(){
+	
+	  $("#con").hide();
+});
+
+function myFun(){
+	  var x = document.forms["myForm"]["mode_val"].value;
+	  var y= document.forms["myForm"]["dur_val"].value;
+	myFun.cnt++;
+	    if (x == "") {
+	 if(myFun.cnt==1){
+	        $("#mod").append("<b style='color:red' id='k'>Dont Leave Field as Empty</b>");
+	 }
+	        return false;
+	    }
+	    else if((x=="contract" || x=="Contract") && y==""){
+	       	$("#k").remove();
+	    	$("#con").fadeIn("slow");
+	    	return false;
+	    }else if(x!="" && y!=""){
+	    	
+	    	$("#k").remove();
+	    	return true;
+	    	
+	    }
+	    else{
+	    	return true;
+	    }
+	    	
+	    
+	  
+	  
+}
+myFun.cnt=0;
+
+</script>
+</head> 
+<body style='margin: 30px'>
+	<!-- <h2>CustomerType List:</h2>
+		<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+	
+
+<div class="container list table-responsive panel panel-danger" >
+	<div class="panel-heading"><h4>Customer Type Information
+	<input class="pull-right"type="search" ng-model="test" placeholder="search here.."></h4>
+	</div>
+	<div class="panel-body" style="padding:5px">
+	<table class="table table-striped table-bordered" id="rec_List">
+		<thead>
+			<tr>
+				<th>Customer Type</th>
+				<th>Amount</th>
+				<th>Commission Rate</th>
+				<th>Edit</th>
+				
+			</tr>
+		</thead>
+		<tbody>
+			<tr dir-paginate="items in CustomerTypelist|filter:test|itemsPerPage:5">
+				<td>{{::items.customerType}}</td>
+				<td>{{::items.dropdown1}} {{::items.amount}} {{::items.dropdown2}}</td>
+				<td>{{::items.commissionRate}}</td>
+				<td><a class="btn btn-primary"
+					class="modal-dialog modal-lg" data-toggle="modal" data-target="#myModal" ng-click="customerTypeDetails(items)"
+					><span class="glyphicon glyphicon-pencil"></span></a></td>
+			</tr>
+			
+		
+		</tbody>
+	</table>
+	</div>	
+	<div class="pannel panel-fixed-footer " style="background:linear-gradient(	#FFFFFF);">
+		<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+		&nbsp;&nbsp; <a href="#!/admin"  type="button"  class="btn btn-info btn-md"><span class="glyphicon glyphicon-home"></span> Home</a>&nbsp;&nbsp;
+		 <a href="#!/AddCustomerType"  type="button"  class="btn btn-info btn-md pull-center"><span class="glyphicon glyphicon-plus"></span>Add</a>	 
+	</div>
+	</br>
+	</div>
+
+	<div class="modal fade" id="myModal" >
+		<div class="modal-dialog">
+
+			
+
+			<div class="modal-content">
+				<div class="modal-header"><h4 class="modal-title">Update Amount </h4></div>
+
+			
+			<div class="modal-body">
+				<form class="form-horizontal" 
+					name="myForm" onsubmit="return myFun()">
+					<div class="form-group" id="mod">
+						<label class="control-label col-sm-4" for="mode">Enter Amount </label>
+						<div class="col-sm-4">
+							<input type="text" class="form-control" id="mode" placeholder="enter Amount" name="des" ng-model="newCustomerTypelist.amount" required>
+							<span style="color:red" ng-show="myForm.des.$touched && myForm.des.$invalid" >This Field is required</span>
+								
+						</div>
+					</div>
+					
+
+
+				<div class="modal-footer">
+				<button class="btn btn-success pull-right" data-dismiss="modal" ng-click="updateCustomerTypelist()"  data-dismiss="modal" ng-disabled="myForm.$invalid">Update</button>
+						<button class="btn btn-danger pull-left" data-dismiss="modal">Cancel</button>
+
+					</div>
+				</form>
+
+			
+			</div>
+
+			</div>
+		</div>
+	</div>
+</body> 
+</html>
+ -->

@@ -1,0 +1,39 @@
+
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<fieldset class="well .scheduler-border" 
+style="width:370px;height:auto;margin:0px auto;border:1px solid #ccc; 
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;">
+<legend  style=" width:auto; padding:0 5px;border-bottom:none;font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif';font-size: 18px;color:blueviolet" align="left">
+Designation
+</legend>
+
+<form class="form-horizontal" name="d">
+<div class="form-group">
+<label class="control-label col-sm-3">Designation:</label>
+<div class="col-sm-3 col-lg-6">
+<input type="text" class="form-control" name="des" ng-model="designation" ng-minlength="2" ng-maxlength="45" ng-pattern="/^([a-zA-Z]+\s)*[a-zA-Z]+$/" required>
+<span style="color:red;" ng-show="d.des.$dirty && d.des.$error.required">Please enter designation</span>
+					       		<span style="color:red;" ng-show="d.des.$error.pattern">Invalid designation</span>
+					       		<span style="color:red;" ng-show="d.des.$error.maxlength" >Designation is too long.</span>
+	</div>
+</div>
+<div style="margin:10px;">
+
+<center>
+ <a href="#!ListDesignation"  type="button"  class="btn btn-info btn-md pull-left">Cancel</a>
+<button class="btn btn-info btn-md pull-right" ng-click="desigSave()" ng-disabled="d.$invalid">Save</button>
+ 
+  
+  </center>
+</div>
+
+
+</form>
+
+</fieldset>
+
+			
+			
+			

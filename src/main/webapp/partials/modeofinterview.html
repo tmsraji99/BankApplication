@@ -1,0 +1,32 @@
+<div ng-include="'partials/header.html'"></div>
+ <div ng-include="'partials/fotter.html'"></div>
+  <div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+     
+     <!-- new existin code here -->
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Mode of Interview/Add Interview Type </h3>
+        </li>
+  
+      </ol>
+      <form name="myForm" ng-submit="addMode()" novalidate>
+      <div class="col-md-4">
+  
+      	 <input type="text"
+			class="form-control" id="mode" name="mode_val"
+			placeholder="Ex:Face-Face/Skype/Telephonic"
+			ng-model="modeofInterview" required> <span
+			style="color: red;"
+			ng-show="myForm.mode_val.$touched && myForm.mode_val.$invalid">The
+			field is required.</span>
+      </div>
+      
+      <div class="col-md-1">
+      	 <button type="submit" class="btn btn-info pull-right" ng-disabled="myForm.$invalid">Save</button>
+      </div>
+      
+	</form>
+      </div>
+      </div>

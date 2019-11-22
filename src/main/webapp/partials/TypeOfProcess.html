@@ -1,0 +1,2270 @@
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper" ng-init="process1();">
+	<div class="container-fluid" style="margin-top: 60px;">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>Process for Interview</h3>
+			</li>
+		</ol>
+		<fieldset class="well .scheduler-border"
+			style="width: 790px; height: auto; margin: 0px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+			<legend
+				style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+				align="left"> Interview form </legend>
+			<form name="interviewform">
+				<div class="form-group col-md-4">
+					<label>Candidate Name:</label> <input type="text"
+						class="form-control" ng-model="candidateiname" readonly>
+				</div>
+				<div class="form-group col-md-4"
+					ng-hide="(canStatus=='Process for Interview')||(canStatus=='Interview Schedule Rejected By Candidate')||
+			(canStatus=='Shared L1 Round Interview Details with Recruiter') 
+			||(canStatus=='Shared L2 Round Interview Details with Recruiter') 
+			||(canStatus=='Shared L3 Round Interview Details with Recruiter')
+			 ||(canStatus=='Shared Clientround Round Interview Details with Recruiter')
+			  || (canStatus=='Shared HRRound Round Interview Details with Recruiter')
+			  ||(canStatus=='Document Collection')">
+					<label for="Type of process">Type of Process<sup>*</sup></label> <select
+						id="typeprocess" ng-model="processtype"
+						ng-options="z as z.status for z in processData"
+						ng-change="interviewchange()" class="form-control">
+						<option value="" selected disabled>--Select--</option>
+					</select>
+				</div>
+				<div class="form-group col-md-2"
+					ng-show="(canStatus=='Process for Interview')
+			||(canStatus=='Interview Schedule Rejected By Candidate')
+			||(canStatus=='Shared L1 Round Interview Details with Recruiter')
+			 ||(canStatus=='Shared L2 Round Interview Details with Recruiter') 
+			 ||(canStatus=='Shared L3 Round Interview Details with Recruiter') 
+			 ||(canStatus=='Shared Clientround Round Interview Details with Recruiter')
+			  ||(canStatus=='Shared HRRound Round Interview Details with Recruiter')
+			||(canStatus=='Document Collection')||(canStatus=='Accepted By Lead') ||(canStatus=='Submitted to Customer') || (canStatus=='Waiting for Interview Feedback')">
+					<label for="company_name">Requirement Id:</label> <input
+						type="text" ng-model="reqId" placeholder="Requirement Id"
+						class="form-control" readonly style="margin-top: 4px;">
+				</div>
+				<div class="form-group col-md-2"
+					ng-show="(canStatus=='Document Collection')">
+					<label for="company_name">Requirement Name: </label> <input
+						type="text" ng-model="reqName" placeholder="Requirement Id"
+						class="form-control" readonly>
+				</div>
+				<!-- <div class="form-group col-md-2" ng-show="(canStatus=='Process for Interview')||(canStatus=='Interview Schedule Rejected By Candidate')||(canStatus=='Shared L1 Round Interview Details with Recruiter') ||(canStatus=='Shared L2 Round Interview Details with Recruiter') ||(canStatus=='Shared L3 Round Interview Details with Recruiter') ||(canStatus=='Shared Clientround Round Interview Details with Recruiter') ||(canStatus=='Shared HRRound Round Interview Details with Recruiter')||(canStatus=='Document Collection')>
+				<label for="company_name">Requirement Id:</label>
+				<input type="text" ng-model="reqId" placeholder="Requirement Id" class="form-control" readonly>
+			</div>
+			<div class="form-group col-md-2" ng-show="(canStatus=='Document Collection')||(canStatus=='Offer Release') ">
+				<label for="company_name">Requirement Name: </label>
+				<input type="text" ng-model="reqName" placeholder="Requirement Id" class="form-control" readonly>								
+			</div> -->
+				<div id="form_upload" class="col-md-4 form-group"
+					ng-show="(canStatus=='Offer Release') && (typeOfHiring=='permanent' || typeOfHiring=='contract' || typeOfHiring=='Contract to Hire') ">
+
+					<label for="candidate_name">Offer Status<sup>*</sup></label> <select
+						class="form-control" ng-model="interviewstatus"
+						ng-change="interviewstatusClick(interviewstatus)" required>
+						<option ng-option value="" selected disabled>Select</option>
+						<option ng-option value="Offer Released">Offer Released</option>
+						<option ng-option value="Documents Verification Failed">Documents
+							Verification Failed</option>
+						<option ng-option value="hold">Hold</option>
+						<option ng-option value="candidateRejected">Rejected By
+							Candidate</option>
+					</select>
+				</div>
+
+				<div ng-show="interviewstatus=='Offer Released'" style="clear: both">
+					<div class="row mx-0">
+						<div class="form-group col-md-4"
+							ng-show="(canStatus=='Offer Release' && typeOfHiring=='Contract to Hire' || typeOfHiring=='contract')">
+
+							<label for="company_name">Employee Name :
+							</label> <input type="text" ng-model="employeeName" name="employeeName"
+								placeholder="Employee Name" class="form-control" required>
+							<span style="color: red"
+								ng-show="interviewform.employeeName.$dirty && interviewform.employeeName.$invalid"></span>
+<!-- 
+								<span ng-show="interviewform.employeeName.$error.required">Employee
+									Name is required</span>
+							 -->
+
+						</div>
+						<div class="form-group col-md-4"
+							ng-show="(canStatus=='Offer Release' && typeOfHiring=='Contract to Hire' || typeOfHiring=='contract')">
+							<label for="company_name">Employee Id: </label> <input
+								type="text" ng-model="employeeId" placeholder="Employee Id"
+								name="canid" class="form-control" required> <span
+								style="color: red"
+								ng-show="interviewform.canid.$dirty && interviewform.canid.$invalid">
+								<span ng-show="interviewform.canid.$error.required">Employee
+									Id is required</span>
+							</span>
+						</div>
+						<div class="col-md-4 form-group"
+							ng-show="(canStatus=='Offer Release' && typeOfHiring=='Contract to Hire' || typeOfHiring=='contract')">
+
+							<label for="candidate_name">Employee DOB<sup>*</sup> :
+							</label>
+							<p class="input-group">
+								<input type="text" name="onboardeddate" placeholder="dd/MM/yyyy"
+									ng-model="employeeDob" class="form-control"
+									uib-datepicker-popup="{{format}}" is-open="popup3.opened"
+									datepicker-options="edob" alt-input-formats="altInputFormats"
+									readonly /> <span class="input-group-btn">
+									<button type="button" class="btn btn-default"
+										ng-click="open3()">
+										<i class="glyphicon glyphicon-calendar"></i>
+									</button>
+								</span> <span style="color: red"
+									ng-show="interviewform.onboardeddate.$dirty && interviewform.onboardeddate.$invalid">
+									<span ng-show="interviewform.onboardeddate.$error.required">Employee
+										DOB is required</span>
+								</span>
+						</div>
+					</div>
+					<div class="row mx-0">
+						<div class="form-group col-md-4"
+							ng-show="(canStatus=='Offer Release' && typeOfHiring=='Contract to Hire' || typeOfHiring=='contract')">
+							<label for="company_name">Employee Type <sup>*</sup>:
+							</label>
+							<!-- <input type="text" ng-model="empType" placeholder="Employee Type" class="form-control">	 -->
+							<select id="employeeType" ng-model="employeeType"
+								name="employeeType" class="form-control">
+								<option ng-option value="Bench">Bench</option>
+								<option ng-option value="FTE">FTE</option>
+								<option ng-option value="Spl">Spl</option>
+								<option ng-option value="SubStaff">SubStaff</option>
+								<option ng-option value="Lateral">Lateral</option>
+								<option ng-option value="SubCon">SubCon</option>
+							</select> <span style="color: red"
+								ng-show="interviewform.employeeType.$dirty && interviewform.employeeType.$invalid">
+								<span ng-show="interviewform.employeeType.$error.required">Employee
+									DOB is required</span>
+							</span>
+
+						</div>
+						<div class="form-group col-md-4"
+							ng-show="(canStatus=='Offer Release' && typeOfHiring=='Contract to Hire' || typeOfHiring=='contract')">
+							<label for="company_name">Skills <sup>*</sup></label>
+							<!-- <input type="text" ng-model="skills" placeholder="Skills" class="form-control" > -->
+							<select id="skill" name="skill" ng-model="skill"
+								class="form-control">
+								<option ng-option value="Software">Software</option>
+								<option ng-option value="Operations">Operations</option>
+								<option ng-option value="Finance">Finance</option>
+								<option ng-option value="HR">HR</option>
+								<option ng-option value="Management">Management</option>
+								<option ng-option value="Staffing">Staffing</option>
+								<option ng-option value="Sales">Sales</option>
+							</select> <span style="color: red"
+								ng-show="interviewform.skill.$dirty && interviewform.skill.$invalid">
+								<span ng-show="interviewform.skill.$error.required">Employee
+									DOB is required</span>
+							</span>
+						</div>
+						<div class="col-md-4 form-group"
+							ng-show="(canStatus=='Offer Release' && typeOfHiring=='Contract to Hire' || typeOfHiring=='contract')">
+
+							<label for="candidate_name">Joining Date <sup>*</sup></label>
+							<p class="input-group">
+								<input type="text" name="JoiningDob" placeholder="dd/MM/yyyy"
+									ng-model="onboardeddate" class="form-control"
+									uib-datepicker-popup="{{format}}" is-open="popup2.opened"
+									datepicker-options="dateOptions"
+									alt-input-formats="altInputFormats" readonly /> <span
+									class="input-group-btn">
+									<button type="button" class="btn btn-default"
+										ng-click="open2()">
+										<i class="glyphicon glyphicon-calendar"></i>
+									</button>
+								</span> <span style="color: red"
+									ng-show="interviewform.JoiningDob.$dirty && interviewform.JoiningDob.$invalid">
+									<span ng-show="interviewform.JoiningDob.$error.required">Joining
+										DOB is required</span>
+								</span>
+						</div>
+					</div>
+					<div class="row mx-0">
+						<div class="form-group col-md-4"
+							ng-show="(canStatus=='Offer Release' && typeOfHiring=='Contract to Hire' || typeOfHiring=='contract')">
+							<label for="company_name">Fixed CTC <sup>*</sup>:
+							</label> <input type="text" ng-model="fixedCtc" placeholder="Fixed CTC"
+								class="form-control" numbers-only maxlength="7">
+						</div>
+						<div class="form-group col-md-4"
+							ng-show="(canStatus=='Offer Release' && typeOfHiring=='Contract to Hire' || typeOfHiring=='contract')">
+							<label for="company_name">Variable CTC <sup>*</sup>:
+							</label> <input type="text" ng-model="variableCtc"
+								placeholder="Variable CTC" class="form-control" numbers-only
+								maxlength="7" required>
+						</div>
+						<div class="form-group col-md-4"
+							ng-show="(canStatus=='Offer Release' && typeOfHiring=='Contract to Hire' || typeOfHiring=='contract')">
+							<label for="company_name">Total CTC <sup>*</sup>:
+							</label> <input type="text" ng-model="totalCtc" placeholder="Total CTC"
+								class="form-control" numbers-only maxlength="7" required>
+						</div>
+					</div>
+
+					<div class="row mx-0">
+						<div class="form-group col-md-4"
+							ng-show="(canStatus=='Offer Release' && typeOfHiring=='Contract to Hire' || typeOfHiring=='contract')">
+							<label for="company_name">Designation <sup>*</sup>:
+							</label> <input type="text" ng-model="designation"
+								placeholder="Designation" class="form-control" required>
+						</div>
+						<div class="form-group col-md-4"
+							ng-show="(canStatus=='Offer Release' && typeOfHiring=='Contract to Hire' || typeOfHiring=='contract')">
+							<label for="company_name">Job Location <sup>*</sup>:
+							</label> <select id="jobLocation" ng-model="jobLocation"
+								name="jobLocation" class="form-control" required="required">
+								<option ng-option value="Hyderbad">Hyderbad</option>
+								<option ng-option value="Kolkata">Kolkata</option>
+								<option ng-option value="Bangalore">Bangalore</option>
+								<option ng-option value="Chennai">Chennai</option>
+								<option ng-option value="Mumbai">Mumbai</option>
+								<option ng-option value="Pune">Pune</option>
+								<option ng-option value="Gurgaon">Gurgaon</option>
+							</select>
+						</div>
+
+						<div class="form-group col-md-4 "
+							ng-show="(canStatus=='Offer Release' && typeOfHiring=='Contract to Hire' || typeOfHiring=='contract')">
+							<label for="company_name">Is in Metro
+								City(Mumbai/Chennai/Kolkata/Bangalore) <sup>*</sup>:
+							</label> <br> <input type="radio" value="yes" id="yes"
+								ng-model="isMetroCity" placeholder="Insurance Cover" class="">Yes
+							&nbsp;&nbsp;</input> <input type="radio" value="no" id="no"
+								ng-model="isMetroCity" placeholder="Insurance Cover" class=""
+								ng-checked="true">No</input>
+						</div>
+					</div>
+
+					<!-- <div class="form-group col-md-4" ng-show="(canStatus=='Offer Release' && typeOfHiring=='Contract to Hire' || typeOfHiring=='contract')"  >
+				<label for="company_name">Insurance Cover: </label>
+				<input type="text" ng-model="insCover" placeholder="Insurance Cover" class="form-control" >								
+			</div> -->
+					<div class="row mx-0">
+						<div class="form-group col-md-4"
+							ng-show="(canStatus=='Document Collection')||(canStatus=='Offer Release') ">
+							<label for="company_name">Client Name:</label> <input type="text"
+								ng-model="clientName" placeholder="Client Name"
+								class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-4"
+							ng-show="(canStatus=='Document Collection')||(canStatus=='Offer Release') ">
+							<label for="company_name">Customer Id:</label> <input type="text"
+								ng-model="clientId" placeholder="Customer Id"
+								class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-2"
+							ng-show="(canStatus=='Process for Interview')
+			||(canStatus=='Interview Schedule Rejected By Candidate')
+			||(canStatus=='Shared L1 Round Interview Details with Recruiter')
+			 ||(canStatus=='Shared L2 Round Interview Details with Recruiter') 
+			 ||(canStatus=='Shared L3 Round Interview Details with Recruiter') 
+			 ||(canStatus=='Shared Clientround Round Interview Details with Recruiter')
+			  ||(canStatus=='Shared HRRound Round Interview Details with Recruiter')
+			||(canStatus=='Document Collection')||(canStatus=='Offer Release')">
+							<label for="company_name">Requirement Id:</label> <input
+								type="text" ng-model="reqId" placeholder="Requirement Id"
+								class="form-control" readonly style="margin-top: 4px;">
+						</div>
+						<div class="form-group col-md-2"
+							ng-show="(canStatus=='Document Collection')||(canStatus=='Offer Release') ">
+							<label for="company_name">Requirement Name: </label> <input
+								type="text" ng-model="reqName" placeholder="Requirement Id"
+								class="form-control" readonly>
+						</div>
+
+					</div>
+					<br> <br>
+					<div class="row mx-0">
+						<div class="form-group col-md-6 border"
+							ng-show="(canStatus=='Offer Release' && typeOfHiring=='Contract to Hire' || typeOfHiring=='contract')">
+							<label for="company_name"> Insurance Applicable for
+								Dependents: </label> <br> <input type="radio" value="yes" id="yes"
+								ng-model="Dependants" placeholder="Insurance Cover" class="">Yes
+							&nbsp;&nbsp;</input> <input type="radio" value="no" id="no"
+								ng-model="Dependants" placeholder="Insurance Cover" class=""
+								ng-checked="true">No</input>
+							<div class="row">
+								<div ng-show="Dependants=='yes'">
+									<div class="form-group col-md-6"
+										ng-show="(canStatus=='Document Collection')||(canStatus=='Offer Release') ">
+										<label for="company_name">Spouse Name: </label> <input
+											type="text" ng-model="spouseName" placeholder="Spouse Name"
+											class="form-control">
+									</div>
+									<div class="form-group col-md-6"
+										ng-show="(canStatus=='Document Collection')||(canStatus=='Offer Release') ">
+										<label for="company_name">Spouse DOB: </label>
+										<!-- <input type="text" ng-model="reqName" placeholder="Requirement Id" class="form-control" readonly>	 -->
+										<p class="input-group">
+											<input type="text" class="form-control"
+												uib-datepicker-popup="{{format}}" ng-model="spouseDob"
+												is-open="popup8.opened" datepicker-options="dateOptions"
+												ng-required="true" close-text="Close"
+												alt-input-formats="altInputFormats" /> <span
+												class="input-group-btn">
+												<button type="button" class="btn btn-default"
+													ng-click="open8()">
+													<i class="glyphicon glyphicon-calendar"></i>
+												</button>
+											</span>
+										</p>
+									</div>
+									<div class="form-group col-md-6"
+										ng-show="(canStatus=='Document Collection')||(canStatus=='Offer Release') ">
+										<label for="company_name">Child 1 Name: </label> <input
+											type="text" ng-model="child1Name" placeholder="Child 1 Name"
+											class="form-control">
+									</div>
+									<div class="form-group col-md-6"
+										ng-show="(canStatus=='Document Collection')||(canStatus=='Offer Release') ">
+										<label for="company_name">Child 1 DOB: </label>
+										<!-- <input type="text" ng-model="reqName" placeholder="Requirement Id" class="form-control" readonly>	 -->
+										<p class="input-group">
+											<input type="text" class="form-control"
+												uib-datepicker-popup="{{format}}" ng-model="child1Dob"
+												is-open="popup4.opened" datepicker-options="dateOptions"
+												ng-required="true" close-text="Close"
+												alt-input-formats="altInputFormats" /> <span
+												class="input-group-btn">
+												<button type="button" class="btn btn-default"
+													ng-click="open4()">
+													<i class="glyphicon glyphicon-calendar"></i>
+												</button>
+											</span>
+										</p>
+									</div>
+									<div class="form-group col-md-6"
+										ng-show="(canStatus=='Document Collection')||(canStatus=='Offer Release') ">
+										<label for="company_name">Child 2 Name: </label> <input
+											type="text" ng-model="child2Name" placeholder="Child 2 Name"
+											class="form-control">
+									</div>
+									<div class="form-group col-md-6"
+										ng-show="(canStatus=='Document Collection')||(canStatus=='Offer Release') ">
+										<label for="company_name">Child 2 DOB: </label>
+										<!-- <input type="text" ng-model="reqName" placeholder="Requirement Id" class="form-control" readonly>	 -->
+										<p class="input-group">
+											<input type="text" class="form-control"
+												uib-datepicker-popup="{{format}}" ng-model="child2Dob"
+												is-open="popup5.opened" datepicker-options="dateOptions"
+												ng-required="true" close-text="Close"
+												alt-input-formats="altInputFormats" /> <span
+												class="input-group-btn">
+												<button type="button" class="btn btn-default"
+													ng-click="open5()">
+													<i class="glyphicon glyphicon-calendar"></i>
+												</button>
+											</span>
+										</p>
+									</div>
+								</div>
+
+
+							</div>
+
+
+						</div>
+
+						<div class="form-group col-md-6 border"
+							ng-show="(canStatus=='Offer Release' && typeOfHiring=='Contract to Hire' || typeOfHiring=='contract')">
+							<label for="company_name">Is Insurance Applicable for
+								Parents: </label> <br> <input type="radio" value="yes" id="yes"
+								ng-model="Parents" placeholder="Insurance Cover" class="">Yes
+							&nbsp;&nbsp;</input> <input type="radio" value="no" id="no"
+								ng-model="Parents" placeholder="Insurance Cover" class=""
+								ng-checked="true">No</input>
+							<div class="row">
+								<div ng-show="Parents=='yes'">
+									<div class="form-group col-md-6"
+										ng-show="(canStatus=='Document Collection')||(canStatus=='Offer Release') ">
+										<label for="company_name">Mother Name: </label> <input
+											type="text" ng-model="motherName" placeholder="Mother Name"
+											class="form-control">
+									</div>
+									<div class="form-group col-md-6"
+										ng-show="(canStatus=='Document Collection')||(canStatus=='Offer Release') ">
+										<label for="company_name">Mother DOB: </label>
+										<!-- <input type="text" ng-model="reqName" placeholder="Requirement Id" class="form-control" readonly>	 -->
+										<p class="input-group">
+											<input type="text" class="form-control"
+												uib-datepicker-popup="{{format}}" ng-model="motherDob"
+												is-open="popup6.opened" datepicker-options="dateOptions"
+												ng-required="true" close-text="Close"
+												alt-input-formats="altInputFormats" /> <span
+												class="input-group-btn">
+												<button type="button" class="btn btn-default"
+													ng-click="motherdob()">
+													<i class="glyphicon glyphicon-calendar"></i>
+												</button>
+											</span>
+										</p>
+									</div>
+									<div class="form-group col-md-6"
+										ng-show="(canStatus=='Document Collection')||(canStatus=='Offer Release') ">
+										<label for="company_name">Father Name: </label> <input
+											type="text" ng-model="fatherName" placeholder="Father Name"
+											class="form-control">
+									</div>
+									<div class="form-group col-md-6"
+										ng-show="(canStatus=='Document Collection')||(canStatus=='Offer Release') ">
+										<label for="company_name">Father DOB: </label>
+										<!-- <input type="text" ng-model="reqName" placeholder="Requirement Id" class="form-control" readonly>	 -->
+										<p class="input-group">
+											<input type="text" class="form-control"
+												uib-datepicker-popup="{{format}}" ng-model="fatherDob"
+												is-open="popup7.opened" datepicker-options="dateOptions"
+												ng-required="true" close-text="Close"
+												alt-input-formats="altInputFormats" /> <span
+												class="input-group-btn">
+												<button type="button" class="btn btn-default"
+													ng-click="fatherdob()">
+													<i class="glyphicon glyphicon-calendar"></i>
+												</button>
+											</span>
+										</p>
+									</div>
+
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2 form-group m-t-25"
+					ng-hide="(canStatus=='On Board') || (canStatus=='Document Collection') || (canStatus=='Accepted By Lead') || (canStatus=='Submitted to Customer') || (canStatus=='Process for Interview') ||(canStatus=='Shared L1 Round Interview Details with Recruiter') || (canStatus=='Waiting for Interview Feedback') || (canStatus=='Shared L2 Round Interview Details with Recruiter') || (canStatus=='Shared L3 Round Interview Details with Recruiter') || (canStatus=='Shared Clientround Round Interview Details with Recruiter') || (canStatus=='Shared HRRound Round Interview Details with Recruiter')||(canStatus=='Offer Release' && typeOfHiring=='permanent')">
+
+					<button type="submit" data-toggle="modal"
+						class="btn btn-info  text-center code-dialog"
+						ng-click="saveCtc()">Save</button>
+
+				</div>
+				</div>
+
+
+				<div class="form-group col-md-2"
+					ng-show="(canStatus=='Document Collection')">
+					<label for="company_name">Type of Hiring </label> <input
+						type="text" ng-model="typeOfHiring" class="form-control"
+						ng-readonly="typeOfHiring">
+				</div>
+
+				<div id="form_upload" class="col-md-3 form-group"
+					ng-show="(canStatus=='Document Collection' && typeOfHiring=='permanent') ">
+					<label for="Type of process">Type of Process<sup>*</sup></label> <select
+						id="typeprocess" ng-model="processtype" class="form-control" required>
+						<option value="" selected disabled>--Select--</option>
+						<option value="Documents Collection" selected>Documents
+							Collection</option>
+					</select>
+				</div>
+				<div id="form_upload" class="col-md-2 form-group"
+					ng-show="(canStatus=='Document Collection' &&  typeOfHiring=='permanent') ">
+					<label for="candidate_name">Status<sup>*</sup></label> 
+					<select	class="form-control" ng-model="interviewstatus"
+						ng-change="interviewstatusClick(interviewstatus)" required>
+						<option ng-option value="" selected disabled>Select</option>
+						<option ng-option value="Offer Release">Documents uploaded</option>
+						<option ng-option value="Documents Verification	Failed">Documents Verification Failed</option>
+						<option ng-option value="hold">Hold</option>
+					</select>
+				</div>
+
+				
+				
+				<div class="col-md-2 form-group m-t-25"
+					ng-hide="(interviewstatus=='Offer Released') || (canStatus=='Interview Schedule Rejected By Candidate')|| (canStatus=='On Board') || (canStatus=='Document Collection') || (canStatus=='Accepted By Lead') || (canStatus=='Submitted to Customer') || (canStatus=='Process for Interview') ||(canStatus=='Shared L1 Round Interview Details with Recruiter') || (canStatus=='Waiting for Interview Feedback') || (canStatus=='Shared L2 Round Interview Details with Recruiter') || (canStatus=='Shared L3 Round Interview Details with Recruiter') || (canStatus=='Shared Clientround Round Interview Details with Recruiter') || (canStatus=='Shared HRRound Round Interview Details with Recruiter')||(canStatus=='Offer Release' && typeOfHiring=='permanent')">
+
+					<button type="submit" 
+						class="btn btn-info  text-center" 
+						ng-click="saveStatus()">Save</button>
+
+				</div>
+				
+				<!-- 			<div  class="col-md-2 form-group m-t-25" ng-hide="(canStatus=='Document Collection') || (canStatus=='Accepted By Lead') || (canStatus=='Submitted to Customer') || (canStatus=='Process for Interview') ||(canStatus=='Shared L1 Round Interview Details with Recruiter') || (canStatus=='Waiting for Interview Feedback') || (canStatus=='Shared L2 Round Interview Details with Recruiter') || (canStatus=='Shared L3 Round Interview Details with Recruiter') || (canStatus=='Shared Clientround Round Interview Details with Recruiter') || (canStatus=='Shared HRRound Round Interview Details with Recruiter')"> 
+			
+				<button type="submit" class="btn btn-info  text-center" ng-disabled="interviewform.$invalid" data-target="#previewData" ng-click="saveCtc()">Save</button>
+				
+			</div> -->
+
+				<div class="col-md-4 form-group m-t-25"
+					ng-show="(canStatus=='Offer Release' && typeOfHiring=='permanent')">
+					<button class="btn btn-info  text-center" ng-click="saveStatus()">Save</button>
+
+				</div>
+
+				<!-- <div id="form_upload" class="col-md-4 form-group" ng-show="(canStatus=='Offer Release' && typeOfHiring=='permanent') "> 
+			
+			<label for="candidate_name">Status</label>
+				<select class="form-control" ng-model="interviewstatus" ng-change="interviewstatusClick(interviewstatus)" required >
+							<option ng-option value=""  selected disabled>Select</option>
+							<option ng-option value="Offer Released">Offer Released</option>
+							<option ng-option value="Documents verification failed">Documents verification failed</option>
+							<option ng-option value="hold">Hold</option>
+							<option ng-option value="candidateRejected">Rejected By Candidate</option>
+				</select>
+			</div> -->
+				<!-- IF Permanent -->
+
+				<div id="form_upload" class="col-md-4 form-group"
+					ng-show="(canStatus=='On Board') ">
+					<label for="candidate_name">Status<sup>*</sup></label> <select
+						class="form-control" ng-model="interviewstatus"
+						ng-change="interviewstatusClick(interviewstatus)" required>
+						<option ng-option value="" selected disabled>Select</option>
+						<option ng-option value="On Boarded">On Boarded</option>
+						<option ng-option value="Not Joined">Not Joined</option>
+						<option ng-option value="hold">Hold</option>
+
+					</select>
+				</div>
+				<div class="col-md-4 form-group"
+					ng-show="(interviewstatus=='On Boarded')">
+					<!-- <label for="candidate_name">Date Of Boarding</label>
+			<input type="date" ng-model="onboardeddate" ></input> -->
+					<label for="candidate_name">Date Of On Boarding<sup>*</sup></label>
+					<p class="input-group">
+						<input type="text" name="onboardeddate" placeholder="dd/MM/yyyy"
+							ng-model="onboardeddate" class="form-control"
+							uib-datepicker-popup="{{format}}" is-open="popup1.opened"
+							datepicker-options="dateOptions"
+							alt-input-formats="altInputFormats" readonly /> <span
+							class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="open1()">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+				</div>
+				<div class="col-md-4 form-group"
+					ng-show="(interviewstatus=='On Boarded')">
+					<form name="onBoardedCTC" novalidate>
+						<label for="candidate_name">CTC<sup>*</sup></label> <input type="text"
+							name="ctc" placeholder="CTC" ng-model="CTC" class="form-control" maxlength="7"
+							numbers-only required />
+						<div ng-messages="onBoardedCTC.ctc.$error"
+							ng-if="onBoardedCTC.ctc.$touched">
+							<div ng-message="required">Enter your CTC</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-md-4 form-group m-t-25"
+					ng-show="(canStatus=='On Board')">
+					<!-- 	<form name="document" novalidate> -->
+					<!--  <input type="checkbox" > -->
+					<!-- <a class="btn btn-info  pull-right" ng-disabled="document.$invalid" ng-click="save()">Save</a>
+					<span style="color:red";>{{mes10}}</span>  -->
+
+					<!-- <label>Do you want to upload documents as Zip file</label>
+				<input type='radio' ng-model="docProcess" value="yes" id="yes">Yes</input>&nbsp;&nbsp; 
+				<input type='radio' ng-model="docProcess" value="no" id="no"  ng-checked="true">No	</input> -->
+					<button class="btn btn-info  text-center"
+						ng-click="saveOnBoardStatus()">Save</button>
+					<!-- </form> -->
+				</div>
+				<!-- IF Permanent END-->
+
+				<!--  Form Upload Save Button start-->
+				<div id="form_upload" class="col-md-4 form-group m-t-25"
+					ng-show="(canStatus=='Document Collection' && (typeOfHiring=='permanent')) ">
+					<form name="document" novalidate>
+						<a class="btn btn-info  text-center"
+							ng-disabled="document.$invalid" ng-click="save()">Save</a> <span
+							style="color: red";>{{mes10}}</span>
+					</form>
+				</div>
+				<div id="form_upload" class="col-md-4 form-group m-t-25"
+					ng-show="(canStatus=='Document Collection' && (typeOfHiring=='Contract to Hire' || typeOfHiring=='contract'))">
+					<form name="document" novalidate>
+						<!--  <input type="checkbox" > -->
+						<!-- <a class="btn btn-info  pull-right" ng-disabled="document.$invalid" ng-click="save()">Save</a>
+					<span style="color:red";>{{mes10}}</span>  -->
+						<input type="checkbox" name="checked" value="checked"
+							ng-model="docu" id="checked"><label for="checked">
+							Are the all documents uploaded?</label>
+						<!-- <label>Do you want to upload documents as Zip file</label>
+				<input type='radio' ng-model="docProcess" value="yes" id="yes">Yes</input>&nbsp;&nbsp; 
+				<input type='radio' ng-model="docProcess" value="no" id="no"  ng-checked="true">No	</input> -->
+						<button class="btn btn-info  text-center"
+							ng-disabled="document.$invalid" ng-click="saveCtoh()">Save</button>
+						<span style="color: red";>{{mes10}}</span>
+					</form>
+				</div>
+				<!--  Form Upload Save Button end-->
+				<!--  Submitted To Customer Start-->
+				<div class="form-group col-md-12" id="form-subcust"
+					style="display: none;">
+					<form name="subcust" novalidate>
+						<button class="btn btn-info pull-right" ng-click="savesubcust()">Submit</button>
+					</form>
+				</div>
+				<!--  Submitted To Customer End-->
+				<!--  customer shortlist start -->
+				<div id="form-custshort" class="form-group col-md-12"
+					style="display: none;">
+					<button class="btn btn-info pull-right" ng-click="savecustShort()"
+						ng-disabled="custshort.$invalid">Save</button>
+				</div>
+				<!--  customer shortlist end -->
+				<!--  customer rejected start -->
+				<div id="form-custreject" class="col-md-12 form-group"
+					style="display: none;">
+					<form name="custreject" novalidate>
+						<button class="btn btn-info pull-right"
+							ng-click="savecustreject()">Save</button>
+					</form>
+				</div>
+
+				<!--  customer rejected end -->
+				<!-- Form Upload Start -->
+				<div id="form_upload" class="col-md-12 form-group"
+					ng-show="(canStatus=='Document Collection' && (typeOfHiring=='Contract to Hire' || typeOfHiring=='contract'))">
+					<form name="document" novalidate>
+						<table class="table table-striped table-bordered" id="upload">
+							<tbody>
+								<tr>
+									<td>Upload as Zip File</td>
+									<td>
+										<button class="file-upload btn btn-warning">
+											<input type="file" class="file-input" id="file" name="file"
+												file-model="uploadZip">
+										</button> <span style="color: red";>{{mes11}}</span>
+									</td>
+									<td><a class="btn btn-info "
+										ng-disabled="document.$invalid" ng-click="uploadasZip()">
+										<span class="text-color">Upload</span></a>
+										<i ng-show="uploadS11" class="material-icons"
+										style="font-size: 26px; color: green">check_circle</i> <i
+										ng-show="uploadE11" class="material-icons"
+										style="font-size: 26px; color: red">error_outline</i></td>
+									<td class="text-center"><a id='dwnldLnk'
+										download='{{candidateDetails.id}}.zip'
+										href="../Documents/{{candidateDetails.id}}.zip"
+										class="btn btn-info btn-xs pull-center" style="color: black;"
+										title='download' ng-click="downloadPDF(candidateDetails.id)">
+											<span class="glyphicon glyphicon-download-alt"></span>
+									</a></td>
+								</tr>
+								<!-- <tr>
+      				<td>
+				        10th Marks Memo
+				  	</td>
+				  	<td>
+				       <button class="file-upload btn btn-warning">
+				        	<input type="file" class="file-input" id="file" name="file" file-model = "_10thMarksMemo" >
+				       </button>
+				        <span style="color:red";>{{mes1}}</span>
+				  	</td>
+				  	<td>    
+				        <a  class="btn btn-info " ng-disabled="document.$invalid" ng-click="upload10ThMM()">Upload</a>
+				            <i  ng-show="uploadS1" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+				            <i  ng-show="uploadE1" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+				  	</td>
+				  	<td  class="text-center">
+					  <a id='dwnldLnk' download='_10thMarksMemo_{{candidateDetails.id}}.pdf' href="../Documents/_10thMarksMemo_{{candidateDetails.id}}.pdf" class="btn btn-info btn-xs pull-center"  style="color:black;" title='download 10th markes memo' ng-click="downloadPDF(candidateDetails.id)"> <span class="glyphicon glyphicon-download-alt"></span></a>
+					</td>
+				</tr> -->
+								<!-- 		<tr>
+				    <td>
+				        12th Marks Memo
+				  	</td>
+				  	<td>
+				        <button class="file-upload btn btn-warning"><input type="file" class="file-input" id="file" name="file" file-model="_12thMarksMemo"></button>
+				                        <span style="color:red";>{{mes2}}</span>
+				  	</td>
+				   	<td>    
+				        <a  class="btn btn-info "ng-disabled="document.$invalid" ng-click="upload12ThMM()">Upload</a>
+				           <i  ng-show="uploadS2" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+				           <i  ng-show="uploadE2" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+				  	</td>
+				 	<td  class="text-center">
+					  <a id='dwnldLnk' download='_12thMarksMemo_{{candidateDetails.id}}.pdf' href="../Documents/_12thMarksMemo_{{candidateDetails.id}}.pdf"class="btn btn-info btn-xs pull-center"  style="color:black;" title='download 12th markes memo' ng-click="downloadPDF(candidateDetails.id)"> <span class="glyphicon glyphicon-download-alt"></span></a>
+					</td>
+				</tr> -->
+
+								<!-- 	<tr>
+				     <td>
+				        Highest Education Marks Memo
+				  	</td>
+				  	<td>
+				        <button class="file-upload btn btn-warning">
+				        	<input type="file" class="file-input" id="file" name="file" file-model="_highestMarkmemo">
+				        </button>
+				            <span style="color:red";>{{mes3}}</span>
+				  	</td>
+				   	<td>    
+				        <a  class="btn btn-info "ng-disabled="document.$invalid" ng-click="uploadHMM()">Upload</a>
+				          <i  ng-show="uploadS3" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+				          <i  ng-show="uploadE3" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+				  	</td> 
+				  	<td  class="text-center">
+					  <a id='dwnldLnk' download="_highestMarkmemo_{{candidateDetails.id}}.pdf" href="../Documents/_highestMarkmemo_{{candidateDetails.id}}.pdf" class="btn btn-info btn-xs pull-center"  style="color:black;" title='download' ng-click="downloadPDF(candidateDetails.id)"> <span class="glyphicon glyphicon-download-alt"></span></a>
+					 </td>
+				</tr>	 -->
+								<!-- 	<tr>
+				    <td>
+				        Latest Salary Slips
+				  	</td>
+				  	<td>
+				        <button class="file-upload btn btn-warning">
+				        	<input type="file" class="file-input" id="file" name="file" file-model="_latestSalaryslips">
+				        </button>
+				           <span style="color:red";>{{mes4}}</span>
+				  	</td>
+				   	<td>    
+				        <a  class="btn btn-info " ng-disabled="document.$invalid" ng-click="uploadLatestSalaryslips()">Upload</a>
+				            <i  ng-show="uploadS4" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+				            <i  ng-show="uploadE4" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+				  	</td>
+				  	<td  class="text-center">
+					  <a id='dwnldLnk' download="_latestSalaryslips_{{candidateDetails.id}}.pdf" href="../Documents/_latestSalaryslips_{{candidateDetails.id}}.pdf" class="btn btn-info btn-xs pull-center"  style="color:black;" title='download' ng-click="downloadPDF(candidateDetails.id)"> <span class="glyphicon glyphicon-download-alt"></span></a>
+					</td>
+				</tr> -->
+
+
+								<!-- 	    <tr>
+				      <td>
+				        Salary Certificates
+				  </td>
+				  <td>
+				        <button class="file-upload"><input type="file" class="file-input" id="file" name="file" file-model="_salaryCertificates">Choose File</button>
+				                        <span style="color:red";>{{mes5}}</span>
+				  </td>
+				   <td>    
+				        <a  class="btn btn-info " ng-disabled="document.$invalid" ng-click="uploadSalaryCertificates()">upload</a>
+				                        <i  ng-show="uploadS5" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+				                        <i  ng-show="uploadE5" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+				  </td> 
+				   </tr> -->
+
+								<!-- 	 <tr>
+				     <td>
+				        Bank Statements
+				  	</td>
+				  	<td>
+				        <button class="file-upload btn btn-warning">
+				        	<input type="file" class="file-input" id="file" name="file" file-model="_bankStatements">
+				        </button>
+				            <span style="color:red";>{{mes5}}</span>
+				  	</td>
+				  	<td>    
+				        <a  class="btn btn-info " ng-disabled="document.$invalid" ng-click="uploadBankStatements()">Upload</a>
+				            <i  ng-show="uploadS5" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+				            <i  ng-show="uploadE5" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+				  	</td> 
+				  	<td  class="text-center">
+					  <a id='dwnldLnk' download='_bankStatements_{{candidateDetails.id}}.pdf' href="../Documents/_bankStatements_{{candidateDetails.id}}.pdf" class="btn btn-info btn-xs pull-center"  style="color:black;" title='download' ng-click="downloadPDF(candidateDetails.id)"> <span class="glyphicon glyphicon-download-alt"></span></a>
+					</td>
+				</tr>	 -->
+								<!-- 	<tr>
+				   	<td>
+				     	Offer Letter
+				  	</td>
+				  <td>
+				        <button class="file-upload btn btn-warning">
+				        	<input type="file" class="file-input" id="file" name="file" file-model="_offeredLetter">
+				        </button>
+				           <span style="color:red";>{{mes6}}</span>
+				  </td>
+				  	<td>    
+				        <a  class="btn btn-info " ng-disabled="document.$invalid" ng-click="uploadOfferedLetter()">Upload</a>
+				          <i  ng-show="uploadS6" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+				          <i  ng-show="uploadE6" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+				 	</td>
+				  	<td  class="text-center">
+					  <a id='dwnldLnk' download='_offeredLetter_{{candidateDetails.id}}.pdf' href="../Documents/_offeredLetter_{{candidateDetails.id}}.pdf" class="btn btn-info btn-xs pull-center"  style="color:black;" title='download' ng-click="downloadPDF(candidateDetails.id)"> <span class="glyphicon glyphicon-download-alt"></span></a>
+					</td>
+				 </tr> -->
+								<!--  <tr>
+				     <td>
+				        Relieving Letter
+				  	</td>
+				  	<td>
+				        <button class="file-upload btn btn-warning">
+				        	<input type="file" class="file-input" id="file" name="file" file-model="_RelievingLetter">
+				        </button>
+				            <span style="color:red";>{{mes7}}</span>
+				  	</td>
+				  	<td>    
+				        <a  class="btn btn-info " ng-disabled="document.$invalid" ng-click="uploadRelieving()">Upload</a>
+				            <i  ng-show="uploadS7" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+				            <i  ng-show="uploadE7" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+				  	</td>
+				  	<td  class="text-center">
+					  <a id='dwnldLnk' download='_RelievingLetter_{{candidateDetails.id}}.pdf' href="../Documents/_RelievingLetter_{{candidateDetails.id}}" class="btn btn-info btn-xs pull-center"  style="color:black;" title='download' ng-click="downloadPDF(candidateDetails.id)"> <span class="glyphicon glyphicon-download-alt"></span></a>
+					</td>
+				 </tr> 	 -->
+								<!-- 	 <tr>
+				    <td>
+						Passport Copy
+				  	</td>
+				  	<td>
+				        <button class="file-upload btn btn-warning">
+				        	<input type="file" class="file-input" id="file" name="file" file-model="_passportCopy">
+				        </button>
+				           <span style="color:red";>{{mes8}}</span>
+				  	</td>
+				  	<td>    
+				        <a class="btn btn-info " ng-disabled="document.$invalid" ng-click="uploadPassportCopy()">upload</a>
+				           <i  ng-show="uploadS8" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+				           <i  ng-show="uploadE8" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+				  	</td> 
+				  	<td  class="text-center">
+					  <a id='dwnldLnk' download='_passportCopy_{{candidateDetails.id}}.pdf' href="../Documents/_passportCopy_{{candidateDetails.id}}" class="btn btn-info btn-xs pull-center"  style="color:black;" title='download' ng-click="downloadPDF(candidateDetails.id)"> <span class="glyphicon glyphicon-download-alt"></span></a>
+					</td>
+				</tr> -->
+
+								<!--     <tr>
+				      <td>
+				        Birth Certificate
+				  </td>
+				  <td>
+				        <button class="file-upload"><input type="file" class="file-input" id="file" name="file" file-model="_birthCertificate">Choose File</button>
+				                        <span style="color:red";>{{mes8}}</span>
+				  </td>
+				  <td>    
+				        <a  class="btn btn-info " ng-disabled="document.$invalid" ng-click="uploadBirthC()">upload</a>
+				                        <i  ng-show="uploadS8" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+				                        <i  ng-show="uploadE8" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+				  </td> 
+				   </tr> -->
+
+								<!-- 	 <tr>
+				     <td>
+				       Form-16 Certificate
+				  	</td>
+				  	<td>
+				        <button class="file-upload btn btn-warning">
+				        	<input type="file" class="file-input" id="file" name="file" file-model="_form16Certificate">
+				        </button>
+				            <span style="color:red";>{{mes9}}</span>
+				  	</td>
+				  	<td>    
+				        <a  class="btn btn-info " ng-disabled="document.$invalid" ng-click="uploadForm16()">upload</a>
+				           <i  ng-show="uploadS9" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+				           <i  ng-show="uploadE9" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+				  	</td> 
+				 	<td  class="text-center">
+					  <a id='dwnldLnk' download='_form16Certificate_{{candidateDetails.id}}.pdf' href="../Documents/_form16Certificate_{{candidateDetails.id}}" class="btn btn-info btn-xs pull-center"  style="color:black;" title='download' ng-click="downloadPDF(candidateDetails.id)"> <span class="glyphicon glyphicon-download-alt"></span></a>
+					</td>
+				 </tr>	 -->
+							</tbody>
+						</table>
+						<!-- <div form-group col-md-8>
+				<a class="btn btn-info pull-right"
+				ng-disabled="document.$invalid" ng-click="save()">Save</a>
+				<span style="color:red";>{{mes10}}</span>
+				</div> -->
+					</form>
+				</div>
+				<!-- offere release -->
+
+			</form>
+			<!-- Form Upload End  -->
+           
+			<div
+				ng-show="(canStatus=='Process for Interview')||(canStatus=='Interview Schedule Rejected By Candidate')||(canStatus=='Shared L1 Round Interview Details with Recruiter') ||(canStatus=='Shared L2 Round Interview Details with Recruiter') ||(canStatus=='Shared L3 Round Interview Details with Recruiter')||(canStatus=='Shared Clientround Round Interview Details with Recruiter')|| (canStatus=='Shared HRRound Round Interview Details with Recruiter')">
+				<form name="form" novalidate>
+					<div class="form-group col-md-2">
+						<label for="company_name">Requirement Name:</label> <input
+							type="text" ng-model="reqName" placeholder="Requirement Name"
+							class="form-control" readonly>
+					</div>
+					<div class="form-group col-md-4"
+						ng-hide="(canStatus=='Shared HRRound Round Interview Details with Recruiter')||(canStatus=='Shared Clientround Round Interview Details with Recruiter') || (canStatus=='Process for Interview') || (canStatus=='Shared L1 Round Interview Details with Recruiter') || (canStatus=='Shared L2 Round Interview Details with Recruiter') ||(canStatus=='Shared L3 Round Interview Details with Recruiter')">
+						<label for="company_name">Client Name:</label> <input type="text"
+							ng-model="clientName" placeholder="Client Name"
+							class="form-control" readonly>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="company_name">SPOC Name:</label> <input type="text"
+							ng-model="spocName" placeholder="SPOC Name" class="form-control">
+					</div>
+					<!-- <div class="form-group col-md-4" ng-show="(userRole == 'recruiter' || (userRole == 'Lead' && loginId == mappedUserId))">
+						<label for="company_name">SPOC Name:</label> <input type="text"
+							ng-model="spocName" placeholder="SPOC Name" class="form-control">
+					</div> -->
+					<div class="clearfix"></div>
+					<div class="form-group col-md-4"
+						ng-show="(userRole == 'BDM' || userRole == 'AM' || (userRole == 'Lead' && loginId != mappedUserId))">
+						<label for="date">Interview Date<sup>*</sup>:</label>
+						<p class="input-group" ng-show='value'>
+							<input type="text" name="reqEndDate" placeholder="dd/MM/yyyy"
+								class="form-control" uib-datepicker-popup="{{format}}"
+								is-open="popup1.opened" datepicker-options="dateOptions"
+								alt-input-formats="altInputFormats" ng-model="interviewDate"
+								ng-change="checkErr(requirementEndDate)" readonly required /> <span
+								class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="open1()">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button>
+							</span>
+						<div ng-messages="clientForm.reqEndDate.$error"
+							ng-if="clientForm.reqEndDate.$touched">
+							<div ng-message="required">*Required End date</div>
+							<span style="color: #ff4c4c;">{{errMessage}}</span>
+						</div>
+						</p>
+						<input type="text" ng-model="interviewDate|date"
+							placeholder="Interveiw Date" class="form-control"
+							ng-show='!value' ng-click="value = !value">
+					</div>
+					<div class="form-group col-md-4" ng-show="(userRole == 'recruiter' || (userRole == 'Lead' && loginId == mappedUserId))">
+						<label for="date">Interview Date:</label>  
+						<p class="input-group" ng-show='value'>
+							<input type="text" name="reqEndDate" placeholder="dd/MM/yyyy"
+								class="form-control" uib-datepicker-popup="{{format}}"
+								is-open="popup1.opened" datepicker-options="dateOptions"
+								alt-input-formats="altInputFormats" ng-model="interviewDate"
+								ng-change="checkErr(requirementEndDate)" required /> <span
+								class="input-group-btn">
+								<button type="button" class="btn btn-default" ng-click="open1()">
+									<i class="glyphicon glyphicon-calendar"></i>
+								</button>
+							</span>
+						<div ng-messages="clientForm.reqEndDate.$error"
+							ng-if="clientForm.reqEndDate.$touched">
+							<div ng-message="required">*Required End date</div>
+							<span style="color: #ff4c4c;">{{errMessage}}</span>
+						</div>
+						</p>
+						<input type="text" ng-model="interviewDate|date"
+							placeholder="Interveiw Date" class="form-control"
+							ng-show='!value' ng-click="value = !value" disabled>
+					</div>
+					<div class="form-group col-md-4"
+						ng-show="(userRole == 'BDM' || userRole == 'AM' || (userRole == 'Lead' && loginId != mappedUserId))">
+						<label for="company_name">Interview Time<sup>*</sup>:</label> <input
+							type="time" ng-show='value1' ng-model="interviewTime"
+							placeholder="Interview Time" class="form-control"> <input
+							type="text" ng-model="interviewTime|date:'shortTime'"
+							placeholder="Interveiw Time" class="form-control"
+							ng-show='!value1' ng-click="value1 = !value1">
+					</div>
+					<div class="form-group col-md-4" ng-show="(userRole == 'recruiter' || (userRole == 'Lead' && loginId == mappedUserId))">
+						<label for="company_name">Interview Time:</label> <input
+							type="time" ng-show='value1' ng-model="interviewTime"
+							placeholder="Interview Time" class="form-control"> <input
+							type="text" ng-model="interviewTime|date:'shortTime'"
+							placeholder="Interveiw Time" class="form-control"
+							ng-show='!value1' ng-click="value1 = !value1" disabled>
+					</div>
+					<div class="form-group col-md-4"
+						ng-show="(userRole == 'BDM' || userRole == 'AM' || (userRole == 'Lead' && loginId != mappedUserId))">
+						<label for="company_email">Interview Type<sup>*</sup>:</label> <select
+							ng-model="typeofinterview" class="form-control"
+							ng-options="x.id as x.modeofInterview for x in interviewDetails">
+						</select>
+					</div>
+					<div class="form-group col-md-4" ng-show="(userRole=='recruiter' ||(userRole == 'Lead' && loginId == mappedUserId))">
+						<label for="company_email">Interview Types</label> <input
+							type="text" ng-model="modeofInterview" class="form-control"
+							disabled>
+					</div>
+					<div class="clearfix"></div>
+					<div class="form-group col-md-4"
+						ng-show="(userRole == 'BDM' || userRole == 'AM' || (userRole == 'Lead' && loginId != mappedUserId))">
+						<label for="candidate_name">Name of Round<sup>*</sup>:</label> <select
+							class="form-control" ng-model="round" required>
+							<option value="" selected disabled>Select</option>
+							<option value="L1">L1 Round</option>
+							<option value="L2">L2 Round</option>
+							<option value="L3">L3 Round</option>
+							<option value="Clientround">Client Round</option>
+							<option value="HRRound">HR Round</option>
+						</select>
+					</div>
+					<div class="form-group col-md-4" ng-show="(userRole == 'recruiter' || (userRole == 'Lead' && loginId == mappedUserId))">
+						<label for="candidate_name">Name of Round</label> <input
+							class="form-control" ng-model="round" type="text" disabled>
+					</div>
+					<div class="form-group col-md-4"
+						ng-show="(userRole == 'BDM' || userRole == 'AM' || (userRole == 'Lead' && loginId != mappedUserId))">
+						<label for="company_name">Interview Location<sup>*</sup>:</label> <input
+							type="text" ng-model="interviewlocation"
+							placeholder="Interview Location" class="form-control">
+					</div>
+					<div class="form-group col-md-4" ng-show="(userRole=='recruiter' ||(userRole == 'Lead' && loginId == mappedUserId))">
+						<label for="company_name">Interview Location:</label> <input
+							type="text" ng-model="interviewlocation"
+							placeholder="Interview Location" class="form-control" disabled>
+					</div>
+					<div class="form-group col-md-4"
+						ng-show="(userRole == 'BDM' || userRole == 'AM' || (userRole == 'Lead' && loginId != mappedUserId))">
+						<label for="company_name">Venue Details<sup>*</sup>:</label>
+						<textarea ng-model="interviewAddress" placeholder="Address"
+							class="form-control"></textarea>
+					</div>
+					<div class="form-group col-md-4" ng-show="(userRole=='recruiter' || (userRole == 'Lead' && loginId == mappedUserId))">
+						<label for="company_name">Venue Details:</label>
+						<textarea ng-model="interviewAddress" placeholder="Address"
+							class="form-control" disabled></textarea>
+					</div>
+					<div class="clearfix"></div>
+					<div class="form-group col-md-12">
+						<button ng-show="(userRole == 'BDM' || userRole == 'AM' || (userRole == 'Lead' && loginId != mappedUserId))"
+							type="button" class="btn btn-success pull-right"
+							ng-click="submitInterviewProcess()">Submit{{userId}}</button>
+
+						<button ng-show="(userRole == 'BDM' || userRole == 'AM' || (userRole == 'Lead' && loginId != mappedUserId))"
+							type="button" class="btn btn-info pull-right"
+							style="margin-right: 10px;">
+							<a href="#!/CandidateList1">Cancel</a>
+						</button>
+					</div>
+					<div class="clearfix"></div>
+					<div class="form-group col-md-8" ng-show="(userRole=='recruiter' || (userRole == 'Lead' && loginId == mappedUserId))">
+						<button type="button" class="btn btn-success "
+							ng-click="updateInterviewstatus()">Accept</button>
+						<button type="button" class="btn btn-danger " data-toggle="modal"
+							data-target="#myModal">Reject</button>
+						<button type="button" class="btn btn-info ">
+							<a href="#!/CandidateList1">Cancel</a>
+						</button>
+					</div>
+				</form>
+			</div>
+			<!-- Interview Feedback form from reqc -->
+			<div id="form_proc" style="display: none;">
+				<form name="interviewFeedback" novalidate>
+					<div class="row">
+						<div class="form-group col-md-4">
+							<label for="company_name">Client Name</label> <input type="text"
+								ng-model="companyname" placeholder="Client Name"
+								class="form-control" ng-readonly="companyname">
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_name">Requirement Type</label>
+							<inputtype ="text" ng-model="internal1"
+								placeholder="Company name" class="form-control"
+								ng-readonly="internal1">
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-md-4">
+							<label for="company_name">Name of Round</label> <input
+								type="text" ng-model="round1" placeholder="Company name"
+								class="form-control" ng-readonly="round1">
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_name">Interview Status</label> <input
+								type="text" ng-model="interviewstatus1"
+								placeholder="Company name" class="form-control">
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-md-4">
+							<label for="company_name">Client Feedback</label> <input
+								type="text" ng-model="clientfeedback1"
+								placeholder="Company name" class="form-control"
+								ng-readonly="clientfeedback1">
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_name">Internal Feedback</label> <input
+								type="text" ng-model="internalfeedback1"
+								placeholder="Company name" class="form-control"
+								ng-readonly="internalfeedback1">
+						</div>
+					</div>
+					<div class="row" ng-if="interviewstatus1 == 'shortlisted'">
+						<div class="form-group col-md-4">
+							<label for="company_name">Recommended Round</label> <input
+								type="text" ng-model="recomendRound1" placeholder="Company name"
+								class="form-control" ng-readonly="recomendRound1">
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_name">Recommended Process</label> <select
+								id="typeprocess" ng-model="recomendProcesstype1"
+								ng-options="z as z.status for z in processDetails"
+								ng-change="interviewchange()" class="form-control"
+								ng-readonly="recomendProcesstype1">
+							</select>
+						</div>
+					</div>
+					
+					<a class="btn btn-info pull-right" ng-click="saveFeedback()">Send
+						Feedback</a>
+				</form>
+			</div>
+			<!-- Interview Feedback form  form AM-->
+			<div id="form_feedback" style="display: none;">
+				<form name="interviewFeedbackForm" novalidate>
+
+					<div class="col-md-12">
+						<div class="form-group col-md-4">
+							<label for="company_name">Client Name</label> <input type="text"
+								ng-model="clientName" placeholder="Client Name"
+								class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="relavent_experience">Requirement Type</label></br> <input
+								type="radio" id="internalfeedback" name="feedback"
+								ng-model="internal" value="Internal Feedback" ng-checked="true">Internal
+							feedback</input>&nbsp&nbsp <input type="radio" id="externalfeedback"
+								name="feedback" ng-model="internal" value="External Feedback">External
+							feedback</input>
+						</div>
+						<div class="form-group col-md-2">
+							<label for="company_name">Type of Hiring </label> <input
+								type="text" ng-model="typeOfHiring" class="form-control"
+								ng-readonly="typeOfHiring">
+						</div>
+					</div>
+					<div class="">
+						<div class="form-group col-md-4">
+							<label for="candidate_name">Name of Round</label> <select
+								class="form-control" ng-model="round" required>
+								<option value="" selected disabled>Select</option>
+								<option value="L1">L1 Round</option>
+								<option value="L2">L2 Round</option>
+								<option value="L3">L3 Round</option>
+								<option value="Clientround">Client Round</option>
+								<option value="HRRound">HR Round</option>
+							</select>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="candidate_name">Interview Status</label> <select
+								class="form-control" ng-model="interviewstatus"
+								ng-change="interviewstatusClick(interviewstatus)" required>
+								<option ng-option value="" selected disabled>Select</option>
+								<option ng-option value="shortlisted">Shortlisted</option>
+								<option ng-option value="selected">Selected</option>
+								<option ng-option value="hold">Hold</option>
+								<option ng-option value="rejected">Rejected</option>
+							</select>
+						</div>
+
+					</div>
+					<div class="">
+						<div class="form-group col-md-4">
+							<label for="location">Client Feedback</label>
+							<textarea rows="3" cols="30" name="client"
+								ng-model="clientfeedback" class="form-control"></textarea>
+							<div ng-messages="interviewFeedbackForm.client.$error"
+								ng-if="interviewFeedbackForm.client.$touched">
+								<!-- <div ng-message="required">This field is required</div> -->
+							</div>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="location">Internal Feedback</label>
+							<textarea rows="3" cols="30" name="internalhg"
+								ng-model="internalfeedback" class="form-control"></textarea>
+							<div ng-messages="interviewFeedbackForm.internalhg.$error"
+								ng-if="interviewFeedbackForm.internalhg.$touched">
+								<!-- <div ng-message="required">This field is required</div> -->
+							</div>
+						</div>
+					</div>
+					<div class=""
+						ng-if="interviewstatus == 'shortlisted' || interviewstatus == 'selected'">
+						<div class="form-group col-md-4">
+							<label for="location">Recommend Round</label> <select
+								class="form-control" name="nextRound" ng-model="fbk.recRound"
+								ng-change="hiringChange(fbk.recRound)" required>
+								<option value="" selected disabled>Select</option>
+								<option ng-option value="L1">L1 Round</option>
+								<option ng-option value="L2">L2 Round</option>
+								<option ng-option value="L3">L3 Round</option>
+								<option ng-option value="Clientround">Client Round</option>
+								<option ng-option value="HRRound">HR Round</option>
+								<option ng-option value="Hire">Hire</option>
+								<!-- <option ng-option value="Documents">Documents</option> -->
+							</select>
+							<div ng-messages="interviewFeedbackForm.client1.$error"
+								ng-if="interviewFeedbackForm.client1.$touched">
+								<div ng-message="required">This field is required</div>
+							</div>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="location">Recommend Process</label> <select
+								class="form-control" name="recommandProcess"
+								ng-model="cgk.status" ng-options="z as z.status for z in status"
+								required>
+								<option ng-option value="" selected disabled>Select</option>
+							</select>
+							<div ng-messages="interviewFeedbackForm.process1.$error"
+								ng-if="interviewFeedbackForm.process1.$touched">
+								<div ng-message="required">This field is required</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<button class="btn btn-info pull-right"
+									ng-disabled="interviewFeedbackForm.$invalid"
+									ng-click="saveInterviewFeedback()">Save</button>
+							</div>
+						</div>
+					</div>
+					<!-- 
+					<div class="row"
+						ng-if="interviewstatus1 == 'rejected' || interviewstatus1 == 'hold'">
+						<div class="form-group">
+							<button class="btn btn-info pull-right"
+								ng-disabled="interviewFeedbackForm.$invalid"
+								ng-click="saveInterviewFeedback()">Save</button>
+						</div>
+					</div> -->
+					<div class=""
+						ng-if="interviewstatus == 'hold' || interviewstatus == 'rejected'">							
+						<div class="col-md-12">
+							<div class="form-group">
+								<button class="btn btn-info pull-right"
+									ng-disabled="interviewFeedbackForm.$invalid"
+									ng-click="saveInterviewFeedbackforRejeted()">Save</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<!-- Submitted to AM -->
+			<div id="form_sub" style="display: none;">
+				<form name="submittedtoaMForm" novalidate>
+					<div class="">
+						<div class="form-group col-md-4">
+							<label for="company_name">Client Name</label> <input type="text"
+								ng-model="companyname" placeholder="Company name"
+								class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="candidate_email">Candidate Email</label> <input
+								type="text" ng-model="candidateemail"
+								placeholder="Company Email" class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_phone">Candidate phoneno</label> <input
+								type="text" ng-model="phone" placeholder="Company name"
+								class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_total">Candidate totalExp</label> <input
+								type="text" ng-model="total" placeholder="Company name"
+								class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_relevent">Candidate releventExp</label> <input
+								type="text" ng-model="relevent" placeholder="Company name"
+								class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_gf">Candidate Current Company</label> <input
+								type="text" ng-model="comapany" placeholder="Company name"
+								class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_ctc">Candidate Current CTC</label> <input
+								type="text" ng-model="ctc" placeholder="Company name"
+								class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_reqirement">Requirement Description</label> <input
+								type="text" ng-model="requirement" placeholder="Company name"
+								class="form-control" readonly>
+						</div>
+					</div>
+					<button class="btn btn-info pull-right" ng-click="saveSbmitted()">Submit</button>
+				</form>
+			</div>
+			<!-- Offered generation -->
+			<div id="form_offered" style="display: none;">
+				<form name="offeredletter" novalidate>
+					<div class="row">
+						<div class="form-group col-md-4">
+							<label for="company_name">Client Name</label> <input type="text"
+								ng-model="companyname" class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="candidate_email">Candidate CTC</label> <input
+								type="text" name="yy" ng-model="Candidatectc"
+								class="form-control" numbers-only required />
+							<div ng-messages="offeredletter.yy.$error"
+								ng-if="offeredletter.yy.$touched">
+								<div ng-message="required">Enter your current CTC</div>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="display: none">
+						<div class="form-group col-md-4">
+							<label for="company_name">Candidate Id</label> <input type="text"
+								ng-model="canid" class="form-control" readonly>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="candidate_email">BdmId</label> <input type="text"
+								ng-model="bid" class="form-control" required />
+						</div>
+						<div class="form-group col-md-4">
+							<label for="candidate_email">AmID</label> <input type="text"
+								ng-model="amid" class="form-control" required />
+						</div>
+						<div class="form-group col-md-4">
+							<label for="candidate_email">RqcId</label> <input type="text"
+								ng-model="rcid" class="form-control" required />
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-md-4">
+							<label for="resume">Offered Name*</label> <input
+								class="form-control" id="name" type="text" name="offeredname"
+								ng-model="inputParams.name" required />
+							<div ng-messages="offeredletter.offeredname.$error"
+								ng-if="offeredletter.offeredname.$touched">
+								<div ng-message="required">Name is mandatory</div>
+							</div>
+						</div>
+						<div class="form-group col-md-4">
+							<label for="resume">Upload offered Letter*</label>
+							<button class="file-upload">
+								<input type="file" class="file-input" id="file" name="file"
+									fileRead="inputParams.file">Choose File
+							</button>
+							<div ng-messages="offeredletter.file.$error"
+								ng-if="offeredletter.file.$touched">
+								<div ng-message="required">Offered letter mandatory</div>
+							</div>
+						</div>
+					</div>
+					<button class="btn btn-info pull-right" ng-click="saveoffered()"
+						ng-disabled="offeredletter.$invalid">Generated</button>
+				</form>
+			</div>
+
+			<!-- APPROVED -->
+
+			<div id="form_approved" style="display: none;">
+				<form name="approved" novalidate>
+
+
+					<div class="row">
+						<div class="form-group col-md-4">
+							<label for="company_name">Client Name</label> <input type="text"
+								ng-model="companyname" placeholder="Company name"
+								class="form-control" readonly>
+
+						</div>
+						<div class="form-group col-md-4">
+							<label for="candidate_email">Candidate Email</label> <input
+								type="text" ng-model="candidateemail" placeholder="Company name"
+								class="form-control" readonly>
+
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_phone">Candidate Phone Number</label> <input
+								type="text" ng-model="phone" placeholder="Company name"
+								class="form-control" readonly>
+
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_total">Candidate Total Experience</label> <input
+								type="text" ng-model="total" placeholder="Company name"
+								class="form-control" readonly>
+
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_relevent">Candidate Relevant
+								Experience</label> <input type="text" ng-model="relevent"
+								placeholder="Company name" class="form-control" readonly>
+
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_gf">Candidate Current Company</label> <input
+								type="text" ng-model="comapany" placeholder="Company name"
+								class="form-control" readonly>
+
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_ctc">Candidate Current CTC</label> <input
+								type="text" ng-model="ctc" placeholder="Company name"
+								class="form-control" readonly>
+
+						</div>
+						<div class="form-group col-md-4">
+							<label for="company_reqirement">Requirement Description</label> <input
+								type="text" ng-model="requirement" placeholder="Company name"
+								class="form-control" readonly>
+
+						</div>
+
+					</div>
+
+
+					<button class="btn btn-info pull-right" ng-click="saveApproved()">Approved</button>
+				</form>
+			</div>
+
+			<!-- rejected -->
+			<div id="form-amreject" style="display: none;">
+				<form name="amreject" novalidate>
+					<div class="form-group col-md-4">
+						<label for="candidate_Reason">Reason</label>
+						<textarea rows="3" cols="30" name="rejectedReason"
+							ng-model="rejected" class="form-control"></textarea>
+
+					</div>
+
+					<button class="btn btn-info pull-right" ng-click="saveAmReject()">Save</button>
+				</form>
+			</div>
+
+
+			<!-- submitted to customer -->
+
+
+			<!--  customer shortlist -->
+			<!-- <div id="form-custshort" style="display: none;">
+<button  class="btn btn-info pull-right"
+ng-click="savecustShort()" ng-disabled="custshort.$invalid">Save</button>
+</div> -->
+			<!-- <a href="#!/CandidateList1" class="btn btn-danger pull-left">Cancel</a> -->
+			<!-- customer rejected-->
+			<!-- <div id="form-custreject" style="display: none;">
+<form name="custreject" novalidate>
+<button class="btn btn-info pull-right"
+ng-click="savecustreject()">Save</button>
+</form>
+</div> -->
+
+			<!-- offere release -->
+			<!-- <div id="form_Release" style="display: none;">
+<form name="Release" novalidate>
+<div class="row">
+
+<div class="form-group col-md-12" >
+ 
+<div class="col-md-5">
+<label for="user_fname">Offer Letter Preview</label>
+</div>
+<div class="col-md-3">
+<button class="btn btn-info" ng-click="navigationToOffeLetter()">Preview</button>
+</div> -->
+			<!-- <label for="user_fname">Date Of Joining</label> -->
+			<!-- <p class="input-group">
+<input type="text" name="dates" placeholder="dd/MM/yy" class="form-control"  uib-datepicker-popup="{{format}}"
+is-open="popup1.opened" datepicker-options="dateOptions" alt-input-formats="altInputFormats" ng-model="releaseDate" required/>
+<span class="input-group-btn">
+<button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+</span> 
+</p> -->
+	</div>
+	<!--  <div class="form-group col-md-4" >
+<label for="user_fname">Offer Letter Upload</label>
+<button class="file-upload"><input type="file" class="file-input" id="file" name="file" fileread="filerelase.offerrelasing">Choose File</button>
+</div> -->
+</div>
+<!-- <button class="btn btn-info pull-right"
+ng-click="saveRelease()">View</button> -->
+</form>
+</div>
+<!-- am review pending -->
+<div id="form-AmPending" style="display: none;">
+	<form name="AmQuery" novalidate>
+		<div class="form-group col-md-4">
+			<label for="candidate_Query">Query</label>
+			<textarea rows="3" cols="30" name="Query" ng-model="query"
+				class="form-control" required></textarea>
+			<div ng-messages="AmQuery.Query.$error"
+				ng-if="AmQuery.Query.$touched">
+				<div ng-message="required">this field is reqired</div>
+			</div>
+		</div>
+		<div form-group col-md-8>
+			<a href="#!/CandidateList1" class="btn btn-info pull-right"
+				ng-disabled="AmQuery.$invalid" ng-click="saveAmPending()">Save</a>
+		</div>
+	</form>
+</div>
+<!-- offere accepted -->
+
+<div id="form_offereAcept" style="display: none;">
+	<form name="Accept" novalidate>
+		<div class="row">
+			<div class="form-group col-md-4">
+				<label for="candidate_accept">Offer Status</label> <select
+					class="form-control" ng-model="offer" required>
+					<option value="" selected disabled>--Select--</option>
+					<option value="accepted">Accepted</option>
+					<option value="rejected">Rejected</option>
+				</select>
+			</div>
+			<div class="form-group col-md-4" ng-show="offer=='rejected'">
+				<label for="t">Offer Rejected Reason</label> <input type="text"
+					ng-model="reasion" placeholder="Enter Reason for Rejection"
+					name="r" class="form-control" />
+			</div>
+			<!-- <div class="form-group col-md-4"  ng-show="offer=='accepted'">
+          <label for="candidate_Accept">Date Of Joining</label>
+          <input type="text"  ng-model="doj1"   class="form-control"  ng-required="doj1">
+        </div>  -->
+			<div class="form-group col-md-4" ng-show="offer=='accepted'">
+				<label for="user_fname">DOJ</label>
+				<p class="input-group">
+					<input type="text" name="doj1" placeholder="dd/MM/yy"
+						class="form-control" uib-datepicker-popup="{{format}}"
+						is-open="popup1.opened" datepicker-options="dateOptions"
+						alt-input-formats="altInputFormats" ng-model="doj1" readonly /> <span
+						class="input-group-btn">
+						<button type="button" class="btn btn-default" ng-click="open1()">
+							<i class="glyphicon glyphicon-calendar"></i>
+						</button>
+					</span>
+				</p>
+			</div>
+		</div>
+		<a href="#!/CandidateList1" class="btn btn-info pull-right"
+			ng-disabled="Accept.$invalid" ng-click="saveAccept()">Save</a>
+	</form>
+</div>
+
+
+<!-- <div id="form_upload" style="display: none;">
+<form name="document" novalidate>
+<table class="table table-striped table-bordered" id="upload">
+   <tbody>
+       <tr>
+      <td>
+        10th Marks Memo
+  </td>
+  <td>
+        <button class="file-upload"><input type="file" class="file-input" id="file" name="file" file-model = "_10thMarksMemo" >Choose File</button>
+                        <span style="color:red";>{{mes1}}</span>
+  </td>
+  <td>    
+        <a  class="btn btn-info " ng-disabled="document.$invalid" ng-click="upload10ThMM()">upload</a>
+                        <i  ng-show="uploadS1" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+                        <i  ng-show="uploadE1" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+  </td>
+   </tr>
+   <tr>
+      <td>
+        12th Marks Memo
+  </td>
+  <td>
+        <button class="file-upload"><input type="file" class="file-input" id="file" name="file" file-model="_12thMarksMemo">Choose File</button>
+                        <span style="color:red";>{{mes2}}</span>
+  </td>
+   <td>    
+        <a  class="btn btn-info "ng-disabled="document.$invalid" ng-click="upload12ThMM()">upload</a>
+                        <i  ng-show="uploadS2" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+                        <i  ng-show="uploadE2" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+  </td>
+   </tr>
+   <tr>
+      <td>
+        Highest Education Marks Memo
+  </td>
+  <td>
+        <button class="file-upload"><input type="file" class="file-input" id="file" name="file" file-model="_highestMarkmemo">Choose File</button>
+                        <span style="color:red";>{{mes3}}</span>
+  </td>
+   <td>    
+        <a  class="btn btn-info "ng-disabled="document.$invalid" ng-click="uploadHMM()">upload</a>
+                        <i  ng-show="uploadS3" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+                        <i  ng-show="uploadE3" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+  </td> 
+   </tr>
+   
+   <tr>
+      <td>
+        Latest Salary Slips
+  </td>
+  <td>
+        <button class="file-upload"><input type="file" class="file-input" id="file" name="file" file-model="_latestSalaryslips">Choose File</button>
+                        <span style="color:red";>{{mes4}}</span>
+  </td>
+   <td>    
+        <a  class="btn btn-info " ng-disabled="document.$invalid" ng-click="uploadLatestSalaryslips()">upload</a>
+                        <i  ng-show="uploadS4" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+                        <i  ng-show="uploadE4" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+  </td>
+   </tr>
+   
+    <tr>
+      <td>
+        Salary Certificates
+  </td>
+  <td>
+        <button class="file-upload"><input type="file" class="file-input" id="file" name="file" file-model="_salaryCertificates">Choose File</button>
+                        <span style="color:red";>{{mes5}}</span>
+  </td>
+   <td>    
+        <a  class="btn btn-info " ng-disabled="document.$invalid" ng-click="uploadSalaryCertificates()">upload</a>
+                        <i  ng-show="uploadS5" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+                        <i  ng-show="uploadE5" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+  </td> 
+   </tr>
+   
+    <tr>
+      <td>
+        Bank Statements
+  </td>
+  <td>
+        <button class="file-upload"><input type="file" class="file-input" id="file" name="file" file-model="_bankStatements">Choose File</button>
+                        <span style="color:red";>{{mes6}}</span>
+  </td>
+  <td>    
+        <a  class="btn btn-info " ng-disabled="document.$invalid" ng-click="uploadBankStatements()">upload</a>
+                        <i  ng-show="uploadS6" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+                        <i  ng-show="uploadE6" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+  </td> 
+   </tr>
+   
+   
+    <tr>
+      <td>
+        Offer and Relieving Letters
+  </td>
+  <td>
+        <button class="file-upload"><input type="file" class="file-input" id="file" name="file" file-model="_offeredandReliving">Choose File</button>
+                        <span style="color:red";>{{mes7}}</span>
+  </td>
+  <td>    
+        <a  class="btn btn-info " ng-disabled="document.$invalid" ng-click="uploadOfferedR()">upload</a>
+                        <i  ng-show="uploadS7" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+                        <i  ng-show="uploadE7" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+  </td> 
+   </tr>
+   
+   
+    <tr>
+      <td>
+        Birth Certificate
+  </td>
+  <td>
+        <button class="file-upload"><input type="file" class="file-input" id="file" name="file" file-model="_birthCertificate">Choose File</button>
+                        <span style="color:red";>{{mes8}}</span>
+  </td>
+  <td>    
+        <a  class="btn btn-info " ng-disabled="document.$invalid" ng-click="uploadBirthC()">upload</a>
+                        <i  ng-show="uploadS8" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+                        <i  ng-show="uploadE8" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+  </td> 
+   </tr>
+   
+    <tr>
+      <td>
+       Form16 Certificate
+  </td>
+  <td>
+        <button class="file-upload"><input type="file" class="file-input" id="file" name="file" file-model="_form16Certificate">Choose File</button>
+                        <span style="color:red";>{{mes9}}</span>
+  </td>
+  <td>    
+        <a  class="btn btn-info " ng-disabled="document.$invalid" ng-click="uploadForm6()">upload</a>
+                        <i  ng-show="uploadS9" class="material-icons" style="font-size:26px;color:green">check_circle</i>
+                        <i  ng-show="uploadE9" class="material-icons" style="font-size:26px;color:red">error_outline</i>
+  </td> 
+   </tr>
+   
+   </tbody>
+</table>
+<div form-group col-md-8>
+<a class="btn btn-info pull-right"
+ng-disabled="document.$invalid" ng-click="save()">Save</a>
+<span style="color:red";>{{mes10}}</span>
+</div>
+</form>
+</div>  -->
+
+</fieldset>
+<!-===========================================================================================-->
+<!-- 
+<div class="col-md-offset-3"
+	ng-show="(canStatus=='Interview Schedule Rejected By Candidate')">
+	<div class="form-group  col-md-6">
+		<label style="font-size: 15px;">Reason</label>
+		<textarea class="form-control" placeholder="Enter Reason"
+			ng-model="reason" value="{{reson}}"></textarea>
+	</div>
+	<div class="clearfix"></div>
+
+
+
+
+
+	<div class="form-group col-md-2">
+		<input type="radio" name="slot" value=""> <label
+			style="margin-top: 30px; font-size: 15px; padding: 1px; border-radius: 4px;">Slot
+			1:</label>
+	</div>
+	<div class="form-group col-md-2">
+		<label for="exampleInputPassword1">Date</label> <input
+			class="form-control" value="{{slot1_date|date}}">
+	</div>
+	<div class="form-group  col-md-2">
+		<label for="exampleInputPassword1">Time</label> <input
+			class="form-control" value="{{slot1_time|date:'h:mm a'}}">
+	</div>
+	<div class="clearfix"></div>
+
+
+
+
+
+
+	<div class="form-group col-md-2">
+		<input type="radio" name="slot" value=""> <label
+			style="margin-top: 30px; font-size: 15px; padding: 1px; border-radius: 4px;">Slot
+			2:</label>
+	</div>
+	<div class="form-group col-md-2">
+		<label for="exampleInputPassword1">Date</label> <input
+			class="form-control" value="{{slot2_date|date}}">
+	</div>
+	<div class="form-group  col-md-2">
+		<label for="exampleInputPassword1">Time</label> <input
+			class="form-control" value="{{slot2_time|date:'h:mm a'}}">
+	</div>
+	<div class="clearfix"></div>
+
+
+
+
+
+
+	<div class="form-group col-md-2">
+		<input type="radio" name="slot" value=""> <label
+			style="margin-top: 30px; font-size: 15px; padding: 1px; border-radius: 4px;">Slot
+			3:</label>
+	</div>
+	<div class="form-group col-md-2">
+		<label for="exampleInputPassword1">Date</label> <input
+			class="form-control" value="{{slot3_date|date}}">
+	</div>
+	<div class="form-group  col-md-2">
+		<label for="exampleInputPassword1">Time</label> <input
+			class="form-control" value="{{slot3_time|date:'h:mm a'}}">
+	</div>
+	<div class="clearfix"></div>
+
+
+	<div class="form-group  col-md-6">
+		<button class="btn btn-info pull-right" ng-click="#">Submit</button>
+	</div>
+</div>
+
+
+<!-=======================================================================================--> -->
+<div class="modal" id="previewData">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<!-- Modal Header -->
+			<div class="modal-header">
+				<h4 class="modal-title"></h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="confirmationblock">
+					<div class="row mx-0 tabletop">
+						<div class="col-sm-4"></div>
+						<div class="col-sm-4 text-center">
+							<span class="confirmblock">ANNEXURE-A </span>
+						</div>
+						<div class="col-sm-4"></div>
+					</div>
+					<div class="row mx-0">
+						<div class="col-sm-2 tablerow border">
+							<span class="toptitle">Employee Name</span><br>
+
+						</div>
+						<div class="col-sm-2 tablerow border">
+							<span class="toptitle">Employee Id</span><br>
+
+						</div>
+						<div class="col-sm-2 tablerow border">
+							<span class="toptitle">Designation</span><br>
+
+						</div>
+						<div class="col-sm-2 tablerow border">
+							<span class="toptitle">Date of Joining</span><br>
+
+						</div>
+						<div class="col-sm-2 tablerow border">
+							<span class="toptitle">Job Location</span><br>
+
+						</div>
+						<div class="col-sm-2 tablerow border">
+							<span class="toptitle">Customer Id</span><br>
+
+						</div>
+					</div>
+					<div class="row mx-0">
+						<div class="col-sm-2">
+							<span class="topvalue">{{employeeName}}</span>
+						</div>
+						<div class="col-sm-2">
+							<span class="topvalue">{{canid}}</span>
+						</div>
+						<div class="col-sm-2">
+							<span class="topvalue">{{designation}}</span>
+						</div>
+						<div class="col-sm-2">
+							<span class="topvalue">{{onboardeddate | date}}</span>
+						</div>
+						<div class="col-sm-2">
+							<span class="topvalue">{{jobLocation}}</span>
+						</div>
+						<div class="col-sm-2">
+							<span class="topvalue">{{clientId}}</span>
+						</div>
+					</div>
+					<div class="row mx-0 ">
+						<div class="col-sm-12 tablerow">
+							<span class="toptitle">Customer Name</span><br>
+
+						</div>
+
+
+					</div>
+					<div class="row mx-0">
+						<div class="col-sm-12">
+							<span class="topvalue">{{clientName}}</span>
+						</div>
+					</div>
+					<div class="row mx-0 tabletop">
+						<div class="col-sm-12 text-center">
+							<span class="confirmblock">Employee CTC Details</span><br>
+
+						</div>
+
+					</div>
+					<!-- <div class="row mx-0">
+					<div class="col-sm-4 tablerow">
+						<span class="toptitle">Fixed CTC </span><br>
+						<span class="topvalue">{{fixedCtc}}</span>
+					</div>
+					<div class="col-sm-4 tablerow">
+					<span class="toptitle">Variable CTC </span><br>
+						<span class="topvalue">{{variableCtc}}</span>
+					</div>
+					<div class="col-sm-4 tablerow">
+					<span class="toptitle">Total CTC</span><br>
+						<span class="topvalue">{{totalCtc}}</span>
+					</div>
+				</div> -->
+					<div class="row mx-0">
+						<div class="col-sm-7 ctcblock">
+							<div class="row">
+								<div class="col-sm-3 border" style="height: 45px">
+									<span style="display: block; padding-top: 10px">
+										Earnings </span>
+								</div>
+								<div class="col-sm-5 border">
+									<span style="display: block; padding-top: 10px">Rule</span>
+								</div>
+								<div class="col-sm-2 border">
+									<span style="display: block; padding-top: 10px"> Per
+										Annum</span>
+								</div>
+								<div class="col-sm-2 border">
+									<span style="display: block; padding-top: 10px"> Per
+										Month </span>
+
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-5 dedutionblock">
+							<div class="row">
+								<div class="col-sm-7 border" style="height: 45px">
+									<span style="display: block; padding-top: 10px">Deductions</span>
+								</div>
+								<div class="col-sm-5 border">
+									<span style="display: block; padding-top: 10px">Per
+										Month</span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="row mx-0">
+						<div class="col-sm-7 ctcdatablock">
+							<div class="row">
+								<div class="col-sm-3 border">
+									<span> Basic </span>
+								</div>
+								<div class="col-sm-5 border">
+									<span>40% of Fixed CTC</span>
+								</div>
+								<div class="col-sm-2 border px-0">
+									<span>{{employeeEarning.basic | number:2}}</span>
+								</div>
+								<div class="col-sm-2 border px-0">
+									{{employeeEarning.basic/12 | number:2}}</div>
+							</div>
+						</div>
+						<div class="col-sm-5 dedutiondata">
+							<div class="row">
+								<div class="col-sm-7 border">
+									<span>Employee PF</span>
+								</div>
+								<div class="col-sm-5 border">
+									<span>{{ctcdeduction.employeePf | number:2}}</span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="row mx-0">
+						<div class="col-sm-7 ctcdatablock">
+							<div class="row">
+								<div class="col-sm-3 border">
+									<span> HRA </span>
+								</div>
+								<div class="col-sm-5 border">
+									<span>40% of Basic (50% for 4 Metros)</span>
+								</div>
+								<div class="col-sm-2 border px-0">
+									<span>{{employeeEarning.hra | number:2}}</span>
+								</div>
+								<div class="col-sm-2 border px-0">
+									{{employeeEarning.hra/12 | number:2}}</div>
+							</div>
+						</div>
+						<div class="col-sm-5 dedutiondata">
+							<div class="row">
+								<div class="col-sm-7 border">
+									<span>Employer PF</span>
+								</div>
+								<div class="col-sm-5 border">
+									<span>{{ctcdeduction.employerPf | number:2}}</span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="row mx-0">
+						<div class="col-sm-7 ctcdatablock">
+							<div class="row">
+								<div class="col-sm-3 border">
+									<span> Special Allowance </span>
+								</div>
+								<div class="col-sm-5 border">
+									<span>Remaining Amount</span>
+								</div>
+								<div class="col-sm-2 border px-0">
+									<span>{{employeeEarning.splAllowance | number:2}}</span>
+								</div>
+								<div class="col-sm-2 border px-0">
+									{{employeeEarning.splAllowance/12 | number:2}}</div>
+							</div>
+						</div>
+						<div class="col-sm-5 dedutiondata">
+							<div class="row">
+								<div class="col-sm-7 border">
+									<span>Professional Tax</span>
+								</div>
+								<div class="col-sm-5 border">
+									<span>{{ctcdeduction.professionalTax | number:2}}</span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="row mx-0">
+						<div class="col-sm-7 ctcdatablock">
+							<div class="row">
+								<div class="col-sm-3 border">
+									<span> Food Card </span>
+								</div>
+								<div class="col-sm-5 border">
+									<span>1100/3000 Per Month</span>
+								</div>
+								<div class="col-sm-2 border px-0">
+									<span>{{employeeEarning.foodCard | number:2}}</span>
+								</div>
+								<div class="col-sm-2 border px-0">
+									{{employeeEarning.foodCard/12 | number:2}}</div>
+							</div>
+						</div>
+						<div class="col-sm-5 dedutiondata">
+							<div class="row">
+								<div class="col-sm-7 border">
+									<span>Food Card</span>
+								</div>
+								<div class="col-sm-5 border">
+									<span>{{ctcdeduction.foodCard | number:2}}</span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="row mx-0">
+						<div class="col-sm-7 ctcdatablock">
+							<div class="row">
+								<div class="col-sm-3 border">
+									<span> Provident Fund </span>
+								</div>
+								<div class="col-sm-5 border">
+									<span>Basic * 12%</span>
+								</div>
+								<div class="col-sm-2 border px-0">
+									<span>{{employeeEarning.providentFund | number:2}}</span>
+								</div>
+								<div class="col-sm-2 border px-0">
+									{{employeeEarning.providentFund/12 | number:2}}</div>
+							</div>
+						</div>
+						<div class="col-sm-5 dedutiondata">
+							<div class="row">
+								<div class="col-sm-7 border" style="height: 22px">
+									<span></span>
+								</div>
+								<div class="col-sm-5 border">
+									<span></span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="row mx-0">
+						<div class="col-sm-7 ctcdatablock">
+							<div class="row">
+								<div class="col-sm-3 border">
+									<span> Gratuity </span>
+								</div>
+								<div class="col-sm-5 border">
+									<span>4.83% of Basic</span>
+								</div>
+								<div class="col-sm-2 border px-0">
+									<span>{{employeeEarning.gratuity | number:2}}</span>
+								</div>
+								<div class="col-sm-2 border"></div>
+							</div>
+						</div>
+						<div class="col-sm-5 dedutiondata">
+							<div class="row">
+								<div class="col-sm-7 border" style="height: 22px">
+									<span></span>
+								</div>
+								<div class="col-sm-5 border">
+									<span></span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="row mx-0">
+						<div class="col-sm-7 ctcdatablock">
+							<div class="row">
+								<div class="col-sm-3 border">
+									<span> Insurance </span>
+								</div>
+								<div class="col-sm-5 border">
+									<span>Mandatory</span>
+								</div>
+								<div class="col-sm-2 border px-0">
+									<span>{{employeeEarning.insurance | number:2}}</span>
+								</div>
+								<div class="col-sm-2 border"></div>
+							</div>
+						</div>
+						<div class="col-sm-5 dedutiondata">
+							<div class="row">
+								<div class="col-sm-7 border" style="height: 22px">
+									<span></span>
+								</div>
+								<div class="col-sm-5 border">
+									<span></span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="row mx-0">
+						<div class="col-sm-7 tablerow">
+							<div class="row">
+								<div class="col-sm-3 border">
+									<span class="toptitle"> Totals </span>
+								</div>
+								<div class="col-sm-5 border">
+									<span></span>
+								</div>
+								<div class="col-sm-2 border px-0">
+									<span class="toptitle">{{employeeEarning.basic +
+										employeeEarning.hra+ employeeEarning.insurance +
+										employeeEarning.gratuity + employeeEarning.providentFund +
+										employeeEarning.splAllowance + employeeEarning.foodCard |
+										number:2}}</span>
+								</div>
+								<div class="col-sm-2 border px-0">
+									<span class="toptitle">{{employeeEarning.basic/12+
+										employeeEarning.hra/12+ employeeEarning.splAllowance/12 +
+										employeeEarning.foodCard/12 +
+										employeeEarning.providentFund/12| number:2}}</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-5 tablerow">
+							<div class="row">
+								<div class="col-sm-7 border">
+									<span class="toptitle"></span>
+								</div>
+								<div class="col-sm-5 border">
+									<span class="toptitle">{{ctcdeduction.employeePf +
+										ctcdeduction.employerPf + ctcdeduction.foodCard +
+										ctcdeduction.professionalTax | number:2}}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row mx-0 tabletop">
+						<div class="col-sm-7">
+							<div class="row">
+								<div class="col-sm-3 border">
+									<span class="toptitle"> Net Pay </span>
+								</div>
+								<div class="col-sm-5">
+									<span></span>
+								</div>
+								<div class="col-sm-2"></div>
+								<div class="col-sm-2 border">
+									<span class="toptitle">{{employeeEarning.basic/12+
+										employeeEarning.hra/12+ employeeEarning.splAllowance/12 +
+										employeeEarning.foodCard/12 + employeeEarning.providentFund/12
+										- ctcdeduction.employeePf - ctcdeduction.employerPf -
+										ctcdeduction.foodCard - ctcdeduction.professionalTax |
+										number:2}}</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-5 tabletop">
+							<div class="row">
+								<div class="col-sm-7 border">
+									<span class="toptitle"></span>
+								</div>
+								<div class="col-sm-5 border">
+									<span class="toptitle"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- <div class="row mx-0 tabletop">
+				<div class="col-sm-12 text-center"><span class="confirmblock">Confirmation Block</span></div>
+				</div> -->
+				</div>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-success" data-dismiss="modal"
+					ng-click="saveFinalCtc()">Confirm</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!--  Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">
+
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3 class="modal-title text-danger">
+					<i class="fa fa-exclamation-circle" aria-hidden="true"></i>&nbsp;Reason
+					Details
+				</h3>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+
+				<div class="form-group  col-md-12">
+					<label style="font-size: 15px;">Reason</label>
+					<textarea class="form-control" placeholder="Enter Reason"
+						ng-model="reason"></textarea>
+
+				</div>
+				<div class="clearfix"></div>
+				<!-- <div class="form-group col-md-2">
+					<label
+						style="margin-top: 30px; font-size: 15px; background: #76b4f7; padding: 1px; border-radius: 4px;">Slot
+						1:</label>
+				</div>
+				<div class="form-group col-md-6">
+					<label for="exampleInputPassword1">Date</label> <input type="date"
+						class="form-control" ng-model="slot1_date">
+
+				</div>
+				<div class="form-group col-md-4">
+					<label for="exampleInputPassword1">Time</label> <input type="time"
+						class="form-control" ng-model="slot1_time">
+				</div>
+				<div class="clearfix"></div>
+				<div class="form-group col-md-2">
+					<label
+						style="margin-top: 30px; font-size: 15px; background: #76b4f7; padding: 1px; border-radius: 4px;">Slot
+						2:</label>
+				</div>
+				<div class="form-group col-md-6">
+					<label for="exampleInputPassword1">Date</label> <input type="date"
+						class="form-control" ng-model="slot2_date">
+
+				</div>
+				<div class="form-group col-md-4">
+					<label for="exampleInputPassword1">Time</label> <input type="time"
+						class="form-control" ng-model="slot2_time">
+				</div>
+				<div class="clearfix"></div>
+				<div class="form-group col-md-2">
+					<label
+						style="margin-top: 30px; font-size: 15px; background: #76b4f7; padding: 1px; border-radius: 4px;">Slot
+						3:</label>
+				</div>
+				<div class="form-group col-md-6">
+					<label for="exampleInputPassword1">Date</label> <input type="date"
+						class="form-control" ng-model="slot3_date">
+
+				</div>
+				<div class="form-group col-md-4">
+					<label for="exampleInputPassword1">Time</label> <input type="time"
+						class="form-control" ng_model="slot3_time">
+				</div> -->
+				<div class="clearfix"></div>
+
+
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-success" data-dismiss="modal"
+					ng-click="submitRejected()">Submit</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+</div>
+</div>
+<script>
+
+$(document).ready(function () {
+    var myCollection = {
+        'Interview Schedule': 'Shortlisted',
+        'Offer Released': 'Selected',
+        'Rejected': 'Rejected'
+    };
+    loadDropDownList(myCollection);
+    
+    $("#countries").change(function () {
+        var selectedValue = $("#countries").val();
+        $("#countryValue").text(selectedValue);
+        $("#countryText").text($("#countries > option[value='" + 
+                                 selectedValue + "']").html());
+    });
+    
+});
+
+function loadDropDownList(collection) {
+    $.each(collection, function (index, value) {
+        var listItem = $("<option></option>").val(index).html(value);
+        $("#countries").append(listItem);
+    });
+}
+</script>

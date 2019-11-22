@@ -1,0 +1,79 @@
+ <div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>My Submission</h3>
+        </li>
+      </ol>
+       <ol class="breadcrumb">
+    <div class="col-md-10">
+    <input class="form-control" style="width:25%" type="search" ng-model="test1" placeholder="Search">
+    </div>
+   
+   
+    </ol>
+    <table class="table col-lg-12 table-bordered" id="rec_List">
+			<thead class="thead-inverse">
+				<tr>
+				<th>Client Name</th>
+					<th> Requirement Name</th>
+				   <th>Submission Profile Per Day</th>
+				<th>Target Profile Per Day</th> 
+				</tr>
+			</thead>
+			<tbody>
+			
+				<tr dir-paginate="list in list|filter:test1|itemsPerPage:3">
+				<td>{{list.clientName}}</td>
+				<td>{{list.nameofRequirenment}}</td>
+				<td>{{list.noofProfileSumitted}}</td>
+				<td>{{list.target}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+    </div>
+    </div>  
+   
+   
+   
+   
+   
+   
+   
+   
+   <div ng-include="'partials/header.html'"></div>
+ <div ng-include="'partials/fotter.html'"></div>
+ <div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Dashboard </h3>
+        </li>
+      </ol>
+<table class="table col-lg-12 table-bordered" id="rec_List">
+			<thead class="thead-inverse">
+				<tr>
+				<th>Client Name</th>
+					<th> Requirement Name</th>
+				   <th>Submission Profile Per Day</th>
+				<th>Target Profile Per Day</th> 
+				</tr>
+			</thead>
+			<tbody>
+			
+				<tr dir-paginate="list in list|filter:test1|itemsPerPage:3">
+				<td>{{list.clientName}}</td>
+				<td>{{list.nameofRequirenment}}</td>
+				<td>{{list.noofProfileSumitted}}</td>
+				<td>{{list.target}}</td>
+				</tr>
+			</tbody>
+		</table>
+   </div>
+   </div>
+   
+   
+   

@@ -1,0 +1,87 @@
+
+<div ng-include=" 'partials/fotter.html' "></div>
+<div ng-include=" 'partials/header.html' "></div>
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>Mode of Interview</h3>
+			</li>
+		</ol>
+		<ol class="breadcrumb">
+			<div class="col-md-10">
+				<input class="form-control" style="width: 25%" type="search"
+					ng-model="test" placeholder="Search">
+			</div>
+			<div class="col-md-2 pull-right">
+				<a href="#!/InterviewMode" type="button"
+					class="btn btn-info btn-md pull-center"><span
+					class="glyphicon glyphicon-plus"></span>Add</a>
+
+			</div>
+
+		</ol>
+		<table class="table col-lg-10 table-bordered" id="rec_List">
+			<thead>
+				<tr>
+					<th>Interview Mode</th>
+					<th>Edit</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr dir-paginate="detail in modeList|filter:test|itemsPerPage:6">
+					<td>{{detail.modeofInterview}}</td>
+					<td><button data-toggle="modal" class="btn btn-primary"
+							data-target="#myModal" ng-click="popupdata(detail.id)">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="col-md-12 text-center">
+			<p>
+				<b>{{noData}}</b>
+			</p>
+		</div>
+		<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+	</div>
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>Edit InterviewMode:</h4>
+					<button type="button" data-dismiss="modal" class="close">&times;</button>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" name="myform"
+						onsubmit="return myFun()">
+						<div class="form-group">
+							<label class="control-label col-sm-4" for="mode">InterviewMode:</label>
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									placeholder="enter your name" id="mode" name="des"
+									ng-model="modeofInterview" required> <span
+									style="color: red;"
+									ng-show="myform.des.$touched && myform.des.$invalid">The
+									field is required</span>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<!-- <button class="btn btn-success pull-right" data-dismiss="modal" ng-click="UpdateCerti(editDetails.id)" ng-disabld="myform.$invalid">Update</button> -->
+					<button class="btn btn-success pull-right" data-dismiss="modal"
+						ng-click="UpdateCerti(editDetails.id)" data-dismiss="modal"
+						ng-disabled="myform.$invalid">Update</button>
+					<button class="btn btn-danger pull-left" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+

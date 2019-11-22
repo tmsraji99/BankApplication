@@ -1,0 +1,38 @@
+<div ng-include="'partials/header.html'"></div>
+ <div ng-include="'partials/fotter.html'"></div>
+  <div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+     
+     <!-- new existin code here -->
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Skills/Add Skills </h3>
+        </li>
+  
+      </ol>
+  <form name="myform" novalidate>
+<div class="col-lg-4">
+<label>Skill Name:</label>
+<input type="text" ng-model="skillName.skillName" name="myfield"class="form-control" required  >
+
+<div  style="margin:10px;" ng-messages="myform.myfield.$error"  ng-if="userForm.userN.$touched">
+  <div ng-message="required">This field is required</div> 
+</div>
+</div>
+
+<div class="col-lg-4">
+<label>Skill Type:</label>
+<select ng-model="skillName.flag" class="form-control">
+<option value="" disabled selected>Please Select</option>
+<option value="true">Primary</option>
+<option value="false">Secondary</option>
+</select>
+</div>
+
+<div class="col-lg-4">
+<button  class="btn btn-info" ng-disabled="myform.$invalid"  ng-click="addSkillSet(skillName)" style="margin-top: 25px;">Save</button>
+ </div>
+</form>
+   </div>
+   </div>

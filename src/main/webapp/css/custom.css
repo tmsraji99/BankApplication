@@ -1,0 +1,129 @@
+.breadcrumb {
+    background: #eee !important;
+}
+ .Applicationloader {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background: rgba(173,216,230, 0.2);
+  z-index: 999999;
+  /*position: absolute;*/
+}
+
+  .Applicationloader img {
+    margin-left: 50%;
+    margin-top: calc(100vh - 60vh);
+  }
+  
+a{
+	color:black;
+	
+}
+
+.loader {
+	background:white;
+	font-size: 36px;
+	line-height: 36px;
+	font-weight: bold;
+	width: 80%;
+	height: 80%;
+	text-align: center;
+	overflow:hidden;
+	
+	position:absolute;
+	top:20%;
+	left:7%;
+	
+}
+.loader img{
+	position: absolute;
+	top: 23%;
+	bottom: 0;
+	left: 32%;
+	right: 0;
+}
+.user{
+	margin-right:30px;
+}
+.loginContainer{
+	position:absolute;
+	top:20%;
+	left:7%;
+	
+	
+}
+.loginContainer .panel{
+	height:400px;
+	
+}
+.loginContainer .panel-body{
+	padding:40px;
+}
+.loginContainer form .btn{
+	margin-top:30px;
+}
+.loginContainer .panel-info{
+	border-color:#333;
+}
+.loginContainer .panel-info .panel-heading{
+	background-color:#333;
+	
+	color:#eee;
+}
+.m-t-25{
+	margin-top:25px;
+}
+@media only screen and (max-width: 600px) {
+	.loginContainer{
+	position:absolute;
+	top:50px;
+	left:0px;
+	font-size:18px;
+	
+	}
+}
+#back{
+	margin-top:30px;
+}
+.nav-sidebar{
+	overflow-y:auto;
+	
+}
+.ms-options-wrap > button:focus, .ms-options-wrap > button {
+    position: absolute;
+    width: 20%;
+    left: 0;
+    text-align: left;
+    border: 1px solid #aaa;
+    background-color: #fff;
+    padding: 5px 20px 5px 5px;
+    margin-top: 1px;
+    font-size: 13px;
+    color: #aaa;
+    outline: none;
+    white-space: nowrap;
+    float: left;
+}
+.ms-options-wrap > .ms-options {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    width: 20%;
+	height:60%;
+	}
+	am-multiselect .dropdown-menu{
+	width:70px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+am-multiselect .dropdown-menu > li > a {
+    padding: 3px 10px;
+    cursor:pointer;
+}
+
+am-multiselect .dropdown-menu > li.selected {
+    background-color: #ADD8E6;
+}

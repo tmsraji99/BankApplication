@@ -1,0 +1,64 @@
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<style>
+td{
+color:black;
+}
+</style>
+
+<div class="container">
+  <div class="panel panel-success" style="width:1030px;">
+	<div class="panel-heading"> <label>Interview Feedback</label></div>
+	</div>
+	<div class="col-lg-4" >
+	<div style="width:1000px;height:350px;line-height:0em;overflow:auto;margin:0px; padding-left: 25%; border:1px ridge #000;" >                           
+ <table class="table table-hover">
+    
+    <tbody>
+     
+      <tr>
+        <td><label>Candidate name:</label></td>
+        <td>{{processfeedbackDetails[0].candidateiname}}</td>
+      </tr>
+      <tr>
+        <td><label>Company name:</label></td>
+        <td>{{processfeedbackDetails[0].companyname}}</td>
+      </tr>
+	   <tr>
+        <td><label>Requirement Type:</label></td>
+        <td>{{processfeedbackDetails[0].requirementType}}</td>
+      </tr>
+	  <tr>
+        <td><label>Name of round:</label></td>
+        <td>{{processfeedbackDetails[0].nameOfRound}}</td>
+      </tr>
+	  <tr>
+        <td><label>interview status:</label></td>
+        <td>{{processfeedbackDetails[0].interviewStatus}}</td>
+      </tr>
+	  <tr>
+        <td><label>Client feedback:</label></td>
+        <td>{{processfeedbackDetails[0].clientFeedback}}</td>
+      </tr>
+	  <tr>
+        <td><label>Internal feedback:</label></td>
+        <td>{{processfeedbackDetails[0].internalFeedback}}</td>
+      </tr>
+		<tr>
+        <td></td>
+        <td></td>
+      </tr>
+	  
+       
+        
+      
+	   
+	  
+    </tbody>
+  </table>
+ 
+   
+  </div></br>
+  <a href="#!/CandidateList1" class="btn btn-info btn-lg pull-left">Back</a>
+</div>
+</div>

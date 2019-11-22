@@ -1,0 +1,58 @@
+<div ng-show="isLoading" class="Applicationloader">
+	<img src="images/rpoloader.gif">
+</div>
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper" ng-init="getBillingList();">
+	<div class="container-fluid" style="margin-top: 60px;">
+		<ol class="breadcrumb">
+			<div class="col-md-12 text-left">
+				<h3>Bank Details</h3>
+	       <ol class="breadcrumb">
+				<div class="col-md-10">
+					<input class="form-control" style="width: 25%" type="search"
+						ng-model="accountNumber" placeholder="Search with Account Number" maxlength="10"
+						minlength="10">
+				</div>
+	  		<div class="col-md-2 pull-right">
+					<a href="#!/addbankDetails" type="button"
+						class="btn btn-info btn-md pull-center"><span
+						class="glyphicon glyphicon-plus"></span>Add</a>
+				</div>
+	
+			</ol>
+			<table st-table="ListReqData" st-safe-src="rowCollection" class="table">
+				<thead>
+			  <tr >
+			       <th class="text-left" >Id</th>
+				   <th class="text-left" >Account Number</th>
+				   <th class="text-left" >Address</th>
+		            <th class="text-left" >Bank Name</th>
+		            <th class="text-left" >BranchName</th>
+		            <th class="text-left" >IFSC code </th>
+					<th class="text-left">Edit</th>	
+					<th class="text-left">Delete</th>			
+		          </tr>		
+		        </thead>
+		        <tbody>
+             <tr ng-repeat="list in lists">
+                    <td class="text-left">{{list.id}}</td>
+		            <td class="text-left">{{list.accountNumber}}</td>
+		            <td class="text-left">{{list.address}}</td>
+		            <td class="text-left"> {{list.bankName}}</td>
+		            <td class="text-left"> {{list.branchName}}</td>
+		            <td class="text-left">{{list.iFSC}}</td>
+		            <td class="text-left">	<a href="#!/editbankDetails/{{list.id}}" type="button"
+							class="btn btn-info">
+					<span class="glyphicon glyphicon-pencil" ng-click="getbyidBankDetails(list.id)"></span></a></td>
+					<td class="text-left">	<a href=""
+					class="btn btn-danger">
+					<span class="glyphicon glyphicon-trash" ng-click="deleteBankDetalis(list.id)"></span></a></td>
+			  </tr>          
+		        </tbody>
+		      </table>
+		      <div class="col-md-12 text-center"><h3>{{nodata}}</h3></div> 
+			</div>
+		</ol>
+	</div>
+</div>

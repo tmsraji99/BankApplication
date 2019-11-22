@@ -1,0 +1,497 @@
+<div ng-show="isLoading" class="Applicationloader">
+	<img src="images/rpoloader.gif">
+</div>
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>
+					<i class="fa fa-users" aria-hidden="true"></i>Users
+				</h3>
+			</li>
+		</ol>
+		<ol class="breadcrumb">
+			<!-- div class="col-md-10">
+    <input class="form-control" style="width:25%" type="search" ng-model="test" placeholder="Search">
+    </div>
+    <div class="col-md-2 pull-right">
+     <a href="#!/users"  type="button"  class="btn btn-info btn-md pull-center"><span class="glyphicon glyphicon-plus"></span>Add</a>		
+    </div> -->
+			<div class="col-md-12">
+				<div class="col-md-4 mb-4">
+					<div class="row">
+						<div class="col-sm-6">
+							Search By Category <select class="form-control"
+								ng-model="searchcategory" style="border-radius: 0">
+								<option value="" selected>--Select --</option>
+								<option value="clientName">Candidate Name</option>
+								<option value="customerType">Recruiter Name</option>
+								<option value="primaryContact">Requirement Name</option>
+								<option value="secondaryContact">Role</option>
+							</select>
+						</div>
+						<div class="col-sm-6">
+							<input class="form-control" type="search" ng-model="searchtext"
+								placeholder="Search Here.."
+								style="margin-top: 21px; border-radius: 0">
+							<!--   <span class="glyphicon glyphicon-search" ng-click="searchclient(searchitem)" style="
+		position: absolute;font-size: 17px; color: #337ab7;right: 22px;top: 31px;z-index: 10;cursor: pointer;"></span> -->
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 mb-4">
+					<div class="row">
+						<div class="col-sm-4">
+							Sort By <select class="form-control" ng-model="order"
+								style="border-radius: 0">
+								<option value="" selected>--Select --</option>
+								<option value="clientName">Candidate Name</option>
+								<option value="customerType">Recruiter Name</option>
+								<option value="primaryContact">Requirement Name</option>
+								<option value="secondaryContact">Role</option>
+								<option value="secondaryContact">Date</option>
+							</select>
+						</div>
+						<div class="col-sm-4">
+							Order By <select class="form-control" ng-model="by"
+								style="border-radius: 0">
+								<option value="" selected>--Select --</option>
+								<option value="asc">Ascending</option>
+								<option value="desc">Descending</option>
+							</select>
+						</div>
+						<div class="col-sm-2 mt-4 pt-2">
+							<button class="btn btn-primary btn-sm" ng-click="searchText()">Search</button>
+						</div>
+						<div class="col-sm-2  mt-4 pt-2">
+							<button class="btn btn-danger btn-sm" ng-click="clearText()">Reset</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 mb-4 mt-4 pt-2">
+					<div class="row">
+						<div class="col-sm-8 pr-0">
+							<!--  <p class="mt-5">Total Number of Records :
+      <strong class="text text-info">{{client1.length}}</strong><p>-->
+							<select class="form-control pull-right" ng-model="pageSize"
+								style="width: 65px; margin-bottom: 6px;">
+								<option value="10" selected>10</option>
+								<option value="15">15</option>
+								<option value="20">20</option>
+								<option value="25">25</option>
+							</select> <span style="margin-right: 8px; margin-top: 6px;"
+								class="pull-right text text-info">Items per page</span>
+						</div>
+						<div class="col-sm-4 mt-2">
+							<a href="#!/users" type="button"
+								class="btn btn-info btn-md pull-center"><span
+								class="glyphicon glyphicon-plus"></span>Add</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</ol>
+
+		<table class="table col-lg-10 table-bordered" id="rec_List">
+			<thead class="thead-inverse">
+				<tr>
+					<th>User Name</th>
+					<th>Name</th>
+					<th>Mobile Name</th>
+					<th>Extension Number</th>
+					<th>Email</th>
+					<th>Role</th>
+					<th>Reporting Authentication</th>
+					<th>Status</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr dir-paginate="list in userlist|filter:test|itemsPerPage:5">
+					<td><a data-toggle="modal" data-target="#myModal1"
+						ng-click="userdetails(list)" title="click for user details"
+						style="color: #1e90ff;">{{::list.username}}</a></td>
+					<td>{{::list.firstName}}&nbsp; {{::list.lastName}}</td>
+					<td>{{::list.contactNumber}}</td>
+					<td>{{::list.extension}}</td>
+					<td>{{::list.email}}</td>
+					<td>{{::list.role}}</td>
+					<td>{{::list.reportingId.firstName}}&nbsp;{{::list.reportingId.lastName}}</td>
+					<td>{{::list.status}}</td>
+					<td><button class="btn btn-primary btn-sm" data-toggle="modal"
+							data-target="#myModal" ng-click="userid(list)">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button> &nbsp;
+
+						<button title="" type="button" class="btn btn-danger btn-sm"
+							data-original-title="Remove from list"
+							ng-click="inactive(list.id)">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button></td>
+
+				</tr>
+				<tr>
+			</tbody>
+		</table>
+		<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+	</div>
+
+	<div class="modal fade" id="myModal1" role="dialog">
+		<div class="modal-dialog" style="width: 50%; height: auto;">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<h4>User Details</h4>
+					<button type="button" data-dismiss="modal" class="close">&times;</button>
+				</div>
+
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+
+							<div
+								style="width: 95%; height: auto; line-height: 3em; overflow: auto; margin: 10px; padding: 5px; border: 2px ridge #000;">
+								<div class="table-responsive">
+									<table class="table">
+
+										<tbody>
+
+											<!-- <tr>
+	        <td><b>designation:</b></td>
+	        <td>{{userdetail.designation}}</td>
+      	</tr> -->
+											<tr>
+												<td><b>DOJ:</b></td>
+												<td>{{userdetail.doj1}}</td>
+											</tr>
+											<tr>
+												<td><b>CTC:</b></td>
+												<td>{{userdetail.ctc}}</td>
+											</tr>
+											<tr>
+												<td><b>Salary:</b></td>
+												<td>{{userdetail.salary}}</td>
+											</tr>
+											<tr>
+												<td><b>Variable Pay :</b></td>
+												<td>{{userdetail.variablepay}}</td>
+											</tr>
+											<tr>
+												<td><b>Min Target :</b></td>
+												<td>{{userdetail.mintarget}}</td>
+											</tr>
+											<tr>
+												<td><b>Max Target :</b></td>
+												<td>{{userdetail.maxtarget}}</td>
+											</tr>
+											<tr>
+												<td><b>Target Duration :</b></td>
+												<td>{{userdetail.targetduration}}</td>
+											</tr>
+											<tr>
+											</tr>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-info pull-right" data-dismiss="modal">OK</button>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+	<div class="modal fade" id="response" role="dialog">
+		<div class="modal-dialog" style="width: 45%; height: auto;">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<!-- <button type="button" data-dismiss="modal" class="close">&times;</button> -->
+					<h4>Update User</h4>
+				</div>
+
+				<div class="modal-body">
+					<div class="container">
+
+						<p style="color: green;">{{responseMes}}</p>
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a ng-show="ok" class="btn btn-info pull-right"
+						data-dismiss="modal" ng-click="redirect()">OK</a>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div ng-show="view2">
+		<h1>
+			<center>NO RECORD FOUND</center>
+		</h1>
+	</div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--modal-->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content modal-lg">
+			<div class="modal-header">
+				<div class="col-md-12">
+					<div class="col-md-10">
+						<h4 class="modal-title">Edit User</h4>
+					</div>
+					<div class="col-md-2">
+						<button type="button" data-dismiss="modal" class="close">&times;</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					<form class="form-horizontal">
+						<div class="col-md-12">
+							<div class="col-md-3">
+								<label for="name">First Name:</label> <input
+									class="form-control" type="text" placeholder="Enter First Name"
+									id="name" ng-model="ListData.firstName" />
+							</div>
+							<!-- <div class="form-group col-md-1"></div> -->
+
+							<div class="col-md-3">
+								<label for="lastname">Last Name:</label> <input
+									class="form-control" type="text" placeholder="Enter Last Name"
+									id="lastname" ng-model="ListData.lastName"></input>
+							</div>
+							<!-- <div class="col-md-1"></div> -->
+							<div class="col-md-3">
+								<label for="email">E-mail:</label> <input class="form-control"
+									type="email" placeholder="Enter Email id" id="email"
+									ng-model="ListData.email"></input>
+							</div>
+							<div class="col-md-3">
+								<label for="email">Employee Id:</label> <input
+									class="form-control" type="email"
+									placeholder="Enter Employee id" id="email"
+									ng-model="ListData.email" minlength="3" maxlength="5" ng-pattern="/^(0|[1-9][0-9]*)$/">
+									
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="col-md-3">
+								<label for="mobile">Mobile:</label> <input class="form-control"
+									type="text" placeholder="Enter Mobile Number" id="mobile"
+									ng-pattern="/^(\+[\d]{1,5}|0)?[7-9]\d{9}$/"
+									ng-model="ListData.contactNumber" numbers-only maxlength="10"></input>
+							</div>
+							<!-- 	<div class="form-group col-md-1"></div> -->
+							<div class="col-md-3">
+								<label for="mobile">Extension Number:</label> <input
+									class="form-control" type="text"
+									placeholder="Enter Extension number" id="mobile"
+									ng-model="ListData.extension" numbers-only minlength="3"
+									maxlength="5"></input>
+							</div>
+							<!-- <div class="form-group col-md-1"></div> -->
+							<div class="col-md-3">
+								<label for="name">Role</label> <select name="userRole"
+									ng-model="ListData.role" style="width: 100%; height: 33.33px"
+									class="form-control" required>
+									<option value="" disabled selected>Choose Role</option>
+									<option value="Admin">ADMIN</option>
+									<option value="BDM">BDM</option>
+									<option value="recruiter">Recruiter</option>
+									<option value="Lead">Team Lead</option>
+									<option value="FinanceLead">Finance Lead</option>
+									<option value="FinanceExecutive">Finance Executive</option>
+									<option value="Management">Management</option>
+									<option value="MIS">MIS</option>
+								</select>
+							</div>
+							<div class="col-md-3" ng-hide="datehide">
+								<label for="user_fname">DOJ:</label>
+								<p class="input-group">
+
+									<input type="text" class="form-control"
+										ng-model="ListData.doj1" ng-click="open1()" /> <span
+										class="input-group-btn">
+										<button type="button" class="btn btn-default"
+											ng-click="open1()">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="col-md-3" ng-hide="dateshow">
+								<label for="user_fname">DOJ:</label>
+								<p class="input-group">
+									<input type="text" name="doj" placeholder="dd/MM/yy"
+										class="form-control" uib-datepicker-popup="{{format}}"
+										is-open="popup1.opened" datepicker-options="dateOptions"
+										alt-input-formats="altInputFormats" ng-model="ListData.doj1"
+										required /> <span class="input-group-btn">
+										<button type="button" class="btn btn-default"
+											ng-click="open1()">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</p>
+							</div>
+							<!-- <div class="form-group col-md-1"></div> -->
+							<div class="col-md-3">
+								<label for="name">Status</label> <select name="userRole"
+									ng-model="ListData.status" style="width: 100%; height: 33.33px"
+									class="form-control" required>
+									<option value="" disabled selected>Choose Role</option>
+									<option value="Active">Active</option>
+									<option value="inactive">Inactive</option>
+								</select>
+							</div>
+							<!-- <div class="form-group col-md-1"></div> -->
+							<div class="col-md-3">
+								<label for="name">Reporting Manager</label> 
+								<select
+									name="userRole" ng-model="ReportingList"
+									style="width: 100%; height: 33.33px" class="form-control"
+									ng-click="reportingList()" ng-options="i for i in reportList"
+									required>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group col-md-10">
+								<hr />
+								<label>Salary Details</label>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="col-md-4">
+								<label for="name">Salary:</label> <input class="form-control"
+									type="text" placeholder="Enter Basic Salary" id="name"
+									ng-model="ListData.salary" numbers-only />
+							</div>
+							<!-- <div class="form-group col-md-1"></div> -->
+							<div class="col-md-4">
+								<label for="name">Variable Pay:</label> <input
+									class="form-control" type="text"
+									placeholder="Enter Variable Pay" id="lastname"
+									ng-model="ListData.variablepay" numbers-only></input>
+							</div>
+							<!-- <div class="form-group col-md-1"></div> -->
+							<div class="col-md-4">
+								<label for="name">CTC:</label> <input class="form-control"
+									type="email" placeholder="Enter CTC" id="email"
+									ng-model="ListData.ctc" numbers-only></input>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="col-md-4">
+								<label for="name">Min Target:</label> <input
+									class="form-control" type="text" placeholder="Enter Min Target"
+									id="name" ng-model="ListData.mintarget" numbers-only />
+							</div>
+							<!-- <div class="form-group col-md-1"></div> -->
+
+							<div class="col-md-4">
+								<label for="name">Max Target:</label> <input
+									class="form-control" type="text" placeholder="Enter Max Target"
+									id="lastname" ng-model="ListData.maxtarget" numbers-only></input>
+							</div>
+							<!-- <div class="form-group col-md-1"></div> -->
+							<div class="col-md-4">
+								<label for="name">Target Duration:</label> <select
+									ng-model="ListData.targetduration" class="form-control">
+									<option value="Q1">Q1</option>
+									<option value="Q2">Q2</option>
+									<option value="Q3">Q3</option>
+									<option value="Q4">Q4</option>
+									<option value="" selected ng-disabled=true>Select</option>
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+
+			</div>
+
+			<!--ng-click="updateUserlist()"-->
+			<div class="modal-footer">
+				<div class="col-sm-12 text-center">
+					<!-- data-dismiss="modal" -->
+					<button type="submit" class="btn btn-success pull-right"
+						data-target="#response" data-toggle="modal" data-dismiss="modal"
+						ng-click="updateUserlist()">Update</button>
+					<button type="submit" class="btn btn-danger pull-left"
+						data-dismiss="modal">Cancel</button>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+

@@ -1,0 +1,346 @@
+<style>
+.well{background: white;}
+.container-fluid{
+background:#f5f5f5
+}
+.breadcrumb{
+background:white
+}
+</style>
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+    <ol class="breadcrumb">
+    <div class="col-md-8">
+    <h3>Customer Contact </h3>
+    </div>
+    </ol>
+    <div class="col-md-6">
+    <p ng-show="saveMsg">Contact Added Successfully</p>
+    <p ng-show="updateMsg">Updated Successfully</p>
+    <p ng-show='errorMsg' style="color: red">Please Fill Mandatory Fields</p>
+   <form name="myForm1"   novalidate  id="myForm1">
+    <fieldset class="well .scheduler-border"
+			style="width: 790px; height: auto; margin: 0px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+			<legend
+				style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+				align="left">Contact Details</legend>
+				<div class="col-md-12">
+				  <button class="btn btn-info pull-left" style="margin-top: -34px;" ng-show="saveBtncontact"  ng-click="addContactSave()">Save</button>
+				   <button class="btn btn-success pull-left" style="margin-top: -34px;"  ng-show="updatebtnContact"    ng-click="addContactUpdate()">Update</button>
+				    <a href="#!/viewClientContact" class="btn btn-info pull-right" style="margin-top: -34px;margin-left:450px;">Cancel</a>
+                 </div>   
+    <div class="row" style="margin-top:25px">
+		<div class="form-group col-lg-6">
+			<label >Customer Name</label>
+		 	<input type="text" name="clientname1" ng-model="clientName" class="form-control" readonly/>
+		 	<input type="hidden" ng-model="clientId"/>
+			<!-- <span style="color:red;" ng-show="myForm.contact_name.$touched && myForm.contact_name.$invalid">*The field is required.</span> -->
+		<!-- 
+		<select ng-model="clientId" class="form-control">
+<option ng-repeat="x in clientdata" value="{{x.id}}">{{x.clientName}}</option>
+</select>
+-->
+
+         <!-- <select name="users" ng-model="clientId" class="form-control">  -->
+<!-- <option value="">--Select Customer Type--</option> -->
+<!-- 	<option ng-repeat="x in clientdata" value="{{x.id}}">{{x.clientName}}</option>
+</select> -->
+		</div>
+		
+		
+		<div class="form-group col-lg-6">
+			<label>Contact Name<sup>*</sup></label>
+			<input type="text" placeholder="Contact Person Name" name="contact_name" ng-model="contact_Name" class="form-control" required></input>
+			<span style="color:red;" ng-show="myForm1.contact_name.$touched && myForm1.contact_name.$invalid">*This field is required.</span>
+		</div>
+		<div class="clearfix"></div>
+		
+		<div class="form-group col-lg-6">
+			<label for="email">Email Id<sup>*</sup></label>
+			<input type="email" placeholder="Enter Email id" name="email" ng-model="email" class="form-control" required></input>
+			<!-- <span style="color:red;" ng-show="myForm1.email.$touched && myForm1.email.$invalid">*This field is required.</span> -->
+			<!-- <span style="color:red;" ng-show="myForm1.email.$error">Enter valid email.</span> -->
+			<span style="color:red" ng-show="myForm1.email.$touched && myForm1.email.$invalid && myForm1.email.$error">
+						<span ng-show="myForm1.email.$error.required">Email is required.</span>
+						<span ng-show="myForm1.email.$error.email">Invalid email address.</span>
+						</span>
+		</div>
+		<div class="form-group col-lg-6">
+			<label for="phone">Mobile<sup>*</sup></label>
+			<input type="text" placeholder="Mobile Number" name="phone" ng-model="mobile" ng-minlength="10" ng-maxlength="10" class="form-control" numbers-only required maxlength="10"></input>
+			<span style="color:red;" ng-show="myForm1.phone.$touched && myForm1.phone.$invalid">*This field is required.</span>
+			<span style="color:red;" ng-show="myForm1.phone.$error.minlength">Number is Short.</span>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="row">
+		
+		<!-- <div class="form-group col-lg-6">
+			<label for="mobile">Mobile No</label>
+			<input type="text" placeholder="Alternate mobile number" name="mobile" ng-minlength="10" ng-maxlength="10" ng-model="mobile" class="form-control" numbers-only maxlength="10"></input>
+			<span style="color:red;" ng-show="myForm.mobile.$error.minlength">*Number is Short.</span>
+			<span style="color:red;" ng-show="myForm.mobile.$error.maxlength" >*Number is long.</span>
+		</div> -->
+		<div class="form-group col-lg-12">
+			<label>Business Location<sup>*</sup></label>
+			<input type="text" placeholder="Enter Business Location" name="BusinessLocation" ng-model="BusinessLocation" class="form-control" required></input>
+			<!-- <span style="color:red;" ng-show="myForm1.BusinessLocation.$touched && myForm1.BusinessLocation.$invalid">*The field is required.</span> -->
+			<div ng-messages="myForm1.BusinessLocation.$error"
+						ng-if="myForm1.BusinessLocation.$touched">
+						<div ng-message="required">*This is required</div>
+					</div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="form-group col-lg-6">
+			<label>Birth Day Date</label>
+			<input type="text" placeholder="dd/MM" name="bday" ng-model="bday" class="form-control"></input>
+			<!-- <span style="color:red;" ng-show="myForm.bday.$touched && myForm.bday.$invalid">*The field is required.</span> -->
+		</div>
+		<div class="form-group col-lg-6">
+			<label>Anniversary Date</label>
+			<input type="text" placeholder="dd/MM" name="Aday" ng-model="Aday" class="form-control"></input>
+			<!-- <span style="color:red;" ng-show="myForm.Aday.$touched && myForm.Aday.$invalid">*The field is required.</span> -->
+			
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="row">
+			<div class="form-group col-md-6" ng-show="(userRole == 'BDM')" ng-hide="(userRole == 'AM')">
+				<label for="contact_name">Primary BDM*</label>
+				<!-- <select id="primarybdm" name="primarybdm" class="form-control" ng-model="primaryContact" required>
+				<option value="" selected ng-disabled="true">-- Select Primary BDM --</option>
+							<option ng-repeat="primaryL in primaryListS" value={{primaryL.id}} >{{primaryL.name}}</option>
+						</select>  -->
+						<input type="text" ng-model="user.userName" class="form-control" disabled>
+						<input type="hidden" ng-model="primarybdm" value={{userId}}> 
+
+						<!-- <span style = "color:red" ng-show = "clientForm.primarybdm.$touched && clientForm.primarybdm.$invalid">  
+		                       <span ng-show = "clientForm.primarybdm.$error.required"> Primary BDM is required</span>  
+		                   </span> -->	
+			</div>  
+			 <div class="form-group col-md-6"  ng-show="(userRole== 'AM')" ng-hide="(userRole == 'BDM')">
+				<label for="contact_name">Primary BDM*</label>
+				<select id="primarybdm" name="primarybdm" class="form-control" ng-model="primaryContact" required>
+				<option value="" selected ng-disabled="true">-- Select Primary BDM --</option>
+							<option ng-repeat="primaryL in primaryListS" value={{primaryL.id}} >{{primaryL.name}}</option>
+				</select> 						
+				<!-- <input type="text" ng-model="user.userName" value={{user.id}} class="form-control" disabled> -->
+				<span style = "color:red" ng-show = "clientForm.primarybdm.$touched && clientForm.primarybdm.$invalid">  
+		                       <span ng-show = "clientForm.primarybdm.$error.required"> Primary BDM is required</span>  
+		          </span>	 
+			</div> 
+			<div class="form-group col-md-6">
+				<label for="contact_name">Secondary BDM*</label>
+				<select id="secondarybdm" name="secondarybdm" class="form-control" ng-model="secondaryContact" required>
+				<option value="" selected ng-disabled="true">-- Select Secondary BDM --</option>
+							<option ng-repeat="primaryL in primaryListS" value={{primaryL.id}} >{{primaryL.name}}</option>
+						</select>
+						<span style = "color:red" ng-show = "clientForm.secondarybdm.$touched && clientForm.secondarybdm.$invalid">  
+		                       <span ng-show = "clientForm.secondarybdm.$error.required"> Secondary BDM is required</span>  
+		                   </span>	
+			</div>
+			
+			<div class="form-group col-md-6" ng-show="(userRole== 'BDM')") ng-hide="(userRole== 'AM')")>
+				<label for="contact_name">Account Manager*</label>
+				<select id="accountManger" name="accountManger" class="form-control" ng-model="accountManger" required>
+					<option value="" selected ng-disabled="true">-- Select Account Manager --</option>
+					<option ng-repeat="accountManger in accountMangerList" value={{accountManger.id}} >{{accountManger.name}}</option>
+				</select>
+					<span style = "color:red" ng-show = "clientForm.accountManger.$touched && clientForm.accountManger.$invalid">  
+		                <span ng-show = "clientForm.accountManger.$error.required"> Account Manager is required</span>  
+		            </span>	
+			</div>
+				<div class="form-group col-md-6" ng-show="(userRole== 'AM')" ng-hide="(userRole== 'BDM')">
+				<label for="contact_name">Account Manager</label>
+				<!-- <select id="accountManger" name="accountManger" class="form-control" ng-model="accountManger" required>
+					<option value="" selected ng-disabled="true">-- Select Account Manager --</option>
+					<option ng-repeat="accountManger in accountMangerList" value={{accountManger.id}} >{{accountManger.name}}</option>
+				</select> -->
+				<input type="text" ng-model="user.userName"  class="form-control" disabled>
+				 <input type="hidden" ng-model="accountManger" value={{userId}}> 
+					<!-- 	<span style = "color:red" ng-show = "clientForm.accountManger.$touched && clientForm.accountManger.$invalid">  
+		                       <span ng-show = "clientForm.accountManger.$error.required"> Primary BDM is required</span>  
+		                   </span> -->
+					<!-- <span style = "color:red" ng-show = "clientForm.accountManger.$touched && clientForm.accountManger.$invalid">  
+		                <span ng-show = "clientForm.accountManger.$error.required"> Account Manager is required</span>  
+		            </span>	 -->
+			</div>
+			<div class="form-group col-md-6">
+			<label for="leadName">Lead*</label>
+			<select id="leadName" name="leadName" class="form-control" ng-model="leadName" required>
+			<option value="" selected ng-disabled="true">-- Select Lead --</option>
+						<option value="{{leads.id}}" ng-repeat="leads in getLeadsList"  >{{leads.fullNameOfUser}}</option>
+					</select>
+					<span style = "color:red" ng-show = "clientForm.leadName.$touched && clientForm.leadName.$invalid">  
+                        <span ng-show = "clientForm.leadName.$error.required"> Lead Name is required</span>  
+                    </span>	
+		</div>
+		</div>
+	
+	 
+		
+                       </fieldset>
+    </form>
+   
+    </div>
+    
+    <div class="col-md-6">
+     <form name="myForm"  novalidate  id="myForm">
+    <fieldset class="well .scheduler-border"
+			style="width: 790px; height: auto; margin: 0px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+			<legend
+				style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+				align="left"> Address Details </legend>
+				
+
+<div class="col-md-12">
+    <button class="btn btn-info pull-left" style="margin-top: -34px;"  ng-show='svaeupdate'  ng-click="addAddress()">Save</button>
+   <button class="btn btn-success pull-right" style="margin-top: -34px;"  ng-show='updAddress1' ng-click="updateAddress()" >Update</button> 
+   
+   <button class="btn btn-info pull-left" style="margin-top: -34px;"  ng-show='routebtn1' ng-click="addAddress()">Save</button>
+   <button class="btn btn-success pull-right" style="margin-top: -34px;"  ng-show='routbtn2' ng-click="updateAddress()">Update</button> 
+   
+   
+     <a href="#!/viewClientContact" class="btn btn-info pull-right"  style="margin-top: -34px;margin-left:450px;">Cancel</a>
+		</div>			
+	<div class="row" style="margin-top:25px">
+	
+	<div class="form-group col-md-6">
+			<label for="contact_name">Address Type<sup>*</sup></label>
+			 
+		<!-- 	<select ng-model="addressId" id="addressId" class="form-control">
+      <option ng-repeat="x in addressType" value="{{x.id}}">{{x.typeOfAddress}}</option>
+             </select>
+             -->
+         <!--    <select  ng-change="fun(id)"
+      ng-model="id" 
+      ng-options="option.typeOfAddress for option in addressType" class="form-control">
+    </select>
+          -->
+          <select name="users" ng-model="id" class="form-control">
+<option value="">--Select Address Type--</option>
+<option ng-repeat="option in addressType" value="{{option.id}}">{{option.typeOfAddress}}</option>
+</select>
+			</div>
+			
+			</div>
+			<div class="form-group" id="displayblock">
+			<form name="myForm" novalidate>
+             <div class="row">
+             	<div class="form-group col-md-6">
+				<label for="contact_name">Street 1<sup>*</sup>:</label>
+					<input type="text" ng-model="address2" class="form-control" placeholder="Enter City Name" ng-disabled="false" name="street1" required/>
+					 <div ng-messages="myForm.street1.$error"
+						ng-if="myForm.street1.$touched">
+						<div ng-message="required">*This is required</div>
+					</div>
+				</div>
+					<div class="form-group col-md-6">
+				<label for="contact_name">Street 2 <sup>*</sup>:</label>
+					<input type="text" ng-model="address1" class="form-control" placeholder="Enter City Name" ng-disabled="false" name="street2" required/>
+					 <div ng-messages="myForm.street2.$error"
+						ng-if="myForm.street2.$touched">
+						<div ng-message="required">*This is required</div>
+					</div>
+				</div>
+				
+				<div class="clearfix"></div>
+				<div class="form-group col-md-6">
+					<label for="contact_name">Country <sup>*</sup>:</label>
+					<input type="text"  class="form-control" ng-model="clientCountry" placeholder="Enter Country Name" name="country"ng-disabled="false" required/>
+						<!-- <span style="color:red" ng-show="myForm.country.$dirty && myForm.country.$invalid" class="ng-hide">   
+	                  Enter Country
+	                   </span> -->
+	                    <div ng-messages="myForm.country.$error"
+						ng-if="myForm.country.$touched">
+						<div ng-message="required">*This is required</div>
+					</div>
+				</div>
+					<div class="form-group col-md-6">
+				<label for="contact_name">State <sup>*</sup>:</label>
+					<input type="text"  class="form-control" ng-model="clientState"	placeholder="Enter State Name" name="state" ng-disabled="false"/ required>
+					<!-- <span style="color:red" ng-show="myForm.state.$dirty &&myForm.state.$touched" class="ng-hide">   
+	                  *This is required
+	                   </span> -->
+	                  <!--  <span style="color:red" ng-show="myForm.state.$touched" class="ng-hide">   
+	                  Enter State
+	                   </span> -->
+	                   <div ng-messages="myForm.state.$error"
+						ng-if="myForm.state.$touched">
+						<div ng-message="required">*This is required</div>
+					</div>
+				</div>						
+				<div class="clearfix"></div>		
+			</div>			
+			 <div class="row">						
+				<div class="form-group col-md-6">
+	             <label for="contact_name">Pincode<sup>*</sup>:</label>
+	                <input type="text"  class="form-control"  maxlength="6" placeholder="Enter Pincode" ng-pattern="/^[1-9][0-9]{5}$/" name="pincode" ng-model="pincode" numbers-only required/>  
+	                  <br/>      
+	                <span style="color:red" ng-show="myForm.pincode.$dirty && myForm.pincode.$invalid" class="ng-hide">   
+	                  Enter Valid Pincode  
+	                   </span>  
+	                    <div ng-messages="myForm.pincode.$error"
+						ng-if="myForm.pincode.$touched">
+						<div ng-message="required">*This is required</div>
+					</div>
+                  </div>             
+	     	</div>
+
+	<h3>Address Details</h3>
+  <ul class="list-group" style="overflow:hidden; overflow-y:scroll;height:150px;">
+    <li class="list-group-item"  ng-repeat="item in updatedList">
+    {{item.typeOfAddress.typeOfAddress}},{{item.addressLane1}},<br>
+    {{item.addressLane2}},{{item.state}},<br>
+    {{item.country}},{{item.city}}<br>
+    {{item.pincode}}<br>
+    <button class="btn btn-info pull-right" style="margin-top: -34px;"  ng-click=editAddress(updatedList,item,$index)>Edit</button> 
+	
+  
+    </li>
+  </ul>
+		</div>		 
+                       </fieldset>
+    </form>
+   
+    </div>
+    </div>
+    
+    </div>
+
+<div class="modal fade" id="response" role="dialog" >
+		<div class="modal-dialog" style="width:45%;height:auto;">   
+		<div class="modal-content">
+			
+        <div class="modal-header">
+		
+		<h4>Add Contact</h4>
+         </div>       
+      
+        <div class="modal-body">
+		<div class="container">
+		
+		<p style="color:green;">{{responseMes}}</p>
+	     
+	    </div>
+        </div>	
+        <div class="modal-footer">
+		<a ng-show="ok"  class="btn btn-info pull-right" data-dismiss="modal" ng-click="redirect()">OK</a>
+       
+        </div>
+		
+        </div>
+        </div>
+	    </div>
+
+
+
+
+
+
+
+
+
+    	

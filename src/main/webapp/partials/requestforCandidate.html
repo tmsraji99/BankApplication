@@ -1,0 +1,268 @@
+<div ng-show="isLoading" class="Applicationloader">
+     <img  src="images/rpoloader.gif">
+  </div>
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>Search Candidate</h3>
+			</li>
+		</ol>
+		<ol class="breadcrumb">
+			<div class="col-md-10">
+				<input class="form-control" style="width: 25%" type="search"
+					ng-model="mobile" placeholder="Search with mobile" maxlength="10"
+					minlength="10">
+			</div>
+			<div class="col-md-2 pull-right">
+				<button class="btn btn-info btn-md pull-center"
+					ng-click="reqForCandidate()">Search</button>
+			</div>
+		</ol>
+		
+		<!-- <table class="table table-hover datatable" id="CandidateSubmissions" >
+			<thead class="col-md-6">
+				<tr>
+					<th class="text-left">CandidateId</th>
+					<th class="text-left" >Candidate Name</th>
+					<th class="text-left">Candidate Source</th>
+					<th class="text-left" >Email</th>
+					<th class="text-left">Mobile</th>
+					<th class="text-left">Total Experience</th>
+					<th class="text-left">Relevant Experience</th>
+				</tr>
+			</thead>
+			<thead class="col-md-6">
+			<tr>
+					<th class="text-left">Current CTC</th>
+					<th class="text-left">Expected CTC</th>
+					<th class="text-left">Salary Negotiables</th>
+					<th class="text-left">Notice Period</th>
+					<th class="text-left">Willing To Relocate</th>
+					<th class="text-left">Skills</th>
+					<th class="text-left">Qualifications</th>
+					<th class="text-left">Request For Candidate</th>
+					</tr>
+			</thead>
+			<tbody>
+				<tr>
+				<td class="text-left">
+				<a data-toggle="modal"
+						data-target="#view" title="View Candidate"  style="color: blue; cursor: pointer;">{{mobileNumberlist.id}}</a></td>
+						<td class="text-left"> {{mobileNumberlist.firstName}}&nbsp;&nbsp;{{mobileNumberlist.lastName}}</td>
+						<td class="text-left"> {{mobileNumberlist.candidateSource}}</td>
+						<td class="text-left"> {{mobileNumberlist.email}}</td>
+						<td class="text-left"> {{mobileNumberlist.mobile}}</td>
+						<td class="text-left"> {{mobileNumberlist.totalExperience}}</td>
+						<td class="text-left"> {{mobileNumberlist.relevantExperience}}</td>
+						<td class="text-left"> {{mobileNumberlist.currentCTC}}</td>
+						<td class="text-left"> {{mobileNumberlist.expectedCTC}}</td>
+						<td class="text-left"> {{mobileNumberlist.salaryNegotiable}}</td>
+						<td class="text-left"> {{mobileNumberlist.noticePeriod}}</td>
+						<td class="text-left"> {{mobileNumberlist.willingtoRelocate}}</td>
+						<td class="text-left"> <span ng-repeat= "skills in skillslist">{{skills.skillName}}</span></td>
+						<td class="text-left"> <span ng-repeat= "qualification in qualificationslist">{{qualification.qualificationName}}</span></td>
+						<td class="text-left"><button class="btn btn-info btn-md pull-center">Request for Candidate</button> </td>	
+				</tr>
+			</tbody>
+		</table> -->
+		
+			
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Candidate Id:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.id}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Candidate Name:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.firstName}}&nbsp;&nbsp;{{mobileNumberlist.lastName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Candidate Source:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.candidateSource}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Email:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.email}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Alternate Email:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.altenateEmail}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Mobile:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.mobile}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Alternate Mobile:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.alternateMobile}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Total Experience:(Yrs)</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.totalExperience}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Relevant Experience:(Yrs)</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.relevantExperience}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Current CTC:(PA)</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.currentCTC}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Expected CTC:(PA)</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.expectedCTC}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Salary Negotiable:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.salaryNegotiable}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Notice Period:(Days)</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.noticePeriod}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Address:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.address}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>City:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.city}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>State:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.state}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Country:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.country}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Pincode:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.pincode}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Willing to Relocate:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.willingtoRelocate}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Skype ID:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.skypeID}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Current Job Type:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.currentJobType}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>PayRoll Company Name:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.payRollCompanyName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Current Company Name:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.currentCompanyName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>PAN CARD Number:</label>
+								</div>
+								<div class="col-lg-6">{{mobileNumberlist.pancardNumber}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Education:</label>
+								</div>
+								<div class="col-lg-6">
+									<ol>
+										<li ng-repeat="qualification in qualificationslist">{{qualification.qualificationName}}</li>
+									</ol>
+
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Skills:</label>
+								</div>
+
+								<div class="col-lg-6">
+									<ol>
+										<li ng-repeat="skills in skillslist ">{{skills.skillName}}</li>
+									</ol>
+
+								</div>
+							</div>
+
+							 <div class="row">
+								<div class="col-sm-6">
+									<label>Certificate Name:</label>
+								</div>
+
+								<div class="col-lg-6">
+									<ol>
+										<li ng-repeat="certificates in certificatesList">{{certificates.certificationName}}</li>
+									</ol>
+								</div>
+							</div>
+							 <div class="row">
+								<div class="col-sm-6">
+									<label>Recruiter Name:</label>
+								</div>
+
+								<div class="col-lg-6">{{recruiterName}}
+									
+								</div>
+							</div>
+								<div class="col-md-12">
+									<button class="btn btn-info pull-right" ng-click="reqCan()" >Request for Candidate</button>
+								</div>
+					
+						</div>
+					</div>
+				</div>

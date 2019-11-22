@@ -1,0 +1,129 @@
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+	<div class="container-fluid"  style="margin-top: 60px;" >
+
+		<!-- new existin code here -->
+		<!-- Breadcrumbs-->
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>Edit Details</h3>
+			</li>
+
+		</ol>
+		<form name="userForm" class="myForm" required novalidate>
+			<div class="row">
+				<div class="form-group col-lg-4">
+					<label for="user_role">Role*</label>
+					<div>
+						<select name="userRole" ng-model="incentiveConfig.role"
+							style="width: 100%; height: 33.33px" class="form-control"
+							required>
+							<option value="">Choose Role</option>
+							<option value="Admin">ADMIN</option>
+							<option value="BDM">BDM</option>
+							<option value="recruiter">Recruiter</option>
+							<option value="AM">Account Manager</option>
+							<option value="Lead">Team Lead</option>
+							<option value="FinanceLead">Finance Lead</option>
+							<option value="FinanceExecutive">Finance Executive</option>
+							<option value="Management">Management</option>
+							<option value="MIS">MIS</option>
+						</select>
+
+						<div ng-messages="userForm.userRole.$error"
+							ng-if="userForm.userRole.$touched">
+							<div ng-message="required">Choose any Option</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="user_fname">Target*</label> <input type="text"
+						name="target" placeholder="Enter Target"
+						ng-model="incentiveConfig.target" required class="form-control" />
+					<div ng-messages="userForm.target.$error"
+						ng-if="userForm.target.$touched">
+						<div ng-message="required">This field is required</div>
+					</div>
+
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="user_fname">Amount*</label> <input type="text"
+						name="amount" placeholder="Enter Amount"
+						ng-model="incentiveConfig.amount" required class="form-control" />
+					<div ng-messages="userForm.amount.$error"
+						ng-if="userForm.amount.$touched">
+						<div ng-message="required">This field is required</div>
+					</div>
+
+				</div>
+              	<div class="form-group col-lg-4">
+					<label for="value type">Value Type*</label>
+					<div>
+						<select name="value type" ng-model="incentiveConfig.valueType"
+							style="width: 100%; height: 33.33px" class="form-control"
+							required>
+							<option value="">Choose Value Type</option>
+							<option value="%">%</option>
+							<option value="fixed">Fixed</option>
+						</select>
+
+						<div ng-messages="userForm.valuetype.$error"
+							ng-if="userForm.valuetype.$touched">
+							<div ng-message="required">Choose any Option</div>
+						</div>
+					</div>
+				</div>
+                <div class="form-group col-lg-4">
+					<label for="rule">Rule*</label>
+					<div>
+						<select name="rule" ng-model="incentiveConfig.rule"
+							style="width: 100%; height: 33.33px" class="form-control"
+							required>
+							<option value="">Choose Rule Type</option>
+							<option value="=">=</option>
+							<option value=">=">>=</option>
+						</select>
+						<div ng-messages="userForm.rule.$error"
+							ng-if="userForm.rule.$touched">
+							<div ng-message="required">Choose any Option</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="iscountable">Is Countable*</label> 
+					 <input type="checkbox" ng-model="incentiveConfig.iscountable">
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="minctc">Min CTC*</label> <input type="text"
+						name="minctc" placeholder="Enter Min CTC"
+						ng-model="incentiveConfig.min_ctc" required class="form-control" />
+					<div ng-messages="userForm.minctc.$error"
+						ng-if="userForm.minctc.$touched">
+						<div ng-message="required">This field is required</div>
+					</div>
+
+				</div>
+               <div class="form-group col-lg-4">
+					<label for="maxctc">Max CTC</label> <input type="text"
+						name="max_ctc" placeholder="Enter Max CTC"
+						ng-model="incentiveConfig.max_ctc" required class="form-control" />
+				</div>
+
+			</div>
+			<div class="row">
+				<!--  ng-disabled="userForm.$invalid"  -->
+				<div class="form-group col-lg-12">
+					<button class="btn btn-success pull-right" data-toggle="modal"
+						data-target="#response" ng-disabled="userForm.$invalid"
+						ng-click="updateincentiveConfig()">Update</button>
+					<a href="#!/incentivesConfiguration" type="button"
+						class="btn btn-info pull-left">Cancel</a>
+<!-- 					<div class="form-group col-lg-4">
+						<button type='reset' class="btn btn-info pull-left">Reset</button>
+					</div> -->
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

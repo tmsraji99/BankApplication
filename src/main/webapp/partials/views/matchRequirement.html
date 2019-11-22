@@ -1,0 +1,325 @@
+<div ng-show="isLoading" class="Applicationloader">
+     <img  src="images/rpoloader.gif">
+  </div>
+<div ng-include="'partials/header.html'"></div>
+ <div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper" ng-init="getCandidateDetails();getRequirementDetails();">
+    <div class="container-fluid" style="margin-top: 60px;">
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Candidate Details </h3>
+        </li>
+        
+        </ol>
+        
+		<div class="col-md-4">
+		<fieldset class="well .scheduler-border"
+			style="width: 790px; height: auto; margin: 0px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+			<legend
+				style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+				align="left">Candidate Details </legend>
+				<div class="row">
+				
+				
+					<div class="col-md-5">
+					    <li class="list-group-item"><strong>Name</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateDetails.firstName}} {{candidateDetails.lastName}}</li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>Education</strong></li>
+					 </div>
+					   <div class="col-md-7">
+					    <li class="list-group-item"><span ng-repeat="x in education">{{x.qualificationName}} , </span></li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>Skills</strong></li>
+					 </div>
+					   <div class="col-md-7">
+					   <li class="list-group-item"><span ng-repeat="x in skills">{{x.skillName}}, </span></li>
+					 </div>
+					  <div class="col-md-5 ">
+					    <li class="list-group-item"><strong>Total Experience</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateDetails.totalExperience}}</li>
+					 </div>
+					  <div class="col-md-5">
+					    <li class="list-group-item"><strong>Relevant Experience</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateDetails.relevantExperience}}</li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>Current CTC</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateDetails.currentCTC | currency:"₹ " }}</li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>Expected CTC</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateDetails.expectedCTC | currency:"₹ "}}</li>
+					 </div>
+					  <div class="col-md-5">
+					    <li class="list-group-item"><strong>Salary Negotiable</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateDetails.salaryNegotiable}}</li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>Notice Period</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateDetails.noticePeriod}}</li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>Willing to Relocate</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateDetails.willingtoRelocate}}</li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>PayRoll CompanyName</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateDetails.payRollCompanyName}}</li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>Current CompanyName</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateDetails.currentCompanyName}}</li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>Certificates</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item"><span ng-repeat="x in certificates">{{x.certificationName}}, </span></li>
+					 </div>
+				</div>
+		</fieldset>
+		</div>
+		<div class="col-md-8">
+		<fieldset class="well .scheduler-border"
+			style="width: 790px; height: auto; margin: 0px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+			<legend
+				style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+				align="left"> Requirement Details </legend>
+				
+				<!-- Total Number Of Records {{length}} -->
+			<!--  <div class="row" ng-repeat="records in requirementDetails | firstPage:currentPage*pageSize | limitTo:pageSize"> -->
+				<!-- 
+				 <div class="row" dir-paginate="records in requirementDetails | itemsPerPage:1" style="margin-top: -85px;">
+				 <div class="col-md-12 text-right">
+				  <button type="button" class="btn btn-info" style="margin-top: 47px;" ng-click="mapCandidateToReq(records)">Map to Requirement</button>
+					<dir-pagination-controls direction-links="true" style="margin-top: 22px; padding: 5px;" pageNumber="false" template-url="partials/views/dirPagination.tpl.html" class="hide-page-numbers pull-right"></dir-pagination-controls>				
+				</div>
+			-->
+					 
+					   <!-- <div class="form-group col-md-6">
+					   <input type="text" placeholder="Search Here.." ng-model="searchText" class="form-control" id="search" style="margin-left: -14px;">
+					   </div> -->
+					  <!--  <div class="form-group  col-md-6">
+					 
+					   </div> -->
+					   <div class="row"> 
+      	<div class="col-md-6 mb-4">
+      		<div class="row">    
+      			<div class="col-sm-6">
+			       Search By Category
+				     <select class="form-control" ng-model="searchcategory" style="border-radius:0">
+				     <option value="" selected>--Select --</option>
+				     <option value="clientName">Client Name</option>
+				     <option value="nameOfRequirement">Requirement Name</option>
+				     </select>
+			      </div>
+      			<div class="col-sm-6">
+			       <input class="form-control"  type="search" ng-model="searchtext" placeholder="Search Here.." style="margin-top:21px;border-radius:0">
+			     </div>
+      		</div> 
+     	</div>
+       	<div class="col-md-6 mb-4">
+	      <div class="row">    
+	      	<div class="col-sm-4">
+			      Sort By
+			        <select class="form-control" ng-model="order" style="border-radius:0">
+			        <option value="" selected>--Select --</option>
+				     <option value="clientName">Client Name</option>
+				     <option value="nameOfRequirement">Requirement Name</option>
+			     </select>
+		      </div>
+		      <div class="col-sm-4">
+		         Order By
+			     <select class="form-control"  ng-model="by" style="border-radius:0">
+			      <option value="" selected>--Select --</option>
+			     <option value="asc">Ascending</option>
+			     <option value="desc">Descending</option>
+			     </select>
+		      </div>
+		      <div class="col-sm-2 mt-4 pt-2">
+		      <button class="btn btn-primary btn-sm" ng-click="searchText()">Search</button> 
+		      </div>
+		        <div class="col-sm-2  mt-4 pt-2">
+		      <button class="btn btn-danger btn-sm" ng-click="clearText()">Reset</button> 
+		      </div>
+      		</div>   
+     </div>
+     <!-- <div class="col-md-2">
+      <p class="mt-5">Total Number of Records :
+      <strong class="text text-info">{{ListReqData.length}}</strong><p>
+      </div> --> 
+      <div class="col-md-12 mb-4">
+	      <div class="row">    
+	      	<div class="col-md-8">     
+		      <select class="form-control" ng-model="pageSize" style="width:65px;margin-bottom: 6px;">
+		      <option>10</option>
+		      <option>15</option>
+		      <option>20</option>
+		      <option>25</option>
+		      </select>
+		        <span style="margin-right: 8px; margin-top: 6px;"class="text text-info">Items per page{{totalCount}}</span>
+		  </div>
+		  <div class="col-md-4 ">   
+		   <button type="button" class="btn btn-success pull-right" ng-click="mapCandidateToReq()">Map Candidate</button>
+      		</div>   
+     </div>    
+	       
+	      <!-- <div class="col-md-2 mt-4 pt-2">
+	    	<a href="#!/bdmreqdtls" class="btn btn-success btn-md right" style="margin-left: 70px;">Add Requirement</a> 	
+	   	 </div> -->
+     </div>
+					   
+	<table class="table">
+    <thead>
+      <tr>
+        <th>Select</th>
+        <th>Req.Id</th>
+        <th>Req.Name</th>
+     <!--    <th>Skills</th> -->
+<!--         <th>Location</th> -->
+        <th>Client Name</th>
+        <th>Notice Period</th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="x in requirementDetails|filter:test">
+        <td>
+      <input type="radio" ng-model="$parent.SelectedReqId"
+                    value="{{x.id}}" />
+       </td>
+        <td>{{x.id}}</td>
+        <td>{{x.nameOfRequirement}}</td>
+       <!--  <td>
+        <table>
+        <tr ng-repeat="i in x.skills">
+        <td>{{i.skillName}}</td>
+        </tr>
+        </table>
+        </td> -->
+        <!-- <td>{{x.jobLocation}}</td> -->
+        <td>{{x.clientName}}</td>
+        <td>{{x.noticePeriod}}</td>
+        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" ng-click="reqDetails(x)">View</button></td>
+      </tr>
+    </tbody>
+  </table>
+				<div class="col-md-12 text-center">
+				<b>{{noData}}</b>
+				</div>	 
+	<div class="col-md-12" ng-show="requirementDetails.length>0">
+			<div class="float-right">
+				<ul uib-pagination total-items="totalCount" max-size="maxSize"
+					items-per-page="pageSizeSelected" boundary-links="true"
+					rotate="false" num-pages="numPages" direction-links="true"
+					ng-model="pageIndex" ng-change="pageChanged()"></ul>
+			</div>
+		</div>
+		</fieldset>
+		</div>
+				
+        </div>
+            <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+       <h4 class="modal-title">Requirement Details</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+       
+      </div>
+      <div class="modal-body">
+      <div class="row">
+  <div class="col-sm-5"><strong>Customer Name :</strong></div>
+  <div class="col-sm-5">{{ReqDetails.addContact.contact_Name}}</div>
+    </div><br>
+     <div class="row">
+  <div class="col-sm-5"><strong>Name Of Requirement :</strong></div>
+  <div class="col-sm-5">{{ReqDetails.nameOfRequirement}}</div>
+    </div><br>
+     <div class="row">
+  <div class="col-sm-5"><strong>Skills :</strong></div>
+  <div class="col-sm-5"><p ng-repeat='item in skills'>{{item.skillName}}</p></div>
+    </div><br>
+      <div class="row">
+  <div class="col-sm-5"><strong>Relevant Experience :</strong></div>
+  <div class="col-sm-5">{{ReqDetails.relavantExperience}}</div>
+    </div><br>
+    <div class="row">
+  <div class="col-sm-5"><strong>Min. Budget :</strong></div>
+  <div class="col-sm-offset-1 col-sm-5">{{ReqDetails.minBudget}}</div>
+    </div><br>
+    <div class="row">
+  <div class="col-sm-5"><strong>Max. Budget :</strong></div>
+  <div class="col-sm-5">{{ReqDetails.maxBudget}}</div>
+    </div><br>
+    <div class="row">
+  <div class="col-sm-5"><strong>Type of Hiring :</strong></div>
+  <div class="col-sm-5">{{ReqDetails.typeOfHiring}}</div>
+    </div><br>
+     <div class="row">
+  <div class="col-sm-5"><strong>Job Location :</strong></div>
+  <div class="col-sm-5">{{ReqDetails.location.locationName}}</div>
+    </div><br>
+    
+   <div class="row">
+  <div class="col-sm-5"><strong>Number of position :</strong></div>
+  <div class="col-sm-5">{{ReqDetails.numberOfPositions}}</div>
+    </div><br>
+    <div class="row">
+  <div class="col-sm-5"><strong>Qualification :</strong></div>
+  <div class="col-sm-5"><p ng-repeat="items in ReqDetails.qualifications">{{items.qualificationName}}</p></div>
+ 
+       
+      </div><br>
+      <div class="row">
+  <div class="col-sm-5"><strong>Job Description :</strong></div>
+  <div class="col-sm-5">{{ReqDetails.jobDes}}</div>
+
+      </div><br>
+      <div class="row">
+  <div class="col-sm-5"><strong>Requirement Description :</strong></div>
+  <div class="col-sm-5">{{ReqDetails.requirementDescription}}</div>
+
+      </div><br>
+      
+      <div class="row">
+  <div class="col-sm-5"><strong>Certificates :</strong></div>
+  <div class="col-sm-5"><p ng-repeat="itemss in ReqDetails.certificates">{{itemss.certificationName}}</p></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+        </div>
+        
+        </div>
+        </div>
+    

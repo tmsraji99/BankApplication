@@ -1,0 +1,82 @@
+
+
+
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+
+
+<div class="content-wrapper"  ng-init="getBillingList();">
+    <div class="container-fluid" style="margin-top: 60px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Users</h3>
+        </li>
+      </ol>
+       <ol class="breadcrumb">
+    <div class="col-md-10">
+    <input class="form-control" style="width:25%" type="search" ng-model="test" placeholder="Search">
+    </div>
+
+   
+    </ol>
+    <table class="table col-lg-10 table-bordered">
+		<thead>
+			<tr>
+			<th>Billing Model</th>
+			<th>Edit</th>
+			<th>Delete</th>
+   		 </tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat = "bList in billingListS|filter:test">
+				<td>
+				 {{bList.billingModel}}
+				
+				<input type="text" class="form-control"  ng-if="isEditable" ng-model="bList.billingModel"/>
+				</td>
+				<td><button  class="btn btn-primary"  data-toggle="modal" class="btn btn-primary" data-target="#myModal" ng-click="popupdata(detail.id)" ><span class="glyphicon glyphicon-pencil"></span></button><button  class="btn btn-primary" ng-if="isEditable" ng-click="saveEditBilling(bList);">Save</button></td>
+				<td><button  class="btn btn-primary" ng-if="!isEditable" ng-click=""><span class="glyphicon glyphicon-trash"></span></button></td>  
+			</tr>
+			
+			
+		</tbody>
+	</table>
+    </div>
+    	
+	 <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">      
+      <div class="modal-content">
+        <div class="modal-header">
+		<h4>Edit Billing Model</h4>
+		<button type="button" data-dismiss="modal" class="close">&times;</button>
+         </div>             
+        <div class="modal-body">
+		<form class="form-horizontal" name="myForm">
+		<div class="form-group">
+		<label class="control-label col-sm-4" for="role">Billing Model:</label>
+		<div class="col-sm-6">
+		<input class="form-control" type="text" placeholder="Enter billing Model" id="name" ng-model="billingModel" name="mode" required>
+		<span style="color:red"; ng-show="myForm.mode.$touched && myForm.mode.$invalid">This Field is required</span>
+		</div>
+		</div>
+		</form>
+        </div>
+        <div class="modal-footer">
+			<button class="btn btn-success pull-right" data-dismiss="modal" ng-click="saveEditBilling(billingModel);" ng-disabled="myForm.$invalid">Update</button>
+	        <button class="btn btn-danger pull-left"data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+      </div>
+	  </div>
+	   <div class="panel-footer">
+	 <div class="row" ng-if="isSaveFiled">
+	 <div class="col-md-8">
+			 <input type="text" class="form-control" ng-model="billingModel"/>
+	 </div>
+	 <div class="col-md-4">
+	 	<button class="btn btn-primary pull-center" placeholder="Enter Billing Model" ng-click="saveValues(billingModel);">Save</button>
+	 </div>
+	 </div>
+		<button class="btn btn-primary pull-right" ng-if="!isSaveFiled" ng-click="saveV();">Add</button>
+	</div>
+    </div>

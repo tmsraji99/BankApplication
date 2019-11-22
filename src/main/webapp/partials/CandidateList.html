@@ -1,0 +1,1643 @@
+<div ng-show="isLoading" class="Applicationloader">
+	<img src="images/rpoloader.gif">
+</div>
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;">
+
+		<!-- new existin code here -->
+		<!-- Breadcrumbs-->
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>
+					<i class="fa fa-envelope" aria-hidden="true"></i> &nbsp;Candidate
+					Submissions
+				</h3>
+			</li>
+
+		</ol>
+
+		<div class="row">
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-sm-6">
+						Search By Category <select class="form-control"
+							ng-model="searchcategory" style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="candidate_id">Candidate Id</option>
+						</select>
+					</div>
+					<div class="col-sm-6 ">
+						<input class="form-control" type="search" ng-model="searchtext"
+							placeholder="Search Here.."
+							style="margin-top: 21px; border-radius: 0">
+						<!-- <span class="glyphicon glyphicon-search" ng-click="searchsub(searchitem)"  style="
+position: absolute;font-size: 17px; color: #337ab7;right: 22px;top: 31px;z-index: 10;cursor: pointer;"></span> -->
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-sm-4">
+						Sort By <select class="form-control" ng-model="order"
+							style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="clientName">Client Name</option>
+							<option value="candidateName">Candidate Name</option>
+							<option value="candidateStatus">Candidate Status</option>
+							<option value="nameOfTheReq">Requirement Name</option>
+							<option value="nameOftheRecruiter">Recruiter Name</option>
+						</select>
+					</div>
+					<div class="col-sm-4">
+						<!--    <input class="form-control"  type="search" ng-model="searchitem.searchtext" placeholder="Search Here.." style="margin-top:21px;border-radius:0">
+      <span class="glyphicon glyphicon-search" ng-click="searchsub(searchitem)"  style="
+position: absolute;font-size: 17px; color: #337ab7;right: 22px;top: 31px;z-index: 10;cursor: pointer;"></span> -->
+						Order By <select class="form-control" ng-model="by"
+							style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="asc">Ascending</option>
+							<option value="desc">Descending</option>
+						</select>
+					</div>
+					<div class="col-sm-2 mt-4 pt-2">
+						<button class="btn btn-primary btn-sm" ng-click="searchText()">Search</button>
+					</div>
+					<div class="col-sm-2 mt-4 pt-2">
+						<button class="btn btn-danger btn-sm" ng-click="clearText()">Reset</button>
+					</div>
+				</div>
+
+
+			</div>
+			<!--      <div class="col-md-2">
+      <p class="mt-5">Total Number of Records :
+      <strong class="text text-info">{{candidatelist.length}}</strong><p>
+      </div> -->
+
+			<div class="col-md-4 mt-4 pt-2">
+
+				<select class="form-control pull-right" ng-model="pageSize"
+					style="width: 65px; margin-bottom: 6px;">
+					<option>10</option>
+					<option>15</option>
+					<option>20</option>
+					<option>25</option>
+				</select> <span style="margin-right: 8px; margin-top: 6px;"
+					class="pull-right text text-info">Items per
+					page{{totalCount}}</span>
+			</div>
+
+		</div>
+		<table class="table table-hover datatable" id="CandidateSubmissions"
+			ui-jq="dataTable" ui-options="dataTableOpt">
+			<thead>
+				<tr>
+					<th class="text-left" ng-click="sortData('candidateid')">Candidate
+						Id
+						<div ng-class="getSortClass('candidateid')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('candidateName')">Candidate
+						Name
+						<div ng-class="getSortClass('candidateName')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('bdmReqId')">Req
+						Id
+						<div ng-class="getSortClass('bdmReqId')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('nameOfTheReq')">Requirement
+						
+						<div ng-class="getSortClass('nameOfTheReq')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('clientName')">Client
+						
+						<div ng-class="getSortClass('clientName')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('nameOftheRecruiter')">Recruiter
+						<div ng-class="getSortClass('nameOftheRecruiter')"></div>
+					</th>
+					
+					<th class="text-left" ng-click="sortData('lastUpdatedDate')">
+						Updated On
+						<div ng-class="getSortClass('lastUpdatedDate')"></div>
+					</th>
+	               <th class="text-left" ng-click="sortData('typeOfHiring')">
+						Type
+						<div ng-class="getSortClass('typeOfHiring')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('ctc')">
+						CTC
+						<div ng-class="getSortClass('ctc')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('candidateStatus')">
+						Status
+						<div ng-class="getSortClass('candidateStatus')"></div>
+					</th>
+				
+
+					<th class="text-left" ng-show="(role =='Lead' || role =='AM')">Review</th>
+					<th class="text-left">Next Step</th>
+					<th class="text-left"
+						ng-show="(role =='AM' || role =='BDM' ||role =='Lead')">
+						 Status</th>
+					<th class="text-center">Resume</th>
+					<th class="text-center">Documents</th>
+					<th class="text-center"
+						ng-show="(role == 'recruiter' || role == 'Lead')">Change
+						Requirement</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr
+					ng-repeat-start="list in candidatelist|filter:test|itemsPerPage:pageSize|orderBy:sortColumn:reverseSort">
+					<td class="text-left"><a data-toggle="modal"
+						data-target="#view" title="View Candidate"
+						ng-click="viewInfo(list)" style="color: blue; cursor: pointer;">{{list.candidateid}}</a></td>
+					<td class="text-left">{{list.candidateName}}</td>
+					<td class="text-left"><a data-toggle="modal"
+						data-target="#viewRequriement" title="View Requirement"
+						ng-click="viewReqInfo(list)" style="color: blue; cursor: pointer;">{{list.bdmReqId}}</a></td>
+					<td class="text-left">{{list.nameOfTheReq}}</td>
+					<td class="text-left">{{list.clientName}}</td>
+					<td class="text-left">{{list.nameOftheRecruiter}}</td>
+					<td class="text-left">{{list.lastUpdatedDate |
+						date:"dd-MM-yyyy"}}</td>
+						<td class="text-left">{{list.typeOfHiring}}</td>
+						<td class="text-left"><span ng-hide="list.ctc == 'null'">{{list.ctc}}</span></td>
+					<td class="text-left"><span
+						ng-if="list.candidateStatus == 'onHold' "> <span
+							ng-switch="getrole">
+								<p ng-switch-when="recruiter">
+									<button href="#!/onHold" ng-click="onHolddata(list.id)">{{list.candidateStatus}}</button>
+								</p>
+								<p ng-switch-when="Lead">
+									<button href="#!/onHold" ng-click="onHolddata(list.id)">{{list.candidateStatus}}</button>
+								</p>
+								<p ng-switch-when="BDM">{{list.candidateStatus}}</p>
+						</span>
+					</span> <span ng-if="list.candidateStatus == 'Query  Answer' "> <span
+							ng-switch="getrole">
+								<p ng-switch-when="BDM">
+
+									<button href="#!/onHold1" ng-click="onHolddata1(list.id)">{{list.candidateStatus}}</button>
+								</p>
+								<p ng-switch-when="recruiter">{{list.candidateStatus}}</p>
+								<p ng-switch-when="Lead">{{list.candidateStatus}}</p>
+						</span>
+					</span> <span
+						ng-if="(list.candidateStatus != 'onHold') && (list.candidateStatus != 'Query  Answer') ">
+							{{list.candidateStatus}} </span></td>
+					<td class="text-left"
+						ng-show="((role =='Lead' && list.userId !=getuserid)  || role =='AM')">
+						<span ng-show="(list.candidateStatus=='Submitted for Review')"><a
+							href="" ng-click="canReqDetails(list)" style="color: green">Review</a>
+					</span>
+					</td>
+					<td class="text-left"><span ng-switch="list.candidateStatus">
+							<p ng-switch-when="onHold">
+								<span
+									ng-if="((getrole == 'recruiter') || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-primary btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span> <span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="Submitted for Review">
+								<span
+									ng-if="(getrole == 'recruiter' ||  (getrole == 'Lead' && list.userId ==getuserid))">
+									<button
+										class="btn btn-default btn-xs width-full width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span> <span
+									ng-if="(getrole == 'BDM' || getrole == 'AM' ||( getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="Rejected">
+								<span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span> <span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">{{list.candidateStatus}}</button>
+								</span>
+							</p>
+							<p ng-switch-when="REGISTERED">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span> <span ng-if="(getrole == 'recruiter' || getrole == 'Lead') ">
+									<button
+										class="btn btn-default btn-xs width-full width-full   pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Type
+										Of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="Submitted to Customer">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM' || (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-info btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Waiting
+										for Customer Feedback</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="Offer Status">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM' || (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="Rejected By Lead">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM' || (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid)) ">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="Customer Rejected">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM' || (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-danger btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">{{list.candidateStatus}}</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' ||(getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-danger btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="pending Review">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid) )">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Type
+										Of Process</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid)) ">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="Accepted By Lead">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-success btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Submit
+										to Customer</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Waiting for submit to
+										Customer</button>
+								</span>
+							</p>
+							<p ng-switch-when="Offer Pending">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Type
+										Of Process</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="Offer Release">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Release
+										Offer</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid)) ">
+									<button class="btn btn-danger btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Waiting for Offer</button>
+								</span>
+							</p>
+							<p ng-switch-when="Aproved By Lead">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Type
+										Of Process</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid)) ">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="Waiting for Interview Feedback">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Provide
+										Feed back</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button
+										class="btn btn-danger  btn-xs width-full    pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Waiting for Feed back</button>
+								</span>
+							</p>
+							<p ng-switch-when="Query  Answer">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button
+										class="btn btn-default  btn-xs width-full    pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Type
+										Of Process</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button
+										class="btn btn-default btn-xs width-full width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="Process for Interview">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-warning btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Process
+										for interview</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid)) ">
+									<button class="btn btn-danger  btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Process for Interview</button>
+								</span>
+							</p>
+							<p ng-switch-when="Feedback for Customer">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button
+										class="btn btn-default  btn-xs width-full    pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button
+										class="btn btn-default  btn-xs width-full    pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Type
+										Of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="waiting for Offer release">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button
+										class="btn btn-default  btn-xs width-full   pull-center"
+										data-dismiss="
+										modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid)) ">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Type
+										Of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="waiting for joing">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="Candidate profile Rejeceted">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type Of Process</button>
+								</span>
+							</p>
+							<p
+								ng-switch-when="Shared L1 Round Interview Details with Recruiter">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-danger btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Schedule Interview</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Schedule
+										Interview</button>
+								</span>
+							</p>
+							<p
+								ng-switch-when="Shared L2 Round Interview Details with Recruiter">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-danger btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Schedule Interview</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Schedule
+										{{list.nameOfRound}} Interview</button>
+								</span>
+							</p>
+							<p
+								ng-switch-when="Shared L3 Round Interview Details with Recruiter">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-danger btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Schedule Interview</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Schedule
+										Interview</button>
+								</span>
+							</p>
+							<p
+								ng-switch-when="Shared Clientround Round Interview Details with Recruiter">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-danger btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Schedule Interview</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Schedule
+										Interview</button>
+								</span>
+							</p>
+							<p
+								ng-switch-when="Shared HRRound Round Interview Details with Recruiter">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-danger btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Schedule Interview</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Schedule
+										Interview</button>
+								</span>
+							</p>
+							<p ng-switch-when="Document Collection">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-danger btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Collect Documents</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Collect
+										or Update Doc Status</button>
+								</span>
+							</p>
+							<p ng-switch-when="On Board">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Update
+										On Board Status</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-danger btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Waiting for On Board
+										Status</button>
+								</span>
+							</p>
+							<p ng-switch-when="Raise Invoice">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-danger btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Raise Invoice/PO</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">Waiting
+										for Invoice/PO</button>
+								</span>
+							</p>
+							<p ng-switch-when="rejected">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-danger btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Rejected</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">
+										Rejected</button>
+								</span>
+							</p>
+							<p ng-switch-when="hold">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-danger btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Hold</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-default btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-click="updatedata(list)">
+										Hold</button>
+								</span>
+							</p>
+							<p ng-switch-when="Documents VerificationFailed">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-danger btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">{{list.candidateStatus}}</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-danger btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">{{list.candidateStatus}}</button>
+								</span>
+							</p>
+							<p ng-switch-when="Not Joined">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-danger btn-xs width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">{{list.candidateStatus}}
+									</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-danger btn-xs width-full pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">{{list.candidateStatus}}</button>
+								</span>
+							</p>
+							<p ng-switch-when="candidateRejected">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-danger btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">{{list.candidateStatus}}
+									</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-danger btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">{{list.candidateStatus}}</button>
+								</span>
+							</p>
+							<p ng-switch-when="Resgined">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-danger btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type of Process</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-danger btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="Background Verification Failed">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button class="btn btn-danger btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type of Process</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-danger btn-xs width-full   pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type of Process</button>
+								</span>
+							</p>
+							<p ng-switch-when="Absconded">
+								<span
+									ng-if="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))">
+									<button
+										class="btn btn-danger btn-xs width-full width-full  pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type of Process</button>
+								</span> <span
+									ng-if="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))">
+									<button class="btn btn-danger btn-xs width-full pull-center"
+										data-dismiss="modal" ng-disabled=true
+										ng-click="updatedata(list)">Type of Process</button>
+								</span>
+							</p>
+
+							<p ng-switch-default>
+								<button class="btn btn-default btn-xs width-full  pull-center"
+									ng-click="updatedata(list)">Type Of Process</button>
+							</p>
+					</span></td>
+					<td class="text-left"
+						ng-show="(getrole == 'BDM' || getrole == 'AM'|| (getrole == 'Lead' && list.userId !=getuserid))"><span
+						ng-show="((getrole == 'BDM' || getrole == 'AM' || getrole == 'Lead') && (list.candidateStatus== 'Raise Invoice'))">
+							<button class="btn btn-success btn-xs   pull-center"
+								data-toggle="modal" data-target="#viewStatus"
+								title="View OnBoard Status" ng-click="viewInfo(list)"
+								style="cursor: pointer;">Confirm OnBoard Status</button>
+					</span></td>
+					<td class="text-center"><a id='dwnldLnk'
+						download='{{list.candidateName +"_"+list.nameOfTheReq}}.docx'
+						href="../Resumes/{{list.candidateid}}.docx"
+						class="btn btn-info btn-xs pull-center" style="color: black;"
+						title='download resume' ng-click="downloadPDF(list.candidateid)">
+							<span class="glyphicon glyphicon-download-alt"></span>
+					</a></td>
+					<td class="text-center"><a id='dwnldLnk'
+						download='{{list.candidateid}}.zip'
+						href="../Documents/{{list.candidateid}}.zip"
+						class="btn btn-info btn-xs pull-center" style="color: black;"
+						title='download documents'
+						ng-click="downloadPDF(list.candidateid)"> <span
+							class="glyphicon glyphicon-download-alt"></span></a></td>
+					<td class="text-left"
+						ng-show="(getrole == 'recruiter' || (getrole == 'Lead' && list.userId ==getuserid))"><span
+						ng-show="((getrole == 'recruiter' || getrole == 'Lead') && (list.candidateStatus== 'Submitted for Review'))">
+							<button class="btn btn-success btn-xs width-full   pull-center"
+								title="Change Requirement"
+								ng-click="changeRequirement(list.candidateid)"
+								style="cursor: pointer;">Change Requirement</button>
+					</span></td>
+					<!-- 
+					   <td>
+					  <a id='dwnldLink' download='document.docx' href="" class="btn btn-default pull-center"  style="color:black;" title='download documents' ng-click="downloadPDF(list.id)"> <span class="glyphicon glyphicon-download-alt"></span></a>
+					  </td>
+				 -->
+				</tr>
+				<tr ng-if="list.expanded" ng-repeat-end="">
+					<td class="text-left" colspan="12">
+						<div class="col-md-offset-3 col-md-5">
+							<h4 style="color: red" ng-show="!flags">No Candidates Found</h4>
+						</div>
+						<div class="col-md-4">
+							<button ng-click="movetoRequirement(x.id,x.spocName)"
+								ng-show="(!flags && role !='BDM')" type="button"
+								class="btn btn-primary btn-sm pull-right">Map Candidate</button>
+						</div>
+						<div class="clearfix"></div>
+
+						<div class="col-md-3">
+							<input class="form-control input-sm" type="search"
+								ng-model="searchReq" placeholder="Search" ng-show="flags">
+						</div>
+						<div class="col-md-6">
+							<h4 style="color: green;" ng-show="flags">Requirement
+								Details</h4>
+						</div>
+						<div class="clearfix"></div>
+						<table st-table="ListReqData" class="table table-hover"
+							ng-show="flags">
+							<thead style="font-size: 12px;">
+								<tr>
+									<th class="text-left">Req Name</th>
+									<th class="text-left">Client</th>
+									<th class="text-left">Open Date</th>
+									<th class="text-left">Valid Up to</th>
+									<th class="text-left">SPOC</th>
+									<th class="text-left">SPOC Mobile</th>
+									<th class="text-left">Email</th>
+									<th class="text-left">Skills</th>
+									<th class="text-left">Status</th>
+									<th class="text-left">Location</th>
+									<!-- <th>Candidate Map</th> -->
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									dir-paginate="y in ListReqDataa|filter:searchReq|itemsPerPage:pageInSize">
+									<td class="text-left">{{y.nameOfRequirement}}</td>
+									<td class="text-left">{{y.client.clientName}}</td>
+									<td class="text-left">{{y.startDate}}</td>
+									<td class="text-left">{{y.endDate}}</td>
+									<td class="text-left">{{y.addContact.contact_Name}}</td>
+									<td class="text-left">{{y.addContact.mobile}}</td>
+									<td class="text-left">{{y.addContact.email}}</td>
+									<td class="text-left"><span ng-repeat="z in y.skills">{{z.skillName}},</span></td>
+									<td class="text-left"><span ng-if="y.status=='Open'"
+										style="color: green;">{{y.status}}</span> <span
+										ng-if="y.status=='closed'" style="color: red;">{{y.status}}</span>
+										<span ng-if="y.status=='Hold'" style="color: orange;">{{y.status}}</span>
+									</td>
+									<td class="text-left">{{x.location.locationName}}</td>
+									<!--  <td><button class="btn btn-info" ng-click="navigationToCandidate(y);">Candidate Map</button></td> -->
+								</tr>
+							</tbody>
+						</table>
+						<div class="row">
+							<div class="col-md-2">
+								Items Per Page <select class="form-control" ng-model="pageSize"
+									style="width: 120px">
+									<option value="" selected disabled>--Select--</option>
+									<option>5</option>
+									<option>15</option>
+									<option>20</option>
+									<option>25</option>
+								</select>
+							</div>
+							<div class="col-md-2">
+								<p style="margin-top: 20px">
+									Total Number of Records <strong>{{ListReqDataa.length}}</strong>
+								<p>
+							</div>
+							<div class="col-md-8">
+
+								<!--  <dir-pagination-controls class="pull-right"></dir-pagination-controls> -->
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="col-md-12 text-center">
+			<b>{{noData}}</b>
+		</div>
+		<div class="col-md-12" ng-show="candidatelist.length>0">
+			<div class="float-right">
+				<ul uib-pagination total-items="totalCount" max-size="maxSize"
+					items-per-page="pageSizeSelected" boundary-links="true"
+					rotate="false" num-pages="numPages" direction-links="true"
+					ng-model="pageIndex" ng-change="pageChanged()"></ul>
+			</div>
+		</div>
+		<!-- View  Candidate Info  -->
+		<div class="modal fade" id="view" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">View Candidate Details:</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="col-md-12">
+						<div class="row">
+								<div class="col-sm-6">
+									<label>Applied as A:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.applyingAs}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Applied Position For</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.appliedPossitionFor}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Candidate Id:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.id}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Candidate Name:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.firstName}}&nbsp;&nbsp;{{candidatelist1.lastName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Candidate Source:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.candidateSource}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Email:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.email}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Alternate Email:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.altenateEmail}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Mobile:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.mobile}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Alternate Mobile:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.alternateMobile}}</div>
+							</div>
+							<!-- <div class="row">
+								<div class="col-sm-6">
+									<label>Related Requirement:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.bdmReq.nameOfRequirement}}</div>
+							</div> -->
+							<!-- <div class="row">
+								<div class="col-sm-6">
+									<label>Related Client:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.client.clientName}}</div>
+							</div> -->
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Total Experience:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.totalExperience +"years"+"-"+ candidatelist1.noOfMonths +"months"}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Relevant Experience:(Yrs)</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.relevantExperience}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Current CTC:(PA)</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.currentCTC}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Expected CTC:(PA)</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.expectedCTC}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Salary Negotiable:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.salaryNegotiable}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Notice Period:(Days)</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.noticePeriod}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Address:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.address}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>City:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.city}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>State:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.state}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Country:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.country}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Pincode:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.pincode}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Willing to Relocate:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.willingtoRelocate}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Current Location:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.currentLocation}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Preferred Location:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.location.locationName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Skype ID:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.skypeID}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Current Job Type:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.currentJobType}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>PayRoll Company Name:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.payRollCompanyName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Current Company Name:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.currentCompanyName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>PAN CARD Number:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.pancardNumber}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Education:</label>
+								</div>
+								<div class="col-lg-6">
+									<ol>
+										<li ng-repeat="ca in candidatelist1.education">{{ca.qualificationName}}</li>
+									</ol>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Skills:</label>
+								</div>
+								<div class="col-lg-6">
+									<ol>
+										<li ng-repeat="candi in candidatelist1.skills">{{candi.skillName}}</li>
+									</ol>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Certificate Name:</label>
+								</div>
+								<div class="col-lg-6">
+									<ol>
+										<li ng-repeat="candidat in candidatelist1.certificates">{{candidat.certificationName}}</li>
+									</ol>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="modal-footer">
+									<button class="btn btn-info pull-right" data-dismiss="modal">OK</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- View  Candidate Info End -->
+		<!-- View  Requirement  start -->
+		<div class="modal fade" id="viewRequriement" role="dialog">
+			<div class="modal-dialog" ng-init="getReqByReqId();">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">View Requirement Details:</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="col-md-12">
+							<div class="row">
+
+								<div class="col-sm-6">
+									<label>Customer Name:</label>
+								</div>
+								<div class="col-lg-6">{{reqDetails.client.clientName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Name Of Requirement:</label>
+								</div>
+								<div class="col-lg-6">{{reqDetails.nameOfRequirement}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Skills:</label>
+								</div>
+								<div class="col-lg-6">
+									<span ng-repeat="y in skills">{{y.skillName}}</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Relevant Experience:</label>
+								</div>
+								<div class="col-lg-6">{{reqDetails.relavantExperience}}years</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Min Budget:</label>
+								</div>
+								<div class="col-lg-6">{{reqDetails.minBudgetRate |
+									currency:"₹ "}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Max Budget:</label>
+								</div>
+								<div class="col-lg-6">{{reqDetails.maxBudgetRate |
+									currency:"₹ "}}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Type Of Hiring:</label>
+								</div>
+								<div class="col-md-6">{{reqDetails.typeOfHiring}}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Job Location:</label>
+								</div>
+								<div class="col-md-6">
+									<span ng-repeat="location in locations">{{location.locationName}},</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Qualification:</label>
+								</div>
+								<div class="col-md-6">
+									<span ng-repeat="e in qualifications">{{e.qualificationName}},
+									</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Roles:</label>
+								</div>
+								<div class="col-md-6">
+									<span ng-repeat="o in designations">{{o.designation}}, </span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Number Of Positions:</label>
+								</div>
+								<div class="col-md-6">{{reqDetails.numberOfPositions}}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Requirement Description:</label>
+								</div>
+								<div class="col-md-6">{{reqDetails.requirementDescription}}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Job Description:</label>
+								</div>
+								<div class="col-md-6">{{reqDetails.jobDes}}</div>
+							</div>
+							<div class="form-group">
+								<div class="modal-footer">
+									<button class="btn btn-info pull-right" data-dismiss="modal">OK</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- View  Requirement  end -->
+		<!-- View Onboard Status Start -->
+		<div class="modal fade" id="viewStatus" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">View Status:</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-md-6">
+									<label>Candidate Name:</label>
+								</div>
+								<div class="col-md-6">
+									{{candidatelist1.firstName}}&nbsp;&nbsp;{{candidatelist1.lastName}}
+								</div>
+								<div class="col-md-6">
+									<label>Email Id:</label>
+								</div>
+								<div class="col-md-6">{{candidatelist1.email}}</div>
+								<div class="col-md-6">
+									<label>Status:</label>
+								</div>
+								<div class="col-md-6 mb-2">
+									<select class="form-control" ng-model="confirmStatus">
+										<option value="Resgined" selected>Resigned</option>
+										<option value="Background Verification Failed">Background
+											Verification Failed</option>
+										<option value="Absconded">Absconded</option>
+
+									</select>
+								</div>
+								<div class="col-md-6 mb-2">
+									<label>Date:</label>
+								</div>
+								<div class="col-md-6 mb-2 mt-2">
+									<p class="input-group">
+										<input type="text" name="onBoardingDate"
+											placeholder="dd/MM/yyyy" class="form-control"
+											uib-datepicker-popup="{{format}}" is-open="popup1.opened"
+											datepicker-options="dateOptions"
+											alt-input-formats="altInputFormats" ng-model="onBoardingDate"
+											ng-change="checkErr(requirementStartdate)" required /> <span
+											class="input-group-btn">
+											<button type="button" class="btn btn-default"
+												ng-click="open1()">
+												<i class="glyphicon glyphicon-calendar"></i>
+											</button>
+										</span>
+										<!-- <div ng-messages="formone.requirementStartdate.$error" ng-if="formone.requirementStartdate.$touched"> -->
+										<!-- <div ng-message="required">*Required End date</div> -->
+										<!-- <span style="color:#ff4c4c;">{{errMessage}}</span> -->
+										<!-- </div>	 -->
+									</p>
+								</div>
+								<div class="col-md-6">
+									<label>Mobile</label>
+								</div>
+								<div class="col-md-6">{{candidatelist1.mobile}}</div>
+							</div>
+							<div class="form-group">
+								<div class="modal-footer">
+									<button class="btn btn-success pull-left" data-dismiss="modal"
+										ng-click="submitStatus(candidatelist1.candidateid)">Submit</button>
+									<button class="btn btn-info pull-right" data-dismiss="modal">Close</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- View Onboard Status  end -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog" style="width: 80%; height: 400px;">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" data-dismiss="modal" class="close">&times;</button>
+						<h4 class="modal-title">Edit User</h4>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal" name="editform" novalidate>
+
+							<div class="row">
+								<label class="control-label col-sm-2" for="name">ClientName:</label>
+								<div class="form-group col-lg-2">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="clintname"
+										ng-model="newUserlist.client.clientName" disabled="disabled"></input>
+
+								</div>
+
+								<label class="control-label col-sm-2" for="lastname">Requirement
+									Name:</label>
+								<div class="form-group col-lg-2">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="lastname"
+										ng-model="newUserlist.bdmReq.nameOfRequirement"
+										disabled="disabled"></input>
+								</div>
+
+								<label class="control-label col-sm-2" for="user_fname">Date</label>
+
+								<div class="form-group col-lg-2">
+
+									<input class="form-control" type="text"
+										ng-model="newUserlist.profileDate" disabled="disabled"></input>
+								</div>
+
+							</div>
+							<div class="row">
+								<label class="control-label col-sm-2" for="lastname">First
+									Name:</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text" name="fname"
+										placeholder="enter your name" id="lastname"
+										ng-model="newUserlist.firstName" required></input>
+									<div ng-messages="editform.fname.$error"
+										ng-if="editform.fname.$touched">
+										<div ng-message="required">required First Name</div>
+									</div>
+								</div>
+
+
+								<label class="control-label col-sm-2" for="lastname">Last
+									Name:</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text" name="lname"
+										placeholder="enter your name" id="lastname"
+										ng-model="newUserlist.lastName"></input>
+									<div ng-messages="editform.lname.$error"
+										ng-if="editform.lname.$touched">
+										<div ng-message="required">required Last Name</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<label class="control-label col-sm-2" for="mobile">Mobile:</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="enter mobile number" id="mobile"
+										name="userContactNumber" ng-model="newUserlist.mobile"
+										ng-pattern="/^[0-9]{10,10}$/" numbers-only required></input> <span
+										style="color: red;"
+										ng-show="editform.userContactNumber.$error.pattern">Invalid
+										number</span>
+								</div>
+
+
+								<label class="control-label col-sm-2" for="mobile">Alternate
+									Mobile*</label>
+
+								<div class="form-group col-lg-4">
+									<input type="text" name="userContactNumber1"
+										class="form-control" ng-model="newUserlist.alternateMobile"
+										numbers-only ng-pattern="/^[0-9]{10,10}$/" required> <span
+										style="color: red;"
+										ng-show="editform.userContactNumber1.$dirty && editform.userContactNumber1.$error.required">Please
+										enter mobile number</span> <span style="color: red;"
+										ng-show="editform.userContactNumber1.$error.pattern">Invalid
+										number</span>
+
+								</div>
+
+
+								<label class="control-label col-sm-2" for="email">E-mail:</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="email"
+										placeholder="enter your mail id" id="email" name="userEmail"
+										ng-model="newUserlist.email"></input>
+									<div ng-messages="editform.userEmail.$error"
+										ng-if="editform.userEmail.$touched">
+										<div ng-message="required">required Email</div>
+										<div ng-message="email">enter valid email address</div>
+									</div>
+								</div>
+
+
+								<label class="control-label col-sm-2" for="user_email">Alter
+									Email*</label>
+								<div class="form-group col-lg-4">
+									<input type="email" name="userEmail1"
+										ng-model="newUserlist.altenateEmail" required
+										class="form-control" />
+									<div ng-messages="editform.userEmail1.$error"
+										ng-if="editform.userEmail1.$touched">
+										<div ng-message="required">required Email</div>
+										<div ng-message="email">enter valid email address</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<label class="control-label col-sm-2" for="name">Education</label>
+
+
+
+								<div class="form-group col-lg-4" ng-dropdown-multiselect2=""
+									options="educationdetails" selected-model="qualiarray"
+									extra-settings="example16settings"></div>
+
+
+
+								<label class="control-label col-sm-2" for="name">Total
+									Experience:(Yrs)</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="change status" id="name" name="experience"
+										ng-model="newUserlist.totalExperience"
+										ng-change="difference(newUserlist.totalExperience,newUserlist.relevantExperience)"
+										valid-number required></input>
+									<div ng-messages="editform.experience.$error"
+										ng-if="editform.experience.$touched">
+										<div ng-message="required">This field is required</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<label class="control-label col-sm-2" for="name">Relevant
+									Experience:(Yrs)</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="name"
+										ng-model="newUserlist.relevantExperience"
+										ng-change="difference(newUserlist.totalExperience,newUserlist.relevantExperience)"
+										valid-number></input> <span style="color: #ff4c4c;">{{messege}}</span>
+								</div>
+
+								<label class="control-label col-sm-2" for="name">Current
+									CTC(lkh/PA):</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="name" name="cur_ctc"
+										ng-model="newUserlist.currentCTC" valid-number required></input>
+									<div ng-messages="editform.cur_ctc.$error"
+										ng-if="editform.cur_ctc.$touched">
+										<div ng-message="required">Enter your current CTC</div>
+									</div>
+								</div>
+
+							</div>
+
+
+
+							<div class="row">
+								<label class="control-label col-sm-2" for="name">Expected
+									CTC(lkh/PA):</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="name" name="exp_ctc"
+										ng-model="newUserlist.expectedCTC" valid-number required></input>
+									<div ng-messages="editform.exp_ctc.$error"
+										ng-if="editform.exp_ctc.$touched">
+										<div ng-message="required">Enter your Expected CTC</div>
+									</div>
+								</div>
+								<label class="control-label col-sm-2" for="name">Salary
+									Negotiable:</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="name"
+										ng-model="newUserlist.salaryNegotiable"></input>
+
+								</div>
+
+
+							</div>
+							<div class="row">
+								<label class="control-label col-sm-2" for="name">Notice
+									Period:(Days)</label>
+								<div class="form-group col-lg-4">
+									<option
+										ng-repeat="noticePeriodes in noticePeriodes| unique : 'noticePeriod'| orderBy : 'noticePeriod' "
+										value={{noticePeriodes.noticePeriod}}>{{noticePeriodes.noticePeriod}}</option>
+									</select>
+
+								</div>
+								<div ng-messages="candidateform.notice.$error"
+									ng-if="candidateform.notice.$touched">
+									<div ng-message="required">Select any Option</div>
+								</div>
+
+								<label class="control-label col-sm-2" for="name">Pincode:</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="name"
+										ng-model="newUserlist.pincode" readonly></input>
+
+
+
+								</div>
+							</div>
+							<div class="row">
+								<label class="control-label col-sm-2" for="name">State:</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="name"
+										ng-model="newUserlist.state" readonly></input>
+								</div>
+
+
+								<label class="control-label col-sm-2" for="name">Country:</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="name"
+										ng-model="newUserlist.country" readonly></input>
+								</div>
+							</div>
+							<div class="row">
+								<label class="control-label col-sm-2" for="name">City:</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="name"
+										ng-model="newUserlist.city" readonly></input>
+								</div>
+								<label class="control-label col-sm-2" for="name">Address:</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="name"
+										ng-model="newUserlist.address" readonly></input>
+
+								</div>
+
+
+
+							</div>
+							<div class="row">
+								<label class="control-label col-sm-2" for="name">Skype
+									ID:</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="name"
+										ng-model="newUserlist.skypeID"></input>
+
+								</div>
+
+								<label class="control-label col-sm-2" for="name">Current
+									Job Type:</label>
+								<div class="form-group col-lg-4">
+
+
+									<select id="cur_job_typ" class="form-control" name="cjobtype"
+										ng-model="newUserlist.currentJobType" required>
+										<option value="" selected>Please Select</option>
+										<option value="permanent">permanent</option>
+										<option value="C2H">C2H</option>
+										<option value="contract">contract</option>
+									</select>
+								</div>
+
+
+
+							</div>
+							<div class="row">
+								<label class="control-label col-sm-2" for="name">PayRoll
+									Company Name:</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="name"
+										ng-model="newUserlist.payRollCompanyName"></input>
+
+								</div>
+
+								<label class="control-label col-sm-2" for="name">Current
+									Company Name:</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="name"
+										ng-model="newUserlist.currentCompanyName"></input>
+								</div>
+							</div>
+							<div class="row">
+								<label class="control-label col-sm-2" for="name">PAN
+									CARD Number:</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="name" name="panno"
+										ng-model="newUserlist.pancardNumber"
+										ng-pattern="/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/"
+										required></input>
+									<div ng-messages="editform.panno.$error"
+										ng-if="editform.panno.$touched">
+										<div ng-message="required"></div>
+									</div>
+
+									<span style="color: red;"
+										ng-show="editform.panno.$dirty && editform.panno.$error.required">This
+										field is required</span> <span style="color: red;"
+										ng-show="editform.panno.$error.pattern">Please enter
+										valid PanNumber</span>
+
+								</div>
+
+								<label class="control-label col-sm-2" for="name">Willing
+									to Relocate:</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" type="text"
+										placeholder="enter your name" id="name"
+										ng-model="newUserlist.willingtoRelocate"></input>
+								</div>
+
+							</div>
+							<div class="row">
+
+								<label class="control-label col-sm-2" for="name">PrimarySkills:</label>
+
+
+								<div class="form-group col-lg-4" ng-dropdown-multiselect1=""
+									options="primary" selected-model="skillarray1"
+									extra-settings="example16settings"></div>
+								<label class="control-label col-sm-2" for="name">SecondarySkills:</label>
+
+
+								<div class="form-group col-lg-4" ng-dropdown-multiselect1=""
+									options="secondary" selected-model="skillarray2"
+									extra-settings="example16settings"></div>
+
+								<label class="control-label col-sm-2" for="name">Certificate
+									Name:</label>
+								<div class="form-group col-lg-4" ng-dropdown-multiselect3=""
+									options="certificatname" selected-model="certiarray"
+									extra-settings="example16settings"></div>
+							</div>
+
+
+							<div class="row">
+
+								<label class="control-label col-sm-2" for="resume">Resume
+									Name*</label>
+								<div class="form-group col-lg-4">
+									<input class="form-control" id="name" type="text"
+										name="resumename" ng-model="newUserlist.filename" required />
+									<div ng-messages="editform.resumename.$error"
+										ng-if="editform.resumename.$touched">
+										<div ng-message="required">Name is mandatory</div>
+									</div>
+								</div>
+
+
+
+
+								<label class="control-label col-sm-2" for="resume">Upload
+									Resume*</label>
+								<div class="form-group col-lg-4">
+									<button class="file-upload">
+										<input type="file" class="file-input" id="file" name="file"
+											fileread="inputParams.file">Choose File
+									</button>
+									<div ng-messages="editform.file.$error"
+										ng-if="editform.file.$touched">
+										<div ng-message="required">Name is mandatory</div>
+									</div>
+								</div>
+
+							</div>
+
+
+
+							<div class="row">
+								<div class="form-group col-lg-12">
+									<button type="submit" class="btn btn-info pull-right"
+										data-dismiss="modal" ng-disabled="editform.$invalid"
+										ng-click="updateCandidatelist()">Update</button>
+									<button type="submit" class="btn btn-danger pull-left"
+										data-dismiss="modal">Cancel</button>
+
+								</div>
+
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end of the code -->
+	</div>
+</div>

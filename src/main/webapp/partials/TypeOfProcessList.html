@@ -1,0 +1,62 @@
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="container">
+  <div class="panel panel-success" style="width:1030px;">
+	<div class="panel-heading"> <label>Interview schedule</label></div>
+	</div>
+	<div class="col-lg-4" >
+<div style="width:1000px;height:480px;line-height:0em;overflow:auto;margin:0px; padding-left: 25%; border:1px ridge #000;" >                          
+  <table class="table table-hover">
+    
+    <tbody>
+     
+      <tr>
+        <td><label>Candidate name:</label></td>
+        <td>{{processlistDetails[0].candidateiname}}</td>
+      </tr>
+      <tr>
+        <td><label>Company name:</label></td>
+        <td>{{processlistDetails[0].companyname}}</td>
+      </tr>
+      <tr>
+        <td><label>Address:</label></td>
+        <td>{{processlistDetails[0].address}}<br>
+		    {{processlistDetails[0].city}}<br>
+	        {{processlistDetails[0].district}}<br>
+	        {{processlistDetails[0].state}}<br>
+		    {{processlistDetails[0].country}}<br>
+	        {{processlistDetails[0].pincode}}</td>
+      </tr>
+	  <tr>
+        <td><label>Type of interview:</label></td>
+        <td>{{processlistDetails[0].typeofinterview}}</td>
+      </tr>
+	  <tr>
+        <td><label>Interview date:</label></td>
+        <td>{{processlistDetails[0].interviewdate}}</td>
+      </tr>
+	  <tr>
+        <td><label>Interview time:</label></td>
+        <td>{{processlistDetails[0].time}}</td>
+      </tr>
+	  <tr>
+        <td><label>Contact person:</label></td>
+        <td>{{processlistDetails[0].contactperson}}</td>
+      </tr>
+	  <tr>
+        <td><label>Mobile number:</label></td>
+        <td>{{processlistDetails[0].mobilenumber}}</td>
+      </tr>
+     </tr>
+		
+
+    </tbody>
+  </table>
+ 
+   
+  </div></br>
+   <a href="#!/CandidateList1" class="btn btn-info btn-lg pull-left">Back</a>
+  </div>
+ 
+</div>
+</div>

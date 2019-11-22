@@ -1,0 +1,56 @@
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="container" ng-init="details()">
+<div id="form_proc">
+		<form name="onHoldForm" novalidate>
+	   
+	<input type="text" ng-model="candidateid" ng-hide=true>
+		<div class="row" >
+		<div class="form-group col-lg-4">
+					<label for="company_total">candidateiname</label> <input type="text"
+						ng-model="candiname" placeholder="candidate name"
+						class="form-control" ng-readonly="">
+
+
+
+				</div>
+					<div class="form-group col-lg-4">
+					<label for="company_total">userEmail</label> <input type="text"
+						ng-model="candiemail" placeholder="useremail"
+						class="form-control" ng-readonly="">
+
+				</div>
+				</div>
+				<div class="row" >
+				<div class="form-group col-lg-4">
+					<label for="company_total">quryQuestion</label> <input type="text"
+						ng-model="candiques" placeholder="quryQuestion"
+						class="form-control" ng-readonly="">
+
+				</div>
+				<div class="form-group col-lg-4">
+	<label for="location" >QueryAnswer</label>
+	<textarea rows="3" cols="30" name="QueryAnswer" ng-model="queryAnswer" class="form-control" required></textarea>
+	  <div ng-messages="onHoldForm.QueryAnswer.$error"
+						ng-if="onHoldForm.QueryAnswer.$touched">
+						<div ng-message="required">this field is reqired</div>
+					</div>
+	</div>
+				
+   	
+	</div>
+	</div>
+	
+	
+ <div class="row">
+	<div class="form-group col-lg-10">
+	
+								<a href="#!/CandidateList1" class="btn btn-danger pull-left">Cancel</a>
+	
+	<a href="#!/CandidateList1" class="btn btn-info  pull-right" style="width:80px;"ng-disabled="onHoldForm.$invalid"
+								ng-click="saveOnHold()">Save</a>
+	</div>
+	</div>
+  </form>
+ </div>
+ 

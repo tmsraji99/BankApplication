@@ -1,0 +1,370 @@
+<div ng-show="isLoading" class="Applicationloader">
+     <img  src="images/rpoloader.gif">
+  </div>
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper" ng-init="getBillingList();">
+    <div class="container-fluid" style="margin-top: 60px;">
+   	 	<ol class="breadcrumb">
+   	 	<div class="col-md-12 text-left">
+    		<h3>Incentives </h3>
+   	 		</div>
+		</ol>
+		<div class="col-md-12"> 
+      <div class="col-md-4 mb-4">
+      	<div class="row"> 
+      		<div class="col-sm-6">
+		      Search By Category
+		     <select class="form-control" ng-model="searchcategory" ng-change="roleChange()" style="border-radius:0" >
+		     <option value="" selected>--Select --</option>
+		     <span ng-show="((role=='AM') || (role=='BDM') || (role=='Lead'))">
+		     <option value="incen.recId" >Recruiter Name</option>
+		     </span>
+		     <option value="date">Date</option>     
+		     </select>
+      		</div>
+      		  <div class="col-sm-6" ng-show="(searchcategory=='incen.recId')">
+      		Search with Recruiter
+			 <select ng-model="roleName" class="form-control" ng-options="sort.firstName as sort.firstName for sort in roleNamesList"></select>
+		    </div> 
+	   <div class="col-sm-6" ng-show="(searchcategory=='date')">
+		    Search with Date
+		    	<p class="input-group">
+								<input type="text" class="form-control" ng-model="searchtext"
+									placeholder="dd/MM/yyyy" uib-datepicker-popup="{{format}}"
+									is-open="popup1.opened" datepicker-options="dateOptions"
+									alt-input-formats="altInputFormats"
+									ng-change="subVsRejdate(typeOfReport,dateforSearch)" /> <span class="input-group-btn">
+						<button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+				</span>	
+				</p> 
+		    </div> 
+      </div>  
+     </div>
+      <div class="col-md-4 mb-4">
+      	<div class="row"> 
+      		<div class="col-sm-4">
+		    Sort By
+		     <select class="form-control"  ng-model="order" style="border-radius:0">
+		     <option value="" selected>--Select --</option>
+		     <option value="recruiterName" ng-show="(role== 'AM' || role== 'BDM'||role== 'Lead')">Recruiter Name</option>
+		     <option value="date">Date</option>         
+		     </select>
+     		 </div>
+      		<div class="col-sm-4">
+			 Order By
+		     <select class="form-control" ng-model="by"  style="border-radius:0">
+		     <option value="" selected>--Select --</option>
+		     <option value="asc">Ascending</option>
+		     <option value="desc">Descending</option>   
+		     </select>
+		      </div>
+		   	<div class="col-sm-2 mt-4 pt-2">
+		      <button class="btn btn-primary btn-sm" ng-click="searchText()">Search</button> 
+		      </div>
+		    <div class="col-sm-2  mt-4 pt-2">
+		      <button class="btn btn-danger btn-sm"  ng-click="clearText()">Reset</button> 
+		     </div>
+      	</div>   
+     </div>
+     <div class="col-md-4 mb-4 mt-4 pt-2">
+	     <div class="row"> 
+	      	<div class="col-sm-12 pr-0">
+     <!--  <p class="mt-5">Total Number of Records :
+      <strong class="text text-info">{{client1.length}}</strong><p>-->
+		        <select class="form-control pull-right" ng-model="pageSize" style="width:65px;margin-bottom: 6px;">
+		      <option>10</option>
+		      <option>15</option>
+		      <option>20</option>
+		      <option>25</option>
+		      </select>
+        		<span style="margin-right: 8px; margin-top: 6px;"class="pull-right text text-info">Items per page{{totalCount}}</span>
+      		</div>
+		      <!--  <div class="col-sm-4 pr-0"> 
+		       <a href="#!/client"  type="button"  class="btn btn-info btn-sm">Add Customer</a>{{totalCount}}
+		      </div> -->
+      </div>
+     </div>
+     </div>
+		<table st-table="ListReqData" st-safe-src="rowCollection" class="table">
+		<thead>
+	  <tr>
+		   <th class="text-left"  ng-click="sortData('canId')">Candidate Id<div  ng-class="getSortClass('canId')"></div></th>
+            <th class="text-left" ng-click="sortData('candidateName')">Candidate Name <div  ng-class="getSortClass('candidateName')"></div></th>
+            <th class="text-left" ng-click="sortData('emailId')">Email<div  ng-class="getSortClass('emailId')"></div></th>
+			<th class="text-left" ng-click="sortData('recId')">Recruiter Id<div  ng-class="getSortClass('recId')"></div></th>
+			<th class="text-left" ng-click="sortData('recruiterName')">Recruiter Name<div  ng-class="getSortClass('recruiterName')"></div></th>
+          <!--   <th class="text-left">Requirement Id </th>
+            <th class="text-left">Requirement Name</th> -->
+			<th class="text-left" ng-click="sortData('date')">Calculated Date <div  ng-class="getSortClass('date')"></div></th>	
+			<th class="text-left">Credited Amount</th>
+			<th class="text-left">Debited Amount</th>
+			<th class="text-left" ng-click="sortData('candidateid')">Role</th>				
+          </tr>		
+        </thead>
+        <tbody>
+       <tr dir-paginate="list in incentivesData1 |filter:test| itemsPerPage:pageSize|orderBy:sortColumn:reverseSort">
+	     	<td class="text-left">
+	     	<a data-toggle="modal"
+						data-target="#view" title="View Candidate"
+						ng-click="viewInfo(list.canId)" style="color: blue; cursor: pointer;">{{list.canId}}</a></td>
+            <td class="text-left">{{list.candidateName}}</td>
+            <td class="text-left"> {{list.emailId}}</td>
+            <td class="text-left">{{list.recId}}</td>
+            <td class="text-left">{{list.recruiterName}}</td>
+       <!--      <td class="text-left"> {{list.reqId}}</td>
+            <td class="text-left">{{list.requirementName}}</td>  -->
+            <td class="text-left">{{list.date}}</td>
+            <td class="text-left">{{list.cr_Amount}}</td>
+            <td class="text-left">{{list.dr_Amount}}</td>
+            <td class="text-left">{{list.role}}</td>
+	  </tr>            
+        </tbody>
+      </table>
+      		<div class="col-md-12 text-center"><b>{{nodata}}</b></div> 
+      <div class="col-md-12"> 
+      <div class="float-right" ng-show="incentivesData1.length>0">
+	 <ul uib-pagination total-items="totalCount" max-size="maxSize" items-per-page="pageSizeSelected" boundary-links="true" rotate="false" 
+		num-pages="numPages" direction-links="true" ng-model="pageIndex" ng-change="pageChanged()"></ul>
+		<!-- <dir-pagination-controls class="pull-right"></dir-pagination-controls>	 -->	
+      </div>
+      </div>
+	</div>
+</div>
+		<!-- View  Candidate Info  -->
+		<div class="modal fade" id="view" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">View Candidate Details:</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="col-md-12">
+						<div class="row">
+								<div class="col-sm-6">
+									<label>Applied as A:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.applyingAs}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Applied Position For:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.appliedPossitionFor}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Candidate Id:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.id}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Candidate Name:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.firstName}}&nbsp;&nbsp;{{candidatelist1.lastName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Candidate Source:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.candidateSource}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Email:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.email}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Alternate Email:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.altenateEmail}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Mobile:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.mobile}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Alternate Mobile:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.alternateMobile}}</div>
+							</div>
+							<!-- <div class="row">
+								<div class="col-sm-6">
+									<label>Related Requirement:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.bdmReq.nameOfRequirement}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Related Client:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.client.clientName}}</div>
+							</div> -->
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Total Experience:(Yrs)</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.totalExperience +"year(s)"+"-"+ candidatelist1.noOfMonths +"month(s)"}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Relevant Experience:(Yrs)</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.relevantExperience}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Current CTC:(PA)</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.currentCTC}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Expected CTC:(PA)</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.expectedCTC}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Salary Negotiable:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.salaryNegotiable}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Notice Period:(Days)</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.noticePeriod}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Address:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.address}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>City:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.city}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>State:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.state}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Country:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.country}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Pincode:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.pincode}}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Willing to Relocate:</label>
+								</div>
+								<div class="col-md-6">{{candidatelist1.willingtoRelocate}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Current Location:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.currentLocation}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Preferred Location:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.location.locationName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Skype ID:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.skypeID}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Current Job Type:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.currentJobType}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>PayRoll Company Name:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.payRollCompanyName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Current Company Name:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.currentCompanyName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>PAN CARD Number:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.pancardNumber}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Education:</label>
+								</div>
+								<div class="col-lg-6">
+									<ol>
+										<li ng-repeat="ca in candidatelist1.education">{{ca.qualificationName}}</li>
+									</ol>
+
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Skills:</label>
+								</div>
+
+								<div class="col-lg-6">
+									<ol>
+										<li ng-repeat="candi in candidatelist1.skills">{{candi.skillName}}</li>
+									</ol>
+
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Certificate Name:</label>
+								</div>
+
+								<div class="col-lg-6">
+									<ol>
+										<li ng-repeat="candidat in candidatelist1.certificates">{{candidat.certificationName}}</li>
+									</ol>
+
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="modal-footer">
+									<button class="btn btn-info pull-right" data-dismiss="modal">OK</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- View  Candidate Info End -->

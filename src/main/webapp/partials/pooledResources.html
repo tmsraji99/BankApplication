@@ -1,0 +1,257 @@
+<div ng-show="isLoading" class="Applicationloader">
+	<img src="images/rpoloader.gif">
+</div>
+
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>
+					<i class="fa fa-fw fa-dashboard"></i> Resource Pool
+				</h3>
+			</li>
+		</ol>
+		<div class="col-md-12">
+			<div class="col-md-8"></div>
+			<div class="col-md-2">
+				<label for="excel">Upload Excel</label>
+				<!-- <button class="file-upload">         -->
+				<input type="file" class="file-input" id="file" name="file"
+					file-model="excel">
+			</div>
+			<div class="col-md-2 mt-4 pt-2">
+				<button class="btn btn-primary btn-sm" ng-click="searchText(excel)">Excel
+					Upload</button>
+
+			</div>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="col-md-3 mb-4">
+			<label>Skills:</label> <input class="form-control" type="search"
+				ng-model="skill" placeholder="Enter Skills" style="border-radius: 0">
+		</div>
+		<div class="col-md-3 mb-4">
+			<label>Current Location:</label> <input class="form-control"
+				type="search" ng-model="currentLocation"
+				placeholder="Enter Current Location" style="border-radius: 0">
+		</div>
+		<div class="col-md-3 mb-4">
+			<label>Notice Period:</label> <input class="form-control"
+				type="search" ng-model="noticePeriod"
+				placeholder="Enter Notice Period" style="border-radius: 0">
+		</div>
+		<div class="col-md-2 mb-4">
+			<label>Salary:</label> <input class="form-control" type="search"
+				ng-model="salary" placeholder="Enter CTC" style="border-radius: 0"
+				maxlength="7" numbers-only>
+		</div>
+		<div class="col-sm-1 mt-4 pt-3">
+			<button class="btn btn-primary btn-sm"
+				ng-click="searchText1(skill,designation,location,noticePeriod,salary,currentLocation,currentCompanyName,exp)">Search</button>
+		</div>
+		<div class="col-md-3 mb-4">
+			<label>Designations:</label> <input class="form-control"
+				type="search" ng-model="designation"
+				placeholder="Enter Designations" style="border-radius: 0">
+		</div>
+		<div class="col-md-3 mb-4">
+			<label>Preferred Location:</label> <input class="form-control"
+				type="search" ng-model="location"
+				placeholder="Enter Preferred Location" style="border-radius: 0">
+		</div>
+		<div class="col-md-3 mb-4">
+			<label>Current Company Name:</label> <input class="form-control"
+				type="search" ng-model="currentCompanyName"
+				placeholder="Enter Current Company Name" style="border-radius: 0">
+		</div>
+		<div class="col-md-2">
+			<label>Experience:</label> <select class="form-control"
+				ng-model="exp" style="border-radius: 0">
+				<option value="" selected>Experience</option>
+				<option value="0">0</option>
+				<option value="01">1</option>
+				<option value="02">2</option>
+				<option value="03">3</option>
+				<option value="04 ">4</option>
+				<option value="05">5</option>
+				<option value="06">6</option>
+				<option value="07">7</option>
+				<option value="08">8</option>
+				<option value="09">9</option>
+				<option value="10">10</option>
+				<option value="11">11</option>
+				<option value="12">12</option>
+				<option value="13">13</option>
+				<option value="14">14</option>
+				<option value="15">15</option>
+				<option value="16">16</option>
+				<option value="17">17</option>
+				<option value="18">18</option>
+				<option value="19">19</option>
+				<option value="20">20</option>
+				<option value="21">21</option>
+			</select>
+		</div>
+		<div class="col-sm-1 mt-4 pt-3">
+			<button class="btn btn-danger btn-sm" ng-click="clearText()">Reset</button>
+		</div>
+
+	</div>
+	<!-- 		<div type="tuple" id="171019011747" class="row  " data-url="https://www.naukri.com/job-listings-UI-Designer-and-Developer-TRUNDL-LABS-PRIVATE-LIMITED-Hyderabad-2-to-7-years-171019011747?src=jobsearchDesk&amp;sid=15713932098284&amp;xp=1&amp;px=1"> <span count="1" class="content">  <ul><li title="UI Designer and Developer" class="desig"><a id="jdUrl" href="https://www.naukri.com/job-listings-UI-Designer-and-Developer-TRUNDL-LABS-PRIVATE-LIMITED-Hyderabad-2-to-7-years-171019011747?src=jobsearchDesk&amp;sid=15713932098284&amp;xp=1&amp;px=1" target="_blank" style="color: inherit;"><font class="hlite">UI</font> Designer and <font class="hlite">Developer</font></a></li></ul> <span class="orgRating"> <span class="org">TRUNDL LABS PRIVATE LIMITED</span>  </span>  <span class="exp"><em></em>2-7 yrs</span>  <span class="loc"><em></em><span>Hyderabad</span></span>    <div class="more desc"> <em></em> <span class="skill">PSD, CSS, Illustrator, Javascript, Dreamweaver, HTML...</span> </div>    <div class="more desc">  <em></em> <span>The Essentials 2+ years of experience in front-end design and development Bachelors Degree or comparable experience in a related field of study ...</span>  </div>  </span>  <span class="action jobType hotjob" title="Hot Job"><em></em></span>    <div class="other_details"> <span title=" Save this job " class="action savejob fav  favReady" jid="171019011747"><em></em></span> <span class="salary"><em></em>  Not disclosed  </span> <div class="rec_details"> Posted  by   <a title="Job Posted by  Kamalasanan Paramu " class="rec_name">  Kamalasanan Paramu  </a>  , <span class="date">1 day ago</span> </div> </div> </div>-->
+	<div class="col-md-12">
+		<div class="col-md-11 bord"
+			style="background-color: white; margin-top: 10px; margin-bottom: 10px;"
+			ng-repeat="results in result">
+			<div class="col-md-6">
+				<p class="">
+					<span style="font-weight: bold; font-size: 16px;">Name</span> : <span
+						style="color: #bf7a13; font-weight: bold;">{{results.firstName}}
+						{{results.lastName}}</span>
+				</p>
+			</div>
+			<div class="col-md-6">
+				<p class="">
+					<span style="font-weight: bold; font-size: 16px;">Candidate
+						Id </span>:<span style="color: #bf7a13; font-weight: bold;">
+						{{results.id}}</span>
+				</p>
+			</div>
+			<div class="col-md-12">
+				<p class="">
+					<span style="color: #337ab7; font-weight: bold;">Designation</span>
+					: <span style="color: #bf7a13; font-weight: bold;">
+						{{results.appliedPossitionFor}}</span>
+				</p>
+			</div>
+			<div class="col-md-3">
+				<p class="">
+					<i class="fa fa-briefcase"></i> <span
+						style="color: #337ab7; font-weight: bold;">Experience</span>: <span
+						style="color: #bf7a13; font-weight: bold;">
+						{{results.totalExperience}}year(s)-{{results.noOfMonths}}month(s)</span>
+				</p>
+			</div>
+			<div class="col-md-3">
+				<p class="">
+					<i class="fa fa-calendar-check-o"></i> <span
+						style="color: #337ab7; font-weight: bold;">Notice Period</span> :
+					<span style="color: #bf7a13; font-weight: bold;">
+						{{results.noticePeriod}}days</span>
+				</p>
+			</div>
+			<div class="col-md-3">
+				<p class="">
+					<i class="fa fa-mobile"></i> <span
+						style="color: #337ab7; font-weight: bold;">Mobile</span> :<span
+						style="color: #bf7a13; font-weight: bold;">
+						{{results.mobile}}</span>
+				</p>
+			</div>
+			<div class="col-md-3">
+				<p class="">
+					<i class="fa fa-envelope"></i> <span
+						style="color: #337ab7; font-weight: bold;">Email </span>: <span
+						style="color: #bf7a13; font-weight: bold;">
+						{{results.email}}</span>
+				</p>
+			</div>
+
+			<div class="col-md-3"
+				style="font-weight: bold; font-size: 14px; line-height: 30px;">
+				<i class="fa fa-thumbs-up"></i> <span
+					style="color: #337ab7; font-weight: bold;">Skills:</span><span
+					style="color: #bf7a13; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+					;
+					ng-repeat="skill in skills"> {{skill.skillName}} </span>
+			</div>
+			<div class="col-md-3"
+				style="font-weight: bold; font-size: 14px; line-height: 30px;">
+				<i class="fa fa-fw fa-dashboard"></i> <span
+					style="color: #337ab7; font-weight: bold;">Applying as</span> : <span
+					style="color: #bf7a13; font-weight: bold;">
+					{{results.applyingAs}}</span>
+			</div>
+			<div class="col-md-3"
+				style="font-weight: bold; font-size: 14px; line-height: 30px;">
+				<i class="fa fa-location-arrow"></i> <span
+					style="color: #337ab7; font-weight: bold;"> Current Location</span>:
+				<span style="color: #bf7a13; font-weight: bold;">
+					{{results.currentLocation}}</span>
+			</div>
+			<div class="col-md-3"
+				style="font-weight: bold; font-size: 14px; line-height: 30px;">
+				<i class="fa fa-location-arrow"></i> <span
+					style="color: #337ab7; font-weight: bold;">Preferred
+					Location </span>: <span style="color: #bf7a13; font-weight: bold;">
+					{{results.location.locationName}} </span>
+			</div>
+			<div class="col-md-3"
+				style="font-weight: bold; font-size: 14px; line-height: 30px;">
+				<i class="fa fa-building"></i> <span
+					style="color: #337ab7; font-weight: bold;"> Current Company
+				</span>: <span style="color: #bf7a13; font-weight: bold;">
+					{{results.currentCompanyName}} </span>
+			</div>
+			<div class="col-md-3"
+				style="font-weight: bold; font-size: 14px; line-height: 30px;">
+				<i class="fa fa-inr"></i> <span
+					style="color: #337ab7; font-weight: bold;"> Current CTC </span>:
+				&#8377 <span style="color: #bf7a13; font-weight: bold;">
+					{{results.currentCTC}} </span>
+			</div>
+			<div class="col-md-3"
+				style="font-weight: bold; font-size: 14px; line-height: 30px;">
+				<i class="fa fa-inr"></i> <span
+					style="color: #337ab7; font-weight: bold;">Expected CTC </span>:
+				&#8377 <span style="color: #bf7a13; font-weight: bold;">
+					{{results.expectedCTC}} </span>
+			</div>
+			<div class="col-md-3"
+				style="font-weight: bold; font-size: 14px; line-height: 30px;">
+				<i class="fa fa-fw fa-dashboard"></i> <span
+					style="color: #337ab7; font-weight: bold;">Current Job Type
+				</span>: <span style="color: #bf7a13; font-weight: bold;">
+					{{results.currentJobType}} </span>
+			</div>
+			<div class="col-md-3"
+				style="font-weight: bold; font-size: 14px; line-height: 30px;">
+				<i class="fa fa-fw fa-dashboard"></i> <span
+					style="color: #337ab7; font-weight: bold;">Current Job Type
+				</span>: <span style="color: #bf7a13; font-weight: bold;">
+					{{results.currentJobType}}</span>
+			</div>
+			<div class="col-md-2 pull-right">
+				<button class="btn btn-primary btn-xs pull-center"
+					data-dismiss="modal" ng-click="mappingRequirement(results.id)">Map
+					To Requirement</button>
+			</div>
+
+			<!-- <div class=""
+				style="font-weight: bold; font-size: 14px; line-height: 30px;">
+				<i class="fa fa-fw fa-dashboard"></i> Our Client is into globally
+				renowned technology and design company that specializes in
+				transforming business-critical processes. They are Specializes in
+				bringing together multiple system and platform and create a unified,
+				powerful and enhanced IT infrastructure. HTML...
+			</div>
+			<div class=""
+				style="font-weight: bold; font-size: 14px; line-height: 30px;">
+				<i class="fa fa-fw fa-dashboard"></i> Not Disclosed, HTML...
+			</div> -->
+		</div>
+		<div class="col-md-1"></div>
+		<div class="col-md-12">
+			<div class="float-right" ng-show="result.length>0">
+				<ul uib-pagination total-items="totalRecords" max-size="maxSize"
+					items-per-page="pageSizeSelected" boundary-links="true"
+					rotate="false" num-pages="numPages" direction-links="true"
+					ng-model="pageIndex" ng-change="pageChanged()"></ul>
+				<!-- <dir-pagination-controls class="pull-right"></dir-pagination-controls>	 -->
+			</div>
+		</div>
+	</div>
+</div>
+</div>

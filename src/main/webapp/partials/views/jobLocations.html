@@ -1,0 +1,88 @@
+
+
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+
+
+<div class="content-wrapper" ng-init="getPaymentList();">
+    <div class="container-fluid" style="margin-top: 60px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Job Locations</h3>
+        </li>
+      </ol>
+       <ol class="breadcrumb">
+    <div class="col-md-10">
+    <input class="form-control" style="width:25%" type="search" ng-model="test" placeholder="Search">
+    </div>
+    <div class="col-md-2 pull-right">
+     <a href="#!/addLocations"  type="button"  class="btn btn-info btn-md pull-center"><span class="glyphicon glyphicon-plus"></span>Add</a>
+    </div>
+   
+    </ol>
+    <table class="table col-lg-10 table-bordered" ng-init="locationlist()">
+		<thead>
+			<tr>
+			<th>Location Name</th>
+			<!-- <th>Bye</th> -->
+			<th>Delete</th>
+   		 </tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat = "pList in locationsList|filter:test">
+				<td>
+				 {{pList.locationName}}
+				
+				<input type="text" class="form-control"  ng-if="isEditable" ng-model="pList.locationName"/>
+				</td>
+				<!-- <td><button  class="btn btn-primary"  data-toggle="modal" class="btn btn-primary" data-target="#myModal" ng-click="popupdata(detail.id)" ><span class="glyphicon glyphicon-pencil"></span></button><button  class="btn btn-primary" ng-if="isEditable" ng-click="saveEditBilling(bList);">Save</button></td> -->
+				<td><button  class="btn btn-primary" ng-if="!isEditable" ng-click=""><span class="glyphicon glyphicon-trash"></span></button></td>  
+			</tr>
+			
+			
+		</tbody>
+	</table>
+	<div class="col-md-12 text-center">
+	<p><b>{{noData}}</b></p>
+	</div>	
+	</div>
+
+	 <div class="panel-footer">
+	 <div class="row" ng-if="isSaveFiled">
+	 <div class="col-md-8 pull-right">
+			 <input type="text" class="form-control" ng-model="paymentType"/>
+	 </div>
+	 <div class="col-md-4">
+	 	<button class="btn btn-primary pull-center" placeholder="Enter Billing Model" ng-click="saveValues(paymentType);">Save</button>
+	 </div>
+	 </div>
+		<!-- <button class="btn btn-primary pull-right" ng-if="!isSaveFiled" ng-click="saveV();">Add</button> -->
+	</div>
+
+	
+	<!--<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">      
+      <div class="modal-content">
+        <div class="modal-header">
+		<h4>Edit Location</h4>
+		<button type="button" data-dismiss="modal" class="close">&times;</button>
+         </div>             
+        <div class="modal-body">
+		<form class="form-horizontal" name="myForm">
+		<div class="form-group">
+		<label class="control-label col-sm-4" for="role">Payment Type:</label>
+		<div class="col-sm-6">
+		<input class="form-control" type="text" placeholder="Enter Service Name" id="name" ng-model="paymentType" name="mode" required>
+		<span style="color:red"; ng-show="myForm.mode.$touched && myForm.mode.$invalid">This Field is required</span>
+		</div>
+		</div>
+		</form>
+        </div>
+        <div class="modal-footer">
+			<button class="btn btn-success pull-right" data-dismiss="modal" ng-click="saveEditBilling(billingModel);" ng-disabled="myForm.$invalid">Update</button>
+	        <button class="btn btn-danger pull-left"data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+      </div>
+	  </div> -->
+	  </div>

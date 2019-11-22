@@ -1,0 +1,49 @@
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="container">
+		<form name="onHoldForm" novalidate>
+	   
+	<input type="text" ng-model="candidateid" ng-hide=true>
+		<div class="row" >
+		<div class="form-group col-lg-4">
+					<label for="company_total">candidateiname</label> <input type="text"
+						ng-model="a" placeholder="candidate name"
+						class="form-control"ng-readonly=true>
+
+
+
+				</div>
+					<div class="form-group col-lg-4">
+					<label for="company_total">userEmail</label> <input type="text"
+						ng-model="b" placeholder="useremail"
+						class="form-control" ng-readonly=true>
+
+				</div>
+				</div>
+				<div class="row" >
+				<div class="form-group col-lg-4">
+					<label for="company_total">quryQuestion</label> <input type="text"
+						ng-model="c" placeholder="quryQuestion"
+						class="form-control" ng-readonly=true>
+
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="company_total">QueryAnswer</label> <input type="text"
+						ng-model="g" placeholder="quryQuestion"
+						class="form-control" ng-readonly=true>
+
+				</div>
+   	
+	</div>
+	
+	
+	
+ 
+	<div class="row" >
+	<div class="form-group col-lg-8">
+	<a href="#!/CandidateList1" class="btn btn-info pull-right" style="width:90px;"
+								ng-click="saveOnHold()">OK</a>
+						</div>		</div>
+  </form>
+ </div>
+ 

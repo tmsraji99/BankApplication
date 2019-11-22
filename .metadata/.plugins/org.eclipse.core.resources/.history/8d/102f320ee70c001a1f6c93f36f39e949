@@ -1,0 +1,23 @@
+package com.ojas.exp;
+
+import java.util.regex.Pattern;
+
+public class RegExpImpl {
+
+	public static void main(String[] args) {
+
+		/*
+		 * List<String> asList = Arrays.asList("abc", "de f", "ghi");
+		 * System.out.println(asList); List<String> collect = asList.stream().filter(x
+		 * -> x.matches("f$")).collect(Collectors.toList()); collect.forEach(a ->
+		 * System.out.println(a));
+		 */
+		String text = "This is the text to be searched " + "for occurrences of the http:// pattern.";
+
+		String regex = "[hi]s";
+
+		boolean matches = Pattern.matches(regex, text);
+
+		System.out.println("matches = " + matches);
+	}
+}

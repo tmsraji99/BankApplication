@@ -1,0 +1,377 @@
+
+<script>
+	$(document).ready(function() {
+		$('.firstroundcleared').on('click', function() {
+			var firstroundcleared = $('input:checked').val();
+			if (firstroundcleared == "yes") {
+				$('#firstroundcleared').css('display', 'block');
+			}
+			if (firstroundcleared == "no") {
+				$('#firstroundcleared').css('display', 'none');
+			}
+		});
+	});
+</script>
+<div ng-show="isLoading" class="Applicationloader">
+     <img  src="images/rpoloader.gif">
+  </div>
+
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+ <div class="container-fluid" style="margin-top: 60px;">
+
+
+<ol class="breadcrumb">
+    <div class="col-md-8">
+    <h3>    <i class="fa fa-handshake-o" aria-hidden="true"></i> Assignment Tracking </h3>
+    </div>
+    </ol>
+
+    <div class="row"> 
+       <div class="col-md-4 mb-4">
+      		<div class="row">
+		    	<div class="col-sm-6">
+				      Search By Category
+				     <select class="form-control" ng-model="searchcategory" style="border-radius:0">
+				         <option value="" selected>--Select --</option>
+					     <option value="clientName">Client Name</option>
+					     <option value="requirementName">Requirement Name</option>
+					     <option value="recruiterName">Recruiter Name</option>		     
+	     			</select>
+	     		 </div>
+			     <div class="col-sm-6">
+			       <input class="form-control"  type="search" ng-model="searchtext" placeholder="Search Here.." style="margin-top:21px;border-radius:0">
+			     <!--  <span class="glyphicon glyphicon-search" ng-click="searchassign(searchitem)" style="
+			position: absolute;font-size: 17px; color: #337ab7;right: 22px;top: 31px;z-index: 10;cursor: pointer;"></span> -->
+			     </div>
+      		</div>  
+       	</div>
+       	 <div class="col-md-4 mb-4">
+        <div class="row">
+		     <div class="col-sm-4">
+		      Sort By
+		     <select class="form-control" ng-model="order"style="border-radius:0">
+		      <option value="" selected>--Select --</option>
+		     <option value="clientName">Client Name</option>
+		     <option value="requirementName">Requirement Name</option>
+		     <option value="recruiterName">Recruiter Name</option>		     
+		     </select>
+	      </div> 
+	      <div class="col-sm-4">
+	 		 Order By
+		     <select class="form-control"  ng-modeel="by" style="border-radius:0">
+		       <option value="" selected>--Select --</option>
+		     <option value="asc">Ascending</option>
+		     <option value="desc" >Descending</option>
+		     </select>	
+	      </div>
+	       <div class="col-sm-2 mt-4 pt-2">
+		      <button class="btn btn-primary btn-sm" ng-click="searchText()">Search</button> 
+		      </div>
+		        <div class="col-sm-2  mt-4 pt-2">
+		      <button class="btn btn-danger btn-sm" ng-click="clearText()">Reset</button> 
+		      </div> 
+      </div>  
+    </div>
+     <!-- <div class="col-md-2">
+      <p class="mt-5">Total Number of Records :
+      <strong class="text text-info">{{record.length}}</strong><p>
+      </div> -->
+      
+       <div class="col-md-4 mt-4 pt-2">
+      
+      <select class="form-control pull-right" ng-model="pageSize" style="width:65px;margin-bottom: 6px;">
+      <option>10</option>
+      <option>15</option>
+      <option>20</option>
+      <option>25</option>
+      </select>
+        <span style="margin-right: 8px; margin-top: 6px;"class="pull-right text text-info">Items per page{{totalCount}}</span>
+      </div>
+     
+     </div>
+<div class="panel-body" style="padding:5px">
+
+	<table class="table col-lg-10 " id="rec_List" ng-init="assignfun()">
+		<thead class="thead-inverse">
+		            <th class="text-left" ng-click="sortData('requirementId')">Requirement Id <div  ng-class="getSortClass('requirementId')"></div></th>
+					<th class="text-left" ng-click="sortData('requirementName')">Requirement Name<div  ng-class="getSortClass('requirementName')"></div></th>					
+					<th class="text-left" ng-click="sortData('clientId')">Client Id<div  ng-class="getSortClass('clientId')"></div></th>
+					<th class="text-left" ng-click="sortData('clientName')">Client Name<div  ng-class="getSortClass('clientName')"></div></th>
+					<th class="text-left" ng-click="sortData('recruiterName')">Recruiter Name <div  ng-class="getSortClass('recruiterName')"></div></th>
+					<th class="text-left" ng-click="sortData('assignedDate')">Assigning Date <div  ng-class="getSortClass('assignedDate')"></div></th>
+					<th class="text-left">De Allocate</th>
+					
+		</thead>
+		<tbody>
+				<tr dir-paginate="record1 in record | filter:test| itemsPerPage:pageSize|orderBy:sortColumn:reverseSort">				       
+						<td class="text-left"><a data-toggle="modal" data-target="#viewRequriement" title="View Requirement"
+							 ng-click="viewReqInfo(record1)" style="color:blue;cursor:pointer;" >{{record1.requirementId}}</a></td>
+						<td class="text-left">{{record1.requirementName}}</td>
+						 <td class="text-left">{{record1.clientId}}</td>
+						<td class="text-left">{{record1.clientName}}</td>					
+						<td class="text-left">{{record1.recruiterName}}</td>
+						<td class="text-left">{{record1.assignedDate| date: 'dd MMM yyyy'}}</td>
+						<td class="text-left"> <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteModal"  ng-click="pushassign(record1)">De Allocate</button></td>
+				</tr>
+		</tbody>
+	</table>
+			
+	    <div class= "col-md-12 text-center"><b>{{nodata}}</b></div> 
+		</div>
+        
+      	<div class="col-md-12" ng-show="record.length>0">
+     	 <div class="float-right">
+			<ul uib-pagination total-items="totalCount" max-size="maxSize" items-per-page="pageSizeSelected" boundary-links="true" rotate="false" num-pages="numPages" direction-links="true" ng-model="pageIndex" ng-change="pageChanged()"></ul>		
+      		</div>
+     		 </div>
+</div>
+</div>
+
+
+
+<!-- <div class="content-wrapper">
+<div class="container" style="margin-top:90px;">
+
+
+<div class="container list table-responsive panel panel-success" >
+	<div class="panel-heading"><h4>Requirement Tracking
+	<input class="form-control col-md-4 pull-right" type="search" ng-model="test" placeholder="Search"></h4>
+	</div>
+
+	<div class="panel-body" style="padding:5px">
+	<table class="table col-lg-10 table-bordered" id="rec_List">
+		<thead class="thead-inverse">
+                     <th>Assigning Date</th>
+					<th>Client Name</th>
+					<th>Requirement Name</th>
+					<th>Recruiter Name</th>
+					<th>Action</th>
+					
+				</thead>
+				<tbody>
+				<tr dir-paginate="record1 in record | filter:test| itemsPerPage:5">
+					<tr ng-repeat="record1 in record">
+					    <td>{{record1.date| date: 'dd MMM yyyy'}}</td>
+						<td>{{record1.client.clientName}}</td>
+						<td>{{record1.bdmReq.nameOfRequirement}}</td>
+						<td><ul ng-repeat="items in record1.users">
+								<li>{{items.firstName}}</li>
+							</ul></td>
+						
+												<td><a data-toggle="modal" data-target="#view"
+								style="color:#0645AD;" ng-click="viewInfo(record1)">View</a>
+						<button data-toggle="modal" data-target="#editModal"
+								class="btn btn-primary" ng-click="pushassign(record1)"><span class="glyphicon glyphicon-pencil"></button>&nbsp;&nbsp;
+
+</td>
+							  <a href="#!/Assignlistwork" class="btn btn-info" class ="pull-left">Submit</a>
+							  <a href="dashboard.html" class="btn-btn-info">Back</a>
+					</tr>
+				</tbody>
+			</table>
+			
+	
+		</div>
+		<div class="pannel panel-fixed-footer " style="background:linear-gradient(	#FFFFFF);">
+		<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+
+		&nbsp;&nbsp; 
+		
+		<span ng-if="role == 'bdmlead'" > 
+			<a href="#!/bdmlead"  type="button"  class="btn btn-info btn-md"><span class="glyphicon glyphicon-home"></span> Home</a>
+		</span>
+						
+		<span ng-if="role == 'BDM'" > 
+			<a href="#!/bdm"  type="button"  class="btn btn-info btn-md"><span class="glyphicon glyphicon-home"></span> Home</a>
+		</span>
+		&nbsp;&nbsp;
+		 <a href="#!/Assignlistwork"  type="button"  class="btn btn-info btn-md pull-center"><span class="glyphicon glyphicon-plus"></span>Assign Work</a> 
+		 
+		 
+		 
+	</div>
+	
+				
+	
+	</div> -->
+	
+	
+	
+	
+	<!-- Modal for edit  -->
+	<div class="modal fade" id="deleteModal" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>De Allocate</h4>
+					<button type="button" data-dismiss="modal" class="close">&times;</button>					
+				</div>
+				<div class="modal-body">
+				<h4> Are you sure to De Allocate this?</h4>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-success pull-right" data-dismiss="modal" data-toggle="modal" data-target="#response" ng-disabled=false ng-click="deleteAssignments(id)">Yes</button>
+						<button class="btn btn-info pull-left" data-dismiss="modal">No</button>
+					<!-- <button class="btn btn-success pull-left"data-dismiss="modal" ng-click="ViewAssignments()">Cancel</button> -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- View Assignments modal -->
+	<div class="modal fade" id="view" role="dialog">
+		<div class="modal-dialog">
+
+			<div class="modal-content">
+				<div class="modal-header">
+				<h4>View Assignments Details:</h4>
+					<button type="button" data-dismiss="modal" class="close">&times;</button>
+					
+				</div>
+				<div class="modal-body">
+					<div class="well">
+						<div class="row">
+							<div class="col-sm-4">
+								<label>Client:</label>
+							</div>
+							<div class="col-lg-8">{{allReqData.client.clientName}}</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">
+								<label>Contact Person:</label>
+							</div>
+							<div class="col-lg-8">{{allReqData.bdmReq.addContact.contact_Name}}</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">
+								<label>Requirement:</label>
+							</div>
+							<div class="col-lg-8">{{allReqData.bdmReq.nameOfRequirement}}</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-4">
+								<label>Target Profiles per Day:</label>
+							</div>
+							<div class="col-lg-8">{{allReqData.target}}</div>
+						</div>
+						
+						<div class="row">
+							<div class="col-sm-4">
+								<label>Recruiters:</label>
+							
+							</div>	<div class="col-lg-8">{{allReqData.users.firstName}}</div>
+						</div>
+					</div>
+				</div>
+				 <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+        </div>
+            </div>
+            </div>
+            </div>     
+</div>
+</div>
+<!-- View  Requirement  start -->
+<div class="modal fade" id="viewRequriement" role="dialog">
+	<div class="modal-dialog" ng-init="getReqByReqId();">
+		<div class="modal-content">
+			<div class="modal-header">
+				 <h4 class="modal-title">View Requirement Details:</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>				
+			</div>
+			<div class="modal-body"  >
+				<div class="col-md-12">
+				<div class="row">
+			
+						<div class="col-sm-6">
+							<label>Customer Name:</label>
+						</div>
+						<div class="col-lg-6">{{reqDetails.client.clientName}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Name Of Requirement:</label>
+						</div>
+						<div class="col-lg-6">{{reqDetails.nameOfRequirement}}</div>
+					</div>
+					<div class="row">
+							<div class="col-sm-6">
+								<label>Skills:</label>
+							</div>
+							<div class="col-lg-6"><span ng-repeat="y in skills">{{y.skillName}}</span></div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Relevant Experience:</label>
+						</div>
+						<div class="col-lg-6">{{reqDetails.relavantExperience}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Min Budget:</label>
+						</div>
+						<div class="col-lg-6">{{reqDetails.minBudgetRate | currency:"₹ "}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Max Budget:</label>
+						</div>
+						<div class="col-lg-6">{{reqDetails.maxBudgetRate | currency:"₹ "}}</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<label>Type Of Hiring:</label>
+						</div>
+						<div class="col-md-6">{{reqDetails.typeOfHiring}}</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<label>Job Location:</label>
+						</div>
+						<div class="col-md-6"><span ng-repeat="e in locations">{{e.locationName}},</span></div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<label>Qualification:</label>
+						</div>
+						<div class="col-md-6"><span ng-repeat="e in qualifications">{{e.qualificationName}}, </span></div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<label>Roles:</label>
+						</div>
+						<div class="col-md-6"><span ng-repeat="o in designations">{{o.designation}}, </span></div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<label>Number Of Positions:</label>
+						</div>
+						<div class="col-md-6">{{reqDetails.numberOfPositions}}</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<label>Requirement Description:</label>
+						</div>
+						<div class="col-md-6">{{reqDetails.requirementDescription}}</div>
+					</div>	
+							<div class="row">
+						<div class="col-md-6">
+							<label>Job Description:</label>
+						</div>
+						<div class="col-md-6">{{reqDetails.jobDes}}</div>
+					</div>				
+					<div class="form-group">
+						<div class="modal-footer">
+								<button class="btn btn-info pull-right" data-dismiss="modal">OK</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- View  Requirement  end -->

@@ -1,0 +1,758 @@
+<div ng-show="isLoading" class="Applicationloader">
+	<img src="images/rpoloader.gif">
+</div>
+<div ng-include=" 'partials/fotter.html' "></div>
+<div ng-include=" 'partials/header.html' "></div>
+<style type="text/css">
+.select2-container .select2-choice {
+	height: 37px !important;
+	padding: 5px 0 3px 10px !important;
+}
+
+;
+.select2-container .select2-choice .select2-arrow {
+	width: 0 !important;
+	height: 0;
+	border-left: 20px solid transparent;
+	border-right: 20px solid transparent;
+	border-top: 20px solid #f00;
+}
+
+.select2-container .select2-choice .select2-arrow:: before {
+	width: 0 !important;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid black;
+}
+;
+</style>
+<script type='text/javascript'>
+	$(document).ready(function(event) {
+		$('#modeOf_Hiring').on('click', function() {
+			if ($(this).val() == 'Contract to Hire') {
+				$('#one').css('display', 'block');
+				$('#two').css('display', 'none');
+				$('#three').css('display', 'none');
+			} else if ($(this).val() == 'permanent') {
+				$('#two').css('display', 'block');
+				$('#one').css('display', 'none');
+				$('#three').css('display', 'none');
+			} else if ($(this).val() == 'contract') {
+				$('#three').css('display', 'block');
+				$('#one').css('display', 'none');
+				$('#two').css('display', 'none');
+			}
+		});
+
+		$('#slabcheck').on('click', function() {
+			if ($(this).is(":checked")) {
+				$('#percentage').attr('disabled', 'disabled');
+				$('#fixed').attr('disabled', 'disabled');
+				$('#two').attr('disabled', 'disabled');
+				$('#one').attr('disabled', 'disabled');
+				$('#slab').css('display', 'block');
+			} else {
+				$('#percentage').attr('disabled', false);
+				$('#fixed').attr('disabled', false);
+				$('#two').attr('disabled', false);
+				$('#one').attr('disabled', false);
+				$('#slab').css('display', 'none');
+			}
+		});
+		$('#slabType').on('click', function() {
+			if ($(this).val() == "percentage") {
+				$('#percentage').css('display', 'block');
+				$('#less').css('display', 'none');
+				$('#great').css('display', 'none');
+			} else if ($(this).val() == "less") {
+				$('#percentage').css('display', 'none');
+				$('#less').css('display', 'block');
+				$('#great').css('display', 'none');
+			} else {
+				$('#percentage').css('display', 'none');
+				$('#less').css('display', 'none');
+				$('#great').css('display', 'block');
+			}
+		});
+
+	});
+</script>
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;">
+		<ol class="breadcrumb">
+			<div class="col-md-8">
+				<h3>Add Requirement</h3>
+				<p ng-show="saveMsg" style="color: green">Requirement Added
+					Successfully</p>
+				<p ng-show="updateMsg" style="color: green">Updated Successfully</p>
+
+			</div>
+		</ol>
+		<div class="row">
+			<div class="col-md-6">
+				<fieldset class="well .scheduler-border"
+					style="width: 395px; height: auto; margin: 5px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+					<legend
+						style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+						align="left"> Requirement Details </legend>
+
+					<div class="row">
+						<div class="form-group col-md-12">
+							<form name="formone" novalidate>
+								<div class="row">
+									<div class="form-group col-md-12">
+										<label>Customer Name*</label> <select id="clientclick"
+											ng-model="clientName" class="form-control"
+											ng-options="items.id as items.clientName for items in clientnamesbdm"
+											id="client_name" ng-click="getActiveContacts(clientName)"
+											ng-init="getActiveContacts(clientName)"
+											style="width: 100%; height: 33.33px">
+										</select>
+										<div ng-messages="formone.client_name.$error"
+											ng-if="formone.client_name.$touched">
+											<div ng-message="required">* Required Customer Name</div>
+										</div>
+									</div>
+									<div class="form-group col-md-12">
+										<label for="contact_person">Customer SPOC Name
+											{{$select.selected.id}}*</label>
+										<!-- <select
+											id="reqId" class="form-control" name="contactperson"
+											ng-model="addContact1"
+											ng-change="getRequirementContact(addContact1)" required>
+											<input type="text" ng-model="spocName">
+											<option value="" selected ng-disabled="true">--
+												Select Customer SPOC --</option>
+											<option ng-repeat="any in chiru" value={{any}}>
+												{{any.contact_Name}}</option>
+										</select> -->
+										<div class="row-fluid">
+											<ui-select ng-model="addContact1"
+												ng-change="getRequirementContact(addContact1)"
+												theme="select2" title="" style="width:100%"> <ui-select-match
+												placeholder="Select a contact Name..."
+												value={{$select.selected.id}}>{{$select.selected.contact_Name}}</ui-select-match>
+											<ui-select-choices
+												repeat="any in chiru | filter: $select.search">
+											<span
+												ng-bind-html="any.contact_Name | highlight: $select.search"></span>
+											</ui-select-choices> </ui-select>
+										</div>
+										<div ng-messages="formone.contactperson.$error"
+											ng-if="formone.contactperson.$touched">
+											<div ng-message="required">*required Contact Person</div>
+										</div>
+
+									</div>
+									<div class="form-group col-md-12">
+										<label for="requirement">Requirement Name*</label> <input
+											type="text" name="reqname" id="requirement"
+											class="form-control" ng-model="nameOfRequirement"
+											placeholder="Enter Requirement Name" required />
+										<div ng-messages="formone.reqname.$error"
+											ng-if="formone.reqname.$touched">
+											<div ng-message="required">This field is required</div>
+										</div>
+									</div>
+									<!-- 	<div class="form-group col-md-6">
+										<label>Requirement Open Date *</label>
+											<input type="text" value="{{requirementStartdate | date:'dd-MMMM-yyyy'}}" ng-model="startDate" class="form-control" placeholder="dd/MM/yy" />
+										<p class="input-group">
+											<input type="text" name="reqStartDate" placeholder="dd/MM/yyyy"
+												class="form-control" uib-datepicker-popup="{{format}}"
+												is-open="popup3.opened" datepicker-options="dateOptions"
+												alt-input-formats="altInputFormats" ng-model="startDate"
+												ng-change="checkErr(requirementEndDate)" required /> <span
+												class="input-group-btn">
+												<button type="button" class="btn btn-default"
+													ng-click="open3()">
+													<i class="glyphicon glyphicon-calendar"></i>
+												</button>
+											</span>
+										<div ng-messages="formone.reqStartDate.$error"
+											ng-if="formone.reqStartDate.$touched">
+											<div ng-message="required">*required start date</div>
+											<span style="color: #ff4c4c;">{{errMessage}}</span>
+										</div>
+										</p>
+
+									</div> -->
+									<div class="form-group col-md-6">
+										<label>Requirement Open Date<sup>*</sup></label>
+										<p class="input-group">
+											<input type="text" name="requirementStartdate"
+												placeholder="dd/MM/yyyy" class="form-control"
+												uib-datepicker-popup="{{format}}" is-open="popup1.opened"
+												datepicker-options="dateOptions"
+												alt-input-formats="altInputFormats"
+												ng-model="requirementStartdate"
+												ng-change="checkErr(requirementStartdate)" required /> <span
+												class="input-group-btn">
+												<button type="button" class="btn btn-default"
+													ng-click="open1()">
+													<i class="glyphicon glyphicon-calendar"></i>
+												</button>
+											</span>
+										<div ng-messages="formone.requirementStartdate.$error"
+											ng-if="formone.requirementStartdate.$touched">
+											<!-- <div ng-message="required">*Required End date</div> -->
+											<span style="color: #ff4c4c;">{{errMessage}}</span>
+										</div>
+										</p>
+									</div>
+									<!-- <div class="form-group col-md-6">
+										<label>Requirement End Date</label>
+										<p class="input-group">
+											<input type="text" name="reqEndDate" placeholder="dd/MM/yyyy"
+												class="form-control" uib-datepicker-popup="{{format}}"
+												is-open="popup1.opened" datepicker-options="dateOptions"
+												alt-input-formats="altInputFormats"
+												ng-model="endDate"
+												ng-change="checkErr(requirementEndDate)" required /> <span
+												class="input-group-btn">
+												<button type="button" class="btn btn-default"
+													ng-click="open1()">
+													<i class="glyphicon glyphicon-calendar"></i>
+												</button>
+											</span>
+										<div ng-messages="formone.reqEndDate.$error"
+											ng-if="formone.reqEndDate.$touched">
+											<div ng-message="required">*required End date</div>
+											<span style="color: #ff4c4c;">{{errMessage}}</span>
+										</div>
+										</p>
+									</div> -->
+									<div class="form-group col-md-6">
+										<label>Requirement End Date</label>
+										<p class="input-group">
+											<input type="text" name="requirementEndDate"
+												placeholder="dd/MM/yyyy" class="form-control"
+												uib-datepicker-popup="{{format}}" is-open="popup2.opened"
+												datepicker-options="dateOptions"
+												alt-input-formats="altInputFormats"
+												ng-model="requirementEndDate"
+												ng-change="checkErr(requirementEndDate)" required /> <span
+												class="input-group-btn">
+												<button type="button" class="btn btn-default"
+													ng-click="open2()">
+													<i class="glyphicon glyphicon-calendar"></i>
+												</button>
+											</span>
+											<!-- <div ng-messages="formone.requirementEndDate.$error"
+											ng-if="formone.requirementEndDate.$touched"> -->
+											<!-- <div ng-message="required">*Required End date</div> -->
+											<span style="color: #ff4c4c;">{{errMessage}}</span>
+									</div>
+									</p>
+								</div>
+								<div class="form-group col-md-12">
+									<label for="relavent_experience">Skill Type<sup>*</sup></label>
+									</br> <input type="radio" id="generic" ng-model="requirementType"
+										value="Generic"> Generic</input> &nbsp;&nbsp; <input
+										type="radio" id="niche" ng-model="requirementType"
+										value="Niche" ng-checked="true"> Niche</input>
+								</div>
+								<div class="form-group col-md-6">
+									<label>Relevant Experience<sup>*</sup>(Yrs)
+									</label>
+									<div class="col-md-6">
+										<select class="form-control" name="minexp"
+											ng-model="minrelevant" style="width: 100%; height: 33.33px"
+											required>
+											<option value="" selected ng-disabled=true>-- Min --</option>
+											<!-- <option value="0-3">0-3</option>
+										<option value="4-5">4-5</option>
+										<option value="6-10">6-10</option>
+										<option value="11-15">11-15</option>
+										<option value="16-20">16-20</option>
+										<option value="21-25">25-30</option>
+										<option value="30-40">30-40</option> -->
+											<option value="0">0</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="5">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											<option value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
+											<option value="13">13</option>
+											<option value="14">14</option>
+											<option value="15">15</option>
+											<option value="16">16</option>
+											<option value="17">17</option>
+											<option value="18">18</option>
+											<option value="19">19</option>
+											<option value="20">20</option>
+											<option value="21">21</option>
+											<option value="22">22</option>
+											<option value="23">23</option>
+											<option value="24">24</option>
+											<option value="25">25</option>
+											<option value="26">26</option>
+											<option value="27">27</option>
+											<option value="28">28</option>
+											<option value="29">29</option>
+											<option value="30">30</option>
+
+										</select>
+										<!-- span style="color: #ff4c4c;">{{messege}}</span> -->
+									</div>
+									<div class="col-md-6">
+										<select class="form-control" name="maxrelevant"
+											ng-model="maxrelevant" style="width: 100%; height: 33.33px"
+											required>
+											<option value="" selected ng-disabled=true>-- Max --</option>
+											<!-- <option value="0-3">0-3</option>
+										<option value="4-5">4-5</option>
+										<option value="6-10">6-10</option>
+										<option value="11-15">11-15</option>
+										<option value="16-20">16-20</option>
+										<option value="21-25">25-30</option>
+										<option value="30-40">30-40</option> -->
+											<option value="0">0</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="5">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											<option value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
+											<option value="13">13</option>
+											<option value="14">14</option>
+											<option value="15">15</option>
+											<option value="16">16</option>
+											<option value="17">17</option>
+											<option value="18">18</option>
+											<option value="19">19</option>
+											<option value="20">20</option>
+											<option value="21">21</option>
+											<option value="22">22</option>
+											<option value="23">23</option>
+											<option value="24">24</option>
+											<option value="25">25</option>
+											<option value="26">26</option>
+											<option value="27">27</option>
+											<option value="28">28</option>
+											<option value="29">29</option>
+											<option value="30">30</option>
+
+										</select> <span style="color: #ff4c4c;">{{messege}}</span>
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label for="number of positions">Number of Positions*</label> <input
+										type="text" name="numberofpositions"
+										ng-model="numberOfPositions"
+										placeholder="Enter Number of Postions"
+										id="number of positions" class="form-control" numbers-only
+										required></input>
+									<div ng-messages="formone.numberofpositions.$error"
+										ng-if="formone.numberofpositions.$touched">
+										<div ng-message="required">This field is required</div>
+									</div>
+								</div>
+							</form>
+						</div>
+				</fieldset>
+			</div>
+			<div class="col-md-6">
+				<fieldset class="well .scheduler-border"
+					style="width: 395px; height: auto; margin: 5px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+					<legend
+						style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+						align="left"> Additional Information </legend>
+					<div class="row">
+						<div class="form-group col-md-12">
+							<form name="formone" novalidate>
+								<label for="client_name">Requirement Type*</label>
+								<!-- {{client}} -->
+								<select name="hiringtype" ng-model="typeOfHiring"
+									class="form-control" id="modeOf_Hiring"
+									ng-change="hiringdropfun()" name="hiringtypedropdown" required>
+									<option value="" selected ng-disabled=true>-- Select--</option>
+									<option value="Contract to Hire">Contract to Hire</option>
+									<option value="permanent">Permanent</option>
+									<option value="contract">Contract</option>
+								</select>
+								<div ng-messages="formone.hiringtypedropdown.$error"
+									ng-if="formone.hiringtypedropdown.$touched">
+									<div ng-message="required">This field is required</div>
+								</div>
+							</form>
+						</div>
+						<div class="form-group col-md-12">
+							<form name="formone" novalidate>
+								<div id="three" ng-show="typeOfHiring=='contract'">
+									<div class="row">
+										<div class="form-group col-md-4">
+											<label>Min Budget*</label> <input type="text"
+												placeholder="Enter Min Budget" class="form-control"
+												minlength="5" maxlength="7" name="minBudget"
+												ng-model="minBudgetContract" valid-number numbers-only /> <span
+												style="color: red"
+												ng-show="formone.minBudget.$error.minlength"> Budget
+												should be thousands only</span> <span style="color: red"
+												ng-show="formone.minBudget.$error.maxlength"> CTC
+												should be lakhs only</span>
+										</div>
+										<div class="form-group col-md-4">
+											<label>Max Budget*</label> <input type="text"
+												placeholder="Enter Max Budget" class="form-control"
+												name="maxBudget" minlength="5" maxlength="7"
+												ng-model="maxBudgetContract" valid-number numbers-only /> <span
+												style="color: red"
+												ng-show="formone.maxBudget.$error.minlength"> Budget
+												should be thousands only</span> <span style="color: red"
+												ng-show="formone.maxBudget.$error.maxlength"> CTC
+												should be lakhs only</span>
+										</div>
+										<div class="form-group col-md-4">
+											<select name="hiringtype" ng-model="newType"
+												class="form-control" style="margin-top: 22px;"
+												id="modeOf_Hiring" name="hiringtypedropdown" required>
+												<option value="" selected ng-disabled=true>--
+													Select --</option>
+												<option value="permonth">Per Month</option>
+												<option value="perannum">Per Annum</option>
+											</select>
+										</div>
+									</div>
+								</div>
+						</div>
+						<div class="form-group col-md-12"
+							ng-show="typeOfHiring=='Contract to Hire'">
+							<div class="row" id="one">
+								<form name="F1" class="myForm" novalidate>
+									<div class="form-group col-md-6">
+										<label>Min Budget</label> <input type="text"
+											placeholder="Enter Min Budget" class="form-control"
+											minlength="5" maxlength="7" ng-model="minBudget"
+											name="minBudget" valid-number numbers-only /> <span
+											style="color: red" ng-show="F1.minBudget.$error.minlength">
+											Budget should be thousands only</span> <span style="color: red"
+											ng-show="F1.minBudget.$error.maxlength"> CTC should be
+											lakhs only</span>
+									</div>
+									<div class="form-group col-md-6">
+										<label>Max Budget</label> <input type="text"
+											placeholder="Enter max Budget" class="form-control"
+											minlength="5" maxlength="7" ng-model="maxBudget"
+											name="maxBudget" valid-number numbers-only /> <span
+											style="color: red" ng-show="F1.maxBudget.$error.minlength">
+											Budget should be thousands only</span> <span style="color: red"
+											ng-show="F1.maxBudget.$error.maxlength"> CTC should be
+											lakhs only</span>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="form-group col-md-12">
+							<div id="two" ng-show="typeOfHiring=='permanent'">
+								<form name="f2" novalidate>
+									<input type="radio" ng-model="value" value="percentage"
+										ng-click="showFun1()" ng-checked="true">Percentage</input> <input
+										type="radio" ng-model="value" value="fixed"
+										ng-click="showFun2()">Fixed</input>
+									<div ng-show="show1">
+										<div class="form-group col-md-6">
+											<label for="fixedrate"></label> <input type="text"
+												style="margin-left: -10px;" placeholder="Enter"
+												name="fixedamount" class="form-control" ng-model="famount"
+												valid-number></input>
+											<p style="color: red;">{{message}}</p>
+										</div>
+									</div>
+									<div ng-show="show2">
+										<div class="form-group col-md-6">
+											<label for="fixedrate"></label> <input type="text"
+												style="margin-left: -10px;" placeholder="Enter"
+												name="fixedamount" class="form-control" ng-model="famount"
+												valid-number></input>
+											<p style="color: red;">{{message}}</p>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="status">Status<sup>*</sup></label> <select
+								id="status" name="status" class="form-control" ng-model="status"
+								required>
+								<option ng-repeat="i in statusList">{{i.status}}</option>
+							</select>
+							<div ng-messages="formone.noticeprd.$error"
+								ng-if="formone.noticeprd.$touched">
+								<div ng-message="required">This field is required</div>
+							</div>
+						</div>
+						<div class="form-group col-md-6">
+						<!-- 	<label for="jobLocation">Job Location<sup>*</sup></label>
+								<select
+								id="clientName" name="client_name" class="form-control"
+								ng-model="locationId" multiple required>
+								<option value="" selected ng-disabled="true">Select</option>
+								<option ng-repeat="items in locationList" value={{items.id}}>{{items.locationName}}</option>
+							</select>
+							<div ng-dropdown-multiselect8="" options="locationList"
+								ng-model="locations" selected-model="locationarray"
+								extra-settings="example16settings"></div> -->
+								<div class="form-group col-md-6">
+							<label for="jobLocation">Job Location<sup>*</sup></label>
+						<!-- <div ng-dropdown-multiselect1="" options="skillbdm"
+							selected-model="skillarray" extra-settings="example16settings"></div> -->
+						<div ng-repeat="s in locationarray">{{s.locationName}}</div>
+					</div>
+					<div class="form-group col-md-6" style="margin-top: 20px;">
+						<button class="btn btn-primary pull-left" data-toggle="modal"
+							data-target="#Locations" title="Search Locations"
+							cursor:pointer;">Search Locations</button>
+					</div>
+						</div>
+						<div class="form-group col-md-12">
+							<label for="notice_period">Notice Period<sup>*</sup></label>(days)
+							<!-- 	 <select
+								id="notice_period" class="form-control" name="noticeprd"
+								ng-model="noticePeriod" style="width: 100%; height: 33.33px"
+								required>
+								<option value="" selected ng-disabled=true>-- Select --</option>
+								<option value="0">0</option>
+								<option value="0-7">0-7</option>
+								<option value="0-14">0-14</option>
+								<option value="15-30">15-30</option>
+								<option value="30-60">30-60</option>
+								<option value="60-90">60-90</option>
+							</select> -->
+							<input type="textbox" class="form-control" id="notice_period"
+								placeholder="in days" ng-model="noticePeriod" name="noticeprd"
+								maxlength="2" valid-number numbers-only required />
+							<div ng-messages="formone.noticeprd.$error"
+								ng-if="formone.noticeprd.$touched">
+								<div ng-message="required">This field is required</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-group col-md-6">
+						<div class="col-md-6">
+							<label for="skill">Skills<sup>*</sup></label>
+							<!-- <div ng-dropdown-multiselect1="" options="skillbdm"
+								selected-model="skillarray" extra-settings="example16settings"></div> -->
+							<div ng-repeat="s in skillsArray">{{s.skillName}}</div>
+						</div>
+						<div class="col-md-6" style="margin-top: 20px;">
+							<button class="btn btn-primary pull-left" data-toggle="modal"
+								data-target="#Skills" title="Search Skills" cursor:pointer;">Search
+								Skills</button>
+						</div>
+					</div>
+					<div class="form-group col-md-6">
+						<div class="col-md-6">
+							<label for="qualification_required">Qualification<sup>*</sup></label>
+						<!-- <div ng-dropdown-multiselect1="" options="skillbdm"
+							selected-model="skillarray" extra-settings="example16settings"></div> -->
+						<div ng-repeat="s in qualiarray">{{s.qualificationName}}</div>
+					</div>
+					<div class="col-md-6" style="margin-top: 20px;">
+						<button class="btn btn-primary pull-left" data-toggle="modal"
+							data-target="#Qualifications" title="Search Qualifications"
+							cursor:pointer;">Search Qualifications</button>
+					</div>
+						
+					</div>
+					<div class="form-group col-md-6">
+						<label for="designation">Roles</label>
+						<div ng-dropdown-multiselect0="" options="desigbdm"
+							selected-model="desigarray" extra-settings="example16settings"></div>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="qualification_required">Certificates</label>
+						<div ng-dropdown-multiselect3="" options="certificatebdm"
+							selected-model="certiarray" extra-settings="example16settings"></div>
+					</div>
+					<div class="form-group col-md-12">
+						<label for="requirement_description">Job Description<sup>*</sup></label><br />
+						<textarea type="text" class="form-control" name="jobdesc"
+							ng-model="jobDescription" rows="3" cols="15" required></textarea>
+						<div ng-messages="formone.jobdesc.$error"
+							ng-if="formone.jobdesc.$touched">
+							<div ng-message="required">This field is required</div>
+						</div>
+					</div>
+					<div class="form-group col-md-12">
+						<label for="requirement_description">Requirement
+							Description*</label><br />
+						<textarea type="text" name="reqdesc" class="form-control"
+							ng-model="requirementDescription" rows="3" cols="15" required></textarea>
+						<div ng-messages="formone.reqdesc.$error"
+							ng-if="formone.reqdesc.$touched">
+							<div ng-message="required">This field is required</div>
+						</div>
+					</div>
+					<div class="form-group col-md-12">
+						<p ng-show='errorMsg' class style="color: red">Please Fill
+							Mandatory Fields</p>
+						<button class="btn btn-success pull-right" ng-click="bdmreqdtls()">Save</button>
+						<a href="#!/bdmlead" class="btn btn-danger pull-right"
+							style="margin-right: 10px;">Cancel</a>
+					</div>
+				</fieldset>
+			</div>
+		</div>
+	</div>
+</div>
+<!--View SKills-->
+<div class="modal fade" id="Skills" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4>Search Skills</h4>
+				<button type="button" data-dismiss="modal" class="close">&times;</button>
+
+			</div>
+			<div class="modal-body">
+				<div class="col-md-10">
+					<input class="form-control" type="search" ng-model="skill"
+						placeholder="Search Here.."> <span> </span>
+				</div>
+				<div class='col-md-1'>
+					<button class="btn btn-success pull-right"
+						ng-click="searchText1(skill)">Search</button>
+				</div>
+				<div class='col-md-1'>
+					<button class="btn btn-success pull-right" ng-click="save()">Save</button>
+				</div>
+				<table class="table table-hover datatable" id="CandidateSubmissions"
+					ui-jq="dataTable" ui-options="dataTableOpt">
+					<thead>
+						<tr>
+							<th>Select</th>
+							<th class="text-left">Skill Name</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="skills in skillsList">
+							<td><input type="checkbox" ng-model="skills.selected"
+								value="{{skills.id}}"></td>
+							<td class="text-left">{{skills.skillName}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="float-right" ng-show="skillsList.length>0">
+					<ul uib-pagination total-items="totalRecords" max-size="maxSize"
+						items-per-page="pageSizeSelected" boundary-links="true"
+						rotate="false" num-pages="numPages" direction-links="true"
+						ng-model="pageIndex" ng-change="pageChanged()"></ul>
+					<!-- <dir-pagination-controls class="pull-right"></dir-pagination-controls>	 -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--View Qualifications-->
+<div class="modal fade" id="Qualifications" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4>Search Qualifications</h4>
+				<button type="button" data-dismiss="modal" class="close">&times;</button>
+
+			</div>
+			<div class="modal-body">
+				<div class="col-md-10">
+					<input class="form-control" type="search" ng-model="qualification"
+						placeholder="Search Here.."> <span> </span>
+				</div>
+				<div class='col-md-1'>
+					<button class="btn btn-success pull-right"
+						ng-click="searchQualification(qualification)">Search</button>
+				</div>
+				<div class='col-md-1'>
+					<button class="btn btn-success pull-right"
+						ng-click="saveQualifications()">Save</button>
+				</div>
+				<table class="table table-hover datatable" id="CandidateSubmissions"
+					ui-jq="dataTable" ui-options="dataTableOpt">
+					<thead>
+						<tr>
+							<th>Select</th>
+							<th class="text-left"> Qualifications Name </th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="qualifications in qualificationsList">
+							<td><input type="checkbox"
+								ng-model="qualifications.selected" value="{{qualifications.id}}"></td>
+							<td class="text-left">{{qualifications.qualificationName}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="float-right" ng-show="qualificationsList.length>0">
+					<ul uib-pagination total-items="totalRecords" max-size="maxSize"
+						items-per-page="pageSizeSelected" boundary-links="true"
+						rotate="false" num-pages="numPages" direction-links="true"
+						ng-model="pageIndex" ng-change="pageChanged()"></ul>
+					<!-- <dir-pagination-controls class="pull-right"></dir-pagination-controls>	 -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!--View locations-->
+<div class="modal fade" id="Locations" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4>Search Qualifications</h4>
+				<button type="button" data-dismiss="modal" class="close">&times;</button>
+
+			</div>
+			<div class="modal-body">
+				<div class="col-md-10">
+					<input class="form-control" type="search" ng-model="locations"
+						placeholder="Search Here.."> <span> </span>
+				</div>
+				<div class='col-md-1'>
+					<button class="btn btn-success pull-right"
+						ng-click="searchLocations(locations)">Search</button>
+				</div>
+				<div class='col-md-1'>
+					<button class="btn btn-success pull-right"
+						ng-click="saveLocations()">Save</button>
+				</div>
+				<table class="table table-hover datatable" id="CandidateSubmissions"
+					ui-jq="dataTable" ui-options="dataTableOpt">
+					<thead>
+						<tr>
+							<th>Select</th>
+							<th class="text-left"> Locations Name </th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="locations in locationsList">
+							<td><input type="checkbox"
+								ng-model="locations.selected" value="{{locations.id}}"></td>
+							<td class="text-left">{{locations.locationName}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="float-right" ng-show="locationsList.length>0">
+					<ul uib-pagination total-items="totalRecords" max-size="maxSize"
+						items-per-page="pageSizeSelected" boundary-links="true"
+						rotate="false" num-pages="numPages" direction-links="true"
+						ng-model="pageIndex" ng-change="pageChanged()"></ul>
+					<!-- <dir-pagination-controls class="pull-right"></dir-pagination-controls>	 -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

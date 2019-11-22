@@ -1,0 +1,27 @@
+<div ng-include="'partials/header.html'"></div>
+ <div ng-include="'partials/fotter.html'"></div>
+  <div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+     
+     <!-- new existin code here -->
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Notice Period/Add Notice Period </h3>
+        </li>
+  
+      </ol>
+      <form name="noticeperiodForm" class="myForm" required novalidate >
+      <div class="col-md-3">
+      <input type="text" name="noticeperiod" ng-model="NoticePeriod.noticePeriod" class="form-control" placeholder="Enter notice period (Days)" maxlength="2"required> 
+      <div ng-messages="noticeperiodForm.noticeperiod.$error" ng-if="noticeperiodForm.noticeperiod.$touched">
+ 							 <div ng-message="required">This field is required</div>
+      							</div>
+      </div>
+      <div class="col-md-1">
+      <button  class="btn btn-info pull-right" ng-disabled="!noticeperiodForm.$valid" ng-click="addNoticePeriod(NoticePeriod)">Save</button>
+      </div>
+
+</form>
+</div>
+</div>

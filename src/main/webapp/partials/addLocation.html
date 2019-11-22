@@ -1,0 +1,27 @@
+<div ng-include="'partials/header.html'"></div>
+ <div ng-include="'partials/fotter.html'"></div>
+  <div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+     
+     <!-- new existin code here -->
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Add Location </h3>
+        </li>
+  
+      </ol>
+      <form name="locationForm" class="myForm" required novalidate >
+      <div class="col-md-3">
+      <input type="text" name="location" ng-model="location.locationName" class="form-control" placeholder="Enter Location name" required> 
+      <div ng-messages="locationForm.location.$error" ng-if="locationForm.location.$touched">
+ 							 <div ng-message="required">This field is required</div>
+      							</div>
+      </div>
+      <div class="col-md-1">
+      <a href="#!/joblocations" class="btn btn-info pull-right" ng-disabled="!locationForm.$valid" ng-click="addlocation(location)">Save</a>
+      </div>
+
+</form>
+</div>
+</div>

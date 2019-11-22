@@ -1,0 +1,117 @@
+		<div ng-include=" 'partials/fotter.html' "></div>
+		<div ng-include=" 'partials/header.html' "></div>
+	</head>
+	
+	<div class="container">
+	
+	<label>Contact Name:  &nbsp;</label><span>{{xyz}}</span>
+ 	<div>
+	<input type="text" class="form-control" ng-model="details.id" style="display:none"/>
+	</br> 
+	</div>
+
+	<div class="form-group" ng-show="view1">
+	<form name="myForm" novalidate>
+		<label>Billing Address:</label></br>
+			
+		<div class="row">
+				<div class="form-group col-lg-4">
+					<input type="text" ng-model="pincode" name="pincode" class="form-control" placeholder="ENTER PINCODE & SEARCH" ng-minlength="6" ng-maxlength="6" ng-disabled="hide1" required/>	
+					<span style="color:red;" ng-show="myForm.pincode.$touched && myForm.pincode.$error.required">*The field is required.</span>
+					<span style="color:red;" ng-show="myForm.pincode.$error.maxlength">*Pincode too long</span>					
+				</div>
+				<div class="form-group col-lg-4">					
+					<a href="#!/addaddress" type="button" class="btn btn-default" style="color:	#1e90ff;" ng-disabled="myForm.$invalid" ng-click="getcountryDetails()" class="form-control">Search </a>		
+				</div>	
+				</div>		
+			<div class="row">
+				<div class="form-group col-lg-4">
+				Country:
+				<input type="text"  class="form-control" ng-model="::client[1].Country" placeholder="Enter Country Name" ng-disabled="true" />
+				</div>
+				
+				<div class="form-group col-lg-4">
+				State:
+				<input type="text"  class="form-control" ng-model="::client[1].State"	placeholder="Enter State Name" ng-disabled="true"/>
+				</div>
+				
+				<div class="form-group col-lg-4">
+				District:
+				<input type="text" ng-model="::client[1].City" class="form-control" placeholder="Enter City Name" ng-disabled="true"/>
+				</div>
+			</div>			
+			<div class="row">
+			<div class="form-group col-lg-4">
+			City:<select  class="form-control" ng-model="Address" ng-disabled="hide1">
+			<option>Select</option>
+			<option ng-repeat="value in client" value={{value.Address}}>{{value.Address}}</option>
+			<option value="" disabled selected>Please Select</option>
+			</select>
+			</div>
+			<div class="form-group col-lg-4" >
+			Address:<textarea rows="3" cols="50" class="form-control"  placeholder="Enter Address" ng-model="addressLane2" ng-disabled="hide1"/>
+			</div>
+			</div>			
+	
+		<button class="btn btn-info  pull-right"  ng-click="addAddress1()" ng-hide="hide1">Save</button>	
+		</form>
+		</div>	
+		
+		<!-- ng-disabled="myForm.$invalid" -->
+		<div class="form-group" ng-show="view2">
+		<form name="myForm1" novalidate>
+		</br></br>
+		<label>Shipping Address:</label></br>
+			
+		<div class="row">
+				<div class="form-group col-lg-4">
+					<input type="text" ng-model="pincode1" name="pincode1" class="form-control" placeholder="ENTER PINCODE & SEARCH" ng-minlength="6" ng-maxlength="6" required/>	
+					<span style="color:red;" ng-show="myForm1.pincode1.$touched && myForm1.pincode1.$error.required">*The field is required.</span>
+					<span style="color:red;" ng-show="myForm1.pincode1.$error.maxlength">*Pincode too long</span>					
+				</div>
+				<div class="form-group col-lg-4">					
+					<a href="#!/addaddress" type="button" class="btn btn-default" style="color:	#1e90ff;" ng-disabled="myForm1.$invalid" ng-click="getcountryDetails1()" class="form-control">Search </a>		
+				</div>	
+				</div>		
+			<div class="row">
+				<div class="form-group col-lg-4">
+				Country:
+				<input type="text"  class="form-control" ng-model="::client1[1].Country" placeholder="Enter Country Name" ng-disabled="true" />
+				</div>
+				
+				<div class="form-group col-lg-4">
+				State:
+				<input type="text"  class="form-control" ng-model="::client1[1].State"	placeholder="Enter State Name" ng-disabled="true"/>
+				</div>
+				
+				<div class="form-group col-lg-4">
+				District:
+				<input type="text" ng-model="::client1[1].City" class="form-control" placeholder="Enter City Name" ng-disabled="true"/>
+				</div>
+			</div>			
+			<div class="row">
+			<div class="form-group col-lg-4">
+			City:<select  class="form-control" ng-model="Address1">
+			<option>Select</option>
+			<option ng-repeat="value in client" value={{value.Address}}>{{value.Address}}</option>
+			<option value="" disabled selected>Please Select</option>
+			</select>
+			</div>
+			<div class="form-group col-lg-4" >
+			Address:<textarea rows="3" cols="50" class="form-control"  placeholder="Enter Address" ng-model="addressLane21" />
+			</div>
+			</div>			
+			
+			
+	
+		<button class="btn btn-info pull-right"  ng-click="addAddress2()">Save</button>	
+		</form>
+		</div>	
+		
+					<a href="#!/viewClientContact" type="button" class="btn btn-info pull-left">Back</a>
+		
+		<!-- ng-disabled="myForm.$invalid" -->
+	
+	
+	</div>
+<!--onClick="window.location.reload();"-->

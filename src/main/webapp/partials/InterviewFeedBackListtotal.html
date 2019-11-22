@@ -1,0 +1,50 @@
+
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="container list table-responsive panel panel-danger">
+	<div class="panel-heading">
+		<h4>
+			InterviewFeedBack Information <input class="pull-right" type="search"
+				ng-model="test" placeholder="search here..">
+		</h4>
+	</div>
+	<div class="panel-body" style="padding: 5px">
+		<table class="table col-lg-10 table-bordered" id="rec_List">
+			<thead class="thead-inverse">
+				<tr>
+					<th>CadidateName</th>
+					<th>Company name</th>
+					<th>Requirement Type</th>
+					<th>Name of round</th>
+					<th>interview status</th>
+					<th>Client feedback</th>
+					<th>Internal feedback</th>
+			       	
+				</tr>
+			</thead>
+			<tbody>
+			
+				<tr dir-paginate="list in processfeedbackDetails|filter:test|itemsPerPage:5">
+
+					<td>{{list.candidateiname}}</td>
+					<td>{{list.companyname}}</td>
+					<td>{{list.requirementType}}</td>
+					<td>{{list.nameOfRound}}</td>
+					<td>{{list.interviewStatus}}</td>
+					<td>{{list.clientFeedback}}</td>
+					<td>{{list.internalFeedback}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="pannel panel-fixed-footer " style="background:linear-gradient(	#FFFFFF);">
+		<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+
+		&nbsp;&nbsp; <a href="#!/recruiter" type="button"  class="btn btn-info"><span class="glyphicon glyphicon-home"></span> Home</a>&nbsp;&nbsp;
+		 
+		 
+		 <a href="#!/CandidateList1"  type="button"  class="btn btn-info pull-center" ng-hide="addcandidate">Candidate List</a>
+		 
+		 </div>
+</div>
+

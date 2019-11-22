@@ -1,0 +1,86 @@
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+
+
+<div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Designations</h3>
+        </li>
+      </ol>
+       <ol class="breadcrumb">
+    <div class="col-md-10">
+    <input class="form-control" style="width:25%" type="search" ng-model="test" placeholder="Search">
+    </div>
+    <div class="col-md-2 pull-right">
+     <a href="#!/addRoles"  type="button"  class="btn btn-info btn-md pull-center"><span class="glyphicon glyphicon-plus"></span>Add</a>	 	
+    </div>
+   
+    </ol>
+        <table class="table table-striped table-bordered" id="rec_List">
+		<thead>
+			<tr>
+				<th>Designation Name</th>
+				<th>Edit</th>	
+			</tr>
+		</thead>
+		<tbody>           
+     <tr dir-paginate="exist in existingDetails| filter:test | itemsPerPage:5">
+            <td>{{::exist.designation}}</td>
+	       <td>	
+			<button  class="btn btn-primary"
+					class="modal-dialog modal-lg" data-toggle="modal" data-target="#myModal" ng-click="editDesignation(exist)">
+					<span class="glyphicon glyphicon-pencil"></span>
+			</button>
+			</td>
+			</tr>
+			
+		</tbody>
+	</table>
+	<div class="col-md-12 text-center">
+	<p><b>{{noData}}</b></p>
+	</div>
+	<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+	</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+	 <form class="form-horizontal" name="myform"  novalidate class="form-horizontal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+				<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-9">
+						<h4 class="modal-title">Edit Designation</h4>
+					</div>
+					<div class="col-md-3">
+						<button type="button" data-dismiss="modal" class="close">&times;</button>	
+					</div>
+				</div>
+				</div>					
+				</div>
+				<div class="modal-body">
+					<div class="col-md-12">
+						 <div class="form-group">
+							<label class="control-label col-sm-3" for="name" >Designation:</label>						
+							<div class="col-sm-9">
+								<input class="form-control" type="text"
+									placeholder="enter designation" ng-model="clickedDesignation.designation" name="des" required>
+									<span style="color: red;" ng-show="myform.des.$touched && myform.des.$invalid">The field is required.</span>
+							</div>
+						</div>
+					</div>
+				</div>
+						</br>
+					<div class="modal-footer">
+							<div class="col-sm-12 text-center">
+								<button type="submit" class="btn btn-success pull-right"
+										data-dismiss="modal" ng-click="updateDesignation()" ng-disabled="myform.$invalid">Update</button>
+								<button type="submit" class="btn btn-danger pull-left"
+										data-dismiss="modal">Cancel</button>								
+							</div>						
+					</div>
+						</div>					
+						</form>  
+						</div>

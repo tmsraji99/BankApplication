@@ -1,0 +1,957 @@
+<div ng-show="isLoading" class="Applicationloader">
+     <img  src="images/rpoloader.gif">
+  </div>
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;"
+		ng-init="getRequirementDetails();">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>
+					<i class="fa fa-fw fa-table"></i> My Requirements
+				</h3>
+			</li>
+		</ol>
+
+		<!--  <div class="row"> 
+		      <div class="col-md-3">
+		     <input class="form-control"  type="search" ng-model="test" placeholder="Search Here..">
+		      Search By Category
+		     <select class="form-control" ng-model="searchitem.searchcategory" style="border-radius:0">
+		     <option value="clientName" selected>Client Name</option>
+		     <option value="nameOfrequirement">Requirement Name</option>
+		     <option value="candidateName">SPOC Name</option>
+		     <option value="candidateStatus">Candidate Status</option>		
+		     <option value="nameOftheRecruiter">Recruiter Name</option>   
+		     </select>
+		      </div>
+      		 <div class="col-md-3">
+		       <input class="form-control"  type="search" ng-model="searchitem.searchtext" placeholder="Search Here.." style="margin-top:21px;border-radius:0">
+		      <span class="glyphicon glyphicon-search" ng-click="searchsub(searchitem)" style="position: absolute;font-size: 17px; color: #337ab7;right: 22px;top: 31px;z-index: 10;cursor: pointer;"></span>
+		      </div>
+     		<div class="col-md-3">
+			      <p class="mt-5">Total Number of Records :
+			      <strong class="text text-info">{{reqListDetails.length}}</strong><p>
+			 </div>     
+		       <div class="col-md-3 mt-4 pt-2">      
+		      <select class="form-control pull-right" ng-model="pageSize" style="width:120px;margin-bottom: 6px;">
+		      <option>10</option>
+		      <option>15</option>
+		      <option>20</option>
+		      <option>25</option>
+		      </select>
+		        <span style="margin-right: 8px; margin-top: 6px;"class="pull-right text text-info">Items per page</span>
+		      </div>	     
+     	</div> -->
+		<div class="row">
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-sm-6">
+						Search By Category <select class="form-control"
+							ng-model="searchcategory" style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="clientName">Client Name</option>
+							<option value="nameOfRequirement">Requirement Name</option>
+							<option value="contactName">SPOC Name</option>
+							<option value="email">Email</option>
+							<option value="mobile">Mobile</option>
+						</select>
+					</div>
+					<div class="col-sm-6">
+						<input class="form-control" type="search" ng-model="searchtext"
+							placeholder="Search Here.."
+							style="margin-top: 21px; border-radius: 0">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-sm-4">
+						Sort By <select class="form-control" ng-model="order"
+							style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="clientName">Client Name</option>
+							<option value="nameOfRequirement">Requirement Name</option>
+							<option value="contactName">SPOC Name</option>
+							<option value="email">Email</option>
+							<option value="mobile">Mobile</option>
+						</select>
+					</div>
+					<div class="col-sm-4">
+						Order By <select class="form-control" ng-model="by"
+							style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="asc">Ascending</option>
+							<option value="desc">Descending</option>
+						</select>
+					</div>
+					<div class="col-sm-2 mt-4 pt-2">
+						<button class="btn btn-primary btn-sm" ng-click="searchText()">Search</button>
+					</div>
+					<div class="col-sm-2  mt-4 pt-2">
+						<button class="btn btn-danger btn-sm" ng-click="clearText()">Reset</button>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="col-md-2">
+      <p class="mt-5">Total Number of Records :
+      <strong class="text text-info">{{ListReqData.length}}</strong><p>
+      </div> -->
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-md-6 mt-4 pt-2">
+						<select class="form-control pull-right" ng-model="pageSize"
+							style="width: 65px; margin-bottom: 6px;">
+							<option>10</option>
+							<option>15</option>
+							<option>20</option>
+							<option>25</option>
+						</select> <span style="margin-right: 8px; margin-top: 6px;"
+							class="pull-right text text-info">Items per page
+							{{totalCount}}</span>
+					</div>
+					 <div class="col-md-6 mt-4 pt-2">
+						<a class="btn btn-default btn btn-primary btn-xs"
+							href="#!/addCandidate">Add Candidate</a>
+					</div>
+				</div>
+			</div>
+
+			
+		</div>
+
+
+		<table st-table="ListReqData" st-safe-src="rowCollection"
+			class="table">
+			<thead>
+				<tr>
+					<th class="text-left">Sr.No.</th>
+					<th class="text-left">Expand/Close</th>
+					<th class="text-left" ng-click="sortData('nameOfRequirement')">Req Name<div  ng-class="getSortClass('nameOfRequirement')"></div></th>
+					<th class="text-left" ng-click="sortData('clientName')">Client<div  ng-class="getSortClass('clientName')"></div></th>
+					<th class="text-left" ng-click="sortData('leadName')">Assigned By<div  ng-class="getSortClass('leadName')"></div></th>
+					<th class="text-left" ng-click="sortData('assigenedDate')">Assigned Date<div  ng-class="getSortClass('assigenedDate')"></div></th>
+					<th class="text-left" ng-click="sortData('startDate')">Open Date<div  ng-class="getSortClass('startDate')"></div></th>
+					<!-- <th class="text-left" ng-click="sortData('endDate')">Valid Up to<div  ng-class="getSortClass('endDate')"></div></th> -->
+					<th class="text-left" ng-click="sortData('contact_Name')">SPOC<div  ng-class="getSortClass('contact_Name')"></div></th>
+					<th class="text-left" ng-click="sortData('mobile')">SPOC Mobile<div  ng-class="getSortClass('mobile')"></div></th>
+					<th class="text-left" ng-click="sortData('candidateid')">Email<div  ng-class="getSortClass('candidateid')"></div></th>
+					<!-- <th st-sort="">Skills</th>-->
+					<th class="text-left" ng-click="sortData('status')">Status<div  ng-class="getSortClass('status')"></div></th>
+					<!-- <th class="text-left">Location</th> -->
+					<th class="text-left">Candidate Map</th>
+					<!-- <th class="text-left">Add Candidate</th> -->
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat-start="x in reqListDetails|filter:test|orderBy:sortColumn:reverseSort">
+					<td class="text-left">{{$index+1}}</td>
+					<td class="text-left">
+						<button class='btn btn-danger' ng-if="x.expanded"
+							ng-click="x.expanded = false">-</button>
+						<button class='btn btn-success' ng-if="!x.expanded"
+							ng-click="expandSelected(x)">+</button>
+					</td>
+					<td class="text-left"><a data-toggle="modal"
+						data-target="#viewRequriement" title="View Requirement"
+						ng-click="viewReqInfo(x)" style="color: blue; cursor: pointer;">{{x.nameOfRequirement}}</a></td>
+					<td class="text-left">{{x.clientName}}</td>
+					<td class="text-left">{{x.leadName}}</td>
+					<td class="text-left">{{x.assigenedDate|date:"dd-MM-yyyy"}}</td>
+					<td class="text-left">{{x.startDate|date:"dd-MM-yyyy"}}</td>
+					<!-- <td class="text-left">{{x.endDate|date:"dd-MM-yyyy"}}</td> -->
+					<td class="text-left">{{x.contact_Name}}</td>
+					<td class="text-left">{{x.mobile}}</td>
+					<td class="text-left">{{x.email}}</td>
+					<!--  
+              <td>            
+              <span ng-repeat="y in x.skills">         
+              {{y.skillName}},
+              </span>             
+              </td>
+			-->
+
+					<td class="text-left"><span ng-if="x.status=='Open'"
+						style="color: green;">{{x.status}}</span> <span
+						ng-if="x.status=='closed'" style="color: red;">{{x.status}}</span>
+						<span ng-if="x.status=='Hold'" style="color: orange;">{{x.status}}</span>
+					</td>
+					<!--   <td class="text-left"> {{x.location.locationName}}</td> -->
+					<td class="text-left"><button
+							class="btn btn-default btn btn-primary btn-xs"
+							ng-click="navigationToCandidate(x);">Candidate Map</button></td>
+					<!-- <td class="text-left"><a
+						class="btn btn-default btn btn-primary btn-xs"
+						href="#!/addCandidate">Add Candidate</a></td> -->
+				</tr>
+				<tr ng-if="x.expanded" ng-repeat-end="">
+					<td colspan="15">
+						<div class="col-md-offset-3 col-md-5">
+							<h4 style="color: red" ng-show="!flag">No Candidates Found</h4>
+						</div>
+
+						<div class="clearfix"></div>
+
+						<div class="col-md-4">
+							<!-- <input class="form-control input-sm" type="search" ng-model="searchReq" placeholder="Search"  ng-show="flag"> -->
+						</div>
+						<div class="col-md-4">
+							<h4 style="color: green;" ng-show="flag">Candidate Details</h4>
+						</div>
+						<div class="col-md-4" ng-show="flag">
+							<ul uib-pagination total-items="totalCount" max-size="maxSize"
+								items-per-page="pageSizeSelected" boundary-links="true"
+								rotate="false" num-pages="numPages" direction-links="true"
+								ng-model="pageIndex" ng-change="pageChanged()"></ul>
+						</div>
+						<div class="clearfix"></div>
+
+
+
+						<table st-table="ListReqData" class="table table-hover bord"
+							ng-show="flag">
+							<thead style="font-size: 12px;">
+								<tr>
+									<th class="text-left">Candidate Id</th>
+									<th class="text-left" st-sort="nameOfRequirement">Candidate
+										Name</th>
+
+
+									<th class="text-left" st-sort="">Submission Date</th>
+									<!-- <th class="text-left" st-sort="">Date of Joining </th> -->
+									<th class="text-left" st-sort="">Candidate Status</th>
+									<th class="text-left" st-sort="">Action</th>
+									<th class="text-left" st-sort="">Edit</th>
+
+									<th class="text-left" st-sort="">Resume</th>
+
+									<!-- <th st-sort="status">Status</th>
+			<th>Location</th>
+			 <th>Action</th>
+			<th >Assign to Recruiter</th> -->
+								</tr>
+							</thead>
+							<tbody>
+
+								<tr ng-repeat="list in ListReqData|filter:searchReq">
+									<td class="text-left">{{list.candidateId}}</td>
+									<td class="text-left"><a data-toggle="modal"
+										data-target="#view" title="view Candidate"
+										ng-click="viewInfo(list)"
+										style="color: blue; cursor: pointer;">{{list.candidateName}}</a>
+									</td>
+									<td class="text-left">{{list.submissionDate |date:'dd MMM
+										yyyy'}}</td>
+									<!-- 					<td class="text-left">{{list.doj|date:'dd MMM yyyy'}}</td> -->
+									<td class="text-left"><span
+										ng-if="list.candidateStatus == 'onHold' "> <span
+											ng-switch="getrole">
+												<p ng-switch-when="recruiter">
+
+													<button href="#!/onHold" class="btn btn-primary btn-xs"
+														ng-click="onHolddata(list.id)">{{list.candidateStatus}}</button>
+												</p>
+												<p ng-switch-when="BDM">{{list.candidateStatus}}</p>
+										</span>
+									</span> <span ng-if="list.candidateStatus == 'Query  Answer' ">
+											<span ng-switch="getrole">
+												<p ng-switch-when="BDM">
+
+													<button href="#!/onHold1" class="btn btn-primary btn-xs"
+														ng-click="onHolddata1(list.id)">{{list.candidateStatus}}</button>
+												</p>
+												<p ng-switch-when="recruiter">{{list.candidateStatus}}</p>
+										</span>
+									</span> <span
+										ng-if="(list.candidateStatus != 'onHold') && (list.candidateStatus != 'Query  Answer') ">
+											{{list.candidateStatus}}
+											</button>
+									</span></td>
+
+
+									<td class="text-left"><span
+										ng-switch="list.candidateStatus">
+											<p ng-switch-when="onHold">
+												<span ng-if="getrole == 'recruiter'">
+													<button class="btn btn-default  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span> <span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs"
+														pull-center"    data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span>
+											</p>
+											<p ng-switch-when="Pending Review By AM">
+												<span ng-if="getrole == 'recruiter'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span> <span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-click="updatedata(list)">Type
+														Of Process</button>
+												</span>
+											</p>
+											<p ng-switch-when="Rejected">
+												<span ng-if="getrole == 'recruiter'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span> <span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span>
+											</p>
+
+											<p ng-switch-when="REGISTERED">
+												<span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-defaul tbtn-xs   pull-center"
+														data-dismiss="modal" ng-click="updatedata(list)">Type
+														Of Process</button>
+												</span>
+
+											</p>
+
+											<p ng-switch-when="Submitted to Customer">
+												<span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-click="updatedata(list)">Type
+														Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-default btn-xs pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span>
+
+											</p>
+
+											<p ng-switch-when="Offer Status">
+												<span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span>
+
+											</p>
+
+
+											<p ng-switch-when="Customer Rejected">
+												<span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span>
+
+											</p>
+											<p ng-switch-when="pending Review">
+												<span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-click="updatedata(list)">Type
+														Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-default btn-xs pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span>
+
+											</p>
+											<p ng-switch-when="Profile has been Accepted by Lead">
+												<span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-click="updatedata(list)">Type
+														Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span>
+
+											</p>
+
+											<p ng-switch-when="Offer Pending">
+												<span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default  pull-center"
+														data-dismiss="modal" ng-click="updatedata(list)">Type
+														Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span>
+
+											</p>
+
+											<p ng-switch-when="Offer Released">
+												<span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-click="updatedata(list)">Type
+														Of Process</button>
+												</span>
+
+											</p>
+
+											<p ng-switch-when="Aproved By Lead">
+												<span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-click="updatedata(list)">Type
+														Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span>
+
+											</p>
+
+
+											<p ng-switch-when="Waiting for Interview Feedback">
+												<span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-click="updatedata(list)">Type
+														Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span>
+
+											</p>
+											<p ng-switch-when="Query  Answer">
+												<span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-click="updatedata(list)">Type
+														Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span>
+
+											</p>
+											<p ng-switch-when="Process for Interview">
+												<span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-click="updatedata(list)">Type
+														Of Process</button>
+												</span>
+
+											</p>
+											<p ng-switch-when="Feedback for Customer">
+												<span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-default btn-xs  pull-center"
+														data-dismiss="modal" ng-click="updatedata(list)">Type
+														Of Process</button>
+												</span>
+
+											</p>
+											<p ng-switch-when="waiting for Offer release">
+												<span ng-if="getrole == 'BDM'">
+													<button
+														class="btn btn-default btn-xs  pull-center data-dismiss="
+														modal"  ng-disabled=true ng-click="updatedata(list)">Type
+														Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-default btn-xs pull-center"
+														data-dismiss="modal" ng-click="updatedata(list)">Type
+														Of Process</button>
+												</span>
+
+											</p>
+											<p ng-switch-when="waiting for joing">
+												<span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-default btn-xs pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span>
+
+											</p>
+											<p ng-switch-when="Candidate profile Rejeceted">
+												<span ng-if="getrole == 'BDM'">
+													<button class="btn btn-default btn-xs pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span> <span ng-if="getrole == 'recruiter' ">
+													<button class="btn btn-default btn-xs pull-center"
+														data-dismiss="modal" ng-disabled=true
+														ng-click="updatedata(list)">Type Of Process</button>
+												</span>
+
+											</p>
+
+											<p ng-switch-default>
+												<button class="btn btn-default btn-xs pull-center"
+													ng-click="updatedata(list)">Type Of Process</button>
+											</p>
+
+									</span></td>
+
+									<td class="text-left"><span
+										ng-switch="list.candidateStatus">
+											<p ng-switch-when="Rejected">
+												<button data-toggle="modal" data-target="#myModal"
+													class="btn btn-success btn-xs" ng-click="userid(list)"
+													ng-hide="edithide">
+													<span class="glyphicon glyphicon-pencil"></span>
+												</button>
+												&nbsp;&nbsp;&nbsp;
+											</p>
+											<p ng-switch-when="REGISTERED">
+												<button data-toggle="modal" data-target="#myModal"
+													class="btn btn-success btn-xs" ng-click="userid(list)"
+													ng-hide="edithide">
+													<span class="glyphicon glyphicon-pencil"></span>
+												</button>
+												&nbsp;&nbsp;&nbsp;
+											</p>
+											<p ng-switch-default>
+												<button data-toggle="modal" data-target="#myModal"
+													class="btn btn-success btn-xs" ng-click="userid(list)"
+													ng-disabled=true ng-hide="edithide">
+													<span class="glyphicon glyphicon-pencil"></span>
+												</button>
+												&nbsp;&nbsp;&nbsp;
+											</p>
+									</span></td>
+									<td class="text-left"><a id='dwnldLnk'
+										download='{{list.id}}.pdf'
+										href="../Resumes/{{list.candidateid}}.pdf"
+										class="btn btn-info btn-xs pull-center" style="color: black;"
+										title='download resume' ng-click="downloadPDF(list.id)"> <span
+											class="glyphicon glyphicon-download-alt"></span></a></td>
+								</tr>
+
+
+
+							</tbody>
+						</table> <!-- 	<hr ng-show="flag"> --> <!--    <div class="col-md-2" ng-show="flag">
+      <p style="margin-right: 12px;"> Items Per Page</p>
+     <select style="width:120px" ng-model="id" ng-options="items.id as items.pageSize for items in options"  ng-click="pageSelected(id)"></select>
+     <select class="form-control pull-right" ng-model="pageSize" style="width:65px;margin-bottom: 6px;">
+		      <option>10</option>
+		      <option>15</option>
+		      <option>20</option>
+		      <option>25</option>
+		      </select>
+		        <span style="margin-right: 8px; margin-top: 6px;"class="pull-right text text-info">Items per page</span>
+      </div> --> <!-- <div class="col-md-12 text-right" ng-show="flag">
+<ul uib-pagination total-items="totalCount" max-size="maxSize" items-per-page="pageSizeSelected" boundary-links="true" rotate="false" num-pages="numPages" direction-links="true" ng-model="pageIndex" ng-change="pageChanged()"></ul>
+      </div> --> <!--       <dir-pagination-controls class="pull-right"></dir-pagination-controls> -->
+						</div>
+						</div>
+
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="col-md-12 text-center">
+			<b>{{noData}}</b>
+		</div>
+		<div class="col-md-12" ng-show="reqListDetails.length>0">
+			<div class="float-right">
+				<ul uib-pagination total-items="totalCount" max-size="maxSize"
+					items-per-page="pageSizeSelected" boundary-links="true"
+					rotate="false" num-pages="numPages" direction-links="true"
+					ng-model="pageIndex" ng-change="pageChanged()"></ul>
+			</div>
+		</div>
+
+
+
+		<!-- <table class="table col-lg-10 table-striped" id="rec_List">
+			<thead class="thead-inverse">
+			    <th>S.No</th>
+				<th>Client Name</th>
+				<th>Requirement Name</th>
+				<th>Assiging Date</th>
+				<th>Candidate</th>
+			</thead>
+			<tbody>
+				<tr dir-paginate="record1 in resultTask|filter:test| orderBy :'-date'|itemsPerPage:pageSize">
+				<td>{{$index+1}}</td>
+						<td>{{record1.client.clientName}}</td>
+						<td><a style="color:blue;cursor: pointer;" data-toggle="modal" data-target="#viewjd" title="view job description" ng-click="popdata(record1)">{{record1.bdmReq.nameOfRequirement}}</a></td>
+						<td>{{record1.date|date :'dd MMM yyyy'}}</td>
+						<td><a href="#!/addCandidate" class="btn btn-info" ng-click="addreqcandifun(record1)">Add<span class="glyphicon glyphicon-plus"></span></a></td>
+						</tr>
+						</tbody>
+	</table> -->
+
+
+
+
+		<div class="col-md-12">
+
+			<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+		</div>
+
+
+	</div>
+</div>
+<div class="modal fade" id="viewjd" role="dialog">
+	<div class="modal-dialog" style="width: 60%; height: 400px;">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h4>Requirement Details</h4>
+				<button type="button" data-dismiss="modal" class="close">&times;</button>
+			</div>
+
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="form-group">
+
+
+						<div
+							style="width: 98%; height: 550px; line-height: 3em; overflow: auto; margin: 10px; padding: 5px; border: 1px ridge #000;">
+							<div class="table-responsive">
+								<table class="table">
+
+									<tbody>
+										<tr>
+											<td><b>Requirement Start Date:</b></td>
+											<td>{{popdatarecord.requirementStartdate| date
+												:'dd/MMM/yyyy'}}</td>
+										</tr>
+										<tr>
+											<td><b>Requirement End Date:</b></td>
+											<td>{{popdatarecord.requirementEndDate| date
+												:'dd/MMM/yyyy'}}</td>
+										</tr>
+										<tr>
+											<td><b>Name Of Requirement:</b></td>
+											<td>{{popdatarecord.nameOfRequirement}}</td>
+										</tr>
+										<tr>
+											<td><b>Designation:</b></td>
+											<td><ul
+													ng-repeat="designations in popdatarecord.designations"
+													style="display: inline;">{{designations.designation}}
+												</ul></td>
+										</tr>
+										<tr>
+											<td><b>Skills:</b></td>
+											<td><ul ng-repeat="skill in popdatarecord.skills"
+													style="display: inline;">{{skill.skillName}}
+												</ul></td>
+										</tr>
+										<tr>
+											<td><b>Qualifications :</b></td>
+											<td><ul
+													ng-repeat="qualifications in popdatarecord.qualifications"
+													style="display: inline;">
+													{{qualifications.qualificationName}}
+												</ul></td>
+										</tr>
+										<tr>
+											<td><b>Certification :</b></td>
+											<td><ul
+													ng-repeat="certification in popdatarecord.certificates"
+													style="display: inline;">
+													{{certification.certificationName}}
+												</ul></td>
+										</tr>
+										<tr>
+											<td><b>Job Location:</b></td>
+											<td>
+												<ul ng-repeat="location in popdatarecord.locations"
+													style="display: inline;">{{popdatarecord.locationName|uppercase}}
+											</td>
+										</tr>
+										<tr>
+											<td><b>Notice Period:</b></td>
+											<td>{{popdatarecord.noticePeriod}}</td>
+										</tr>
+										<tr>
+											<td><b>Number Of Positions:</b></td>
+											<td>{{popdatarecord.numberOfPositions}}</td>
+										</tr>
+										<tr>
+											<td><b>Skill Type:</b></td>
+											<td>{{popdatarecord.requirementType}}</td>
+										</tr>
+										<tr>
+											<td><b>Requirement Description:</b></td>
+											<td>{{popdatarecord.requirementDescription}}</td>
+										</tr>
+
+
+										<tr>
+											<td><b>Job Description:</b></td>
+											<td>{{popdatarecord.gross_Amount}}</td>
+										</tr>
+
+
+										<tr>
+											<td><b>Total Experience:</b></td>
+											<td>{{popdatarecord.totalExperience}} years</td>
+
+										</tr>
+										<tr>
+											<td><b>Relavant Experience :</b></td>
+											<td>{{popdatarecord.relavantExperience}} years</td>
+
+										</tr>
+										<tr>
+											<td><b>Interview Mode:</b></td>
+											<td><ul
+													ng-repeat="interviewMode in popdatarecord.interviewMode"
+													style="display: inline;">
+													{{interviewMode.modeofInterview}}
+												</ul></td>
+
+										</tr>
+										<tr>
+											<td><b>Client Name:</b></td>
+											<td>{{popdatarecord.client.clientName}}</td>
+										</tr>
+										<tr>
+											<td><b>Contact Person:</b></td>
+											<td>{{popdatarecord.addContact.contact_Name}}</td>
+										</tr>
+										<tr>
+											<td><b>Email:</b></td>
+											<td>{{popdatarecord.addContact.email}}</td>
+										</tr>
+										<tr>
+											<td><b>Mobile Number :</b></td>
+											<td>{{popdatarecord.addContact.mobile}}</td>
+										</tr>
+										<tr>
+											<td><b>Phone Number :</b></td>
+											<td>{{popdatarecord.addContact.phone}}</td>
+										</tr>
+										<tr>
+											<td><b>Number Of Rounds :</b></td>
+											<td>{{popdatarecord.numberOfRounds}}</td>
+										</tr>
+										<tr>
+											<td><b>Budget:</b></td>
+											<td>{{popdatarecord.netPeriod| currency:'&#8360'}}</td>
+										</tr>
+
+
+										<tr>
+											<td><b>Mode Of Hiring:</b></td>
+											<td>{{popdatarecord.typeOfHiring |uppercase}}</td>
+										</tr>
+
+
+										<tr ng-show="c2h">
+											<td><b>Salary Band :</b></td>
+											<td>{{popdatarecord.salaryBand|uppercase}}</td>
+										</tr>
+										<tr ng-show="c2h">
+											<td><b>Contract Duration(In month) :</b></td>
+											<td>{{popdatarecord.minimumContract}}</td>
+										</tr>
+										<tr ng-show="c2h">
+											<td><b>Conversion fee :</b></td>
+											<td>{{popdatarecord.conversionFee|currency:'&#8360'}}</td>
+										</tr>
+
+
+										<tr ng-show="permanent1">
+											<td><b>Percentage / Slab :</b></td>
+											<td>{{permanentAlias}}</td>
+										</tr>
+										<tr ng-show="permanent1">
+											<td><b>Amount :</b></td>
+											<td>{{popdatarecord.famount|currency:'&#8360'}}</td>
+										</tr>
+
+										<tr ng-show="permanent2">
+											<td><b>Percentage / Slab :</b></td>
+											<td>{{permanentAlias}}</td>
+										</tr>
+										<tr ng-show="permanent2">
+
+											<td><b>Slab Info:</b></td>
+
+											<td>{{popdatarecord.newtype}}
+												<table class="table">
+													<tr>
+														<th><center>From</center></th>
+														<th><center>To</center></th>
+														<th><center>Amount</center></th>
+														<th><center>Type</center></th>
+													</tr>
+													<tr ng-repeat="slabData in popdatarecord.slab">
+														<td>{{slabData.startFrom}}</td>
+														<td>{{slabData.startEnd}}</td>
+														<td>{{slabData.amount|currency:'&#8360'}}</td>
+														<td>{{slabData.slabType|uppercase}}</td>
+													</tr>
+												</table>
+											</td>
+
+										</tr>
+
+										<tr ng-show="contract">
+											<td><b>Bill Rate :</b></td>
+											<td>{{popdatarecord.billRate}}</td>
+										</tr>
+										<tr ng-show="contract">
+											<td><b>Rate :</b></td>
+											<td>{{popdatarecord.tax}}&nbsp;&nbsp;{{popdatarecord.per_OR_rupee}}</td>
+										</tr>
+
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="modal-footer">
+				<button class="btn btn-info pull-right" data-dismiss="modal">OK</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+<!-- View  Requirement  start -->
+<div class="modal fade" id="viewRequriement" role="dialog">
+	<div class="modal-dialog" ng-init="getReqByReqId();">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">View Requirement Details:</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<div class="col-md-12">
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Customer Name:</label>
+						</div>
+						<div class="col-lg-6">{{reqDetails.client.clientName}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Name Of Requirement:</label>
+						</div>
+						<div class="col-lg-6">{{reqDetails.nameOfRequirement}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Skills:</label>
+						</div>
+						<div class="col-lg-6">
+							<span ng-repeat="y in skills">{{y.skillName}}</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Relevant Experience:</label>
+						</div>
+						<div class="col-lg-6">{{reqDetails.relavantExperience}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Min Budget:</label>
+						</div>
+						<div class="col-lg-6">{{reqDetails.minBudgetRate |
+							currency:"₹ "}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Max Budget</label>
+						</div>
+						<div class="col-lg-6">{{reqDetails.maxBudgetRate |
+							currency:"₹ "}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Type Of Hiring:</label>
+						</div>
+						<div class="col-lg-6">{{reqDetails.typeOfHiring}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Job Location:</label>
+						</div>
+						<div class="col-lg-6">
+							<span ng-repeat="location in locations">{{location.locationName}},</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Qualification Name:</label>
+						</div>
+						<div class="col-lg-6">
+							<span ng-repeat="e in qualifications">{{e.qualificationName}},
+							</span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Roles:</label>
+						</div>
+						<div class="col-lg-6">
+							<span ng-repeat="o in designations">{{o.designation}}, </span>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Number Of Positions</label>
+						</div>
+						<div class="col-lg-6">{{reqDetails.numberOfPositions}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Requirement Description:</label>
+						</div>
+						<div class="col-lg-6">{{reqDetails.requirementDescription}}</div>
+					</div>
+					<div class="form-group">
+						<div class="modal-footer">
+							<button class="btn btn-info pull-right" data-dismiss="modal">OK</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+

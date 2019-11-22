@@ -1,0 +1,78 @@
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+
+
+<div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Qualification</h3>
+        </li>
+      </ol>
+       <ol class="breadcrumb">
+    <div class="col-md-10">
+    <input class="form-control" style="width:25%" type="search" ng-model="test" placeholder="Search">
+    </div>
+    <div class="col-md-2 pull-right">
+   <a href="#!/addqualification"  type="button"  class="btn btn-info btn-md pull-center"><span class="glyphicon glyphicon-plus"></span>Add</a>	 		
+    </div>
+   
+    </ol>
+    <table class="table  table-bordered" id="rec_List">
+			<thead>
+				<tr>
+					<th>Qualification Name</th>
+					<th>Action</th>
+
+				</tr>
+			<thead>
+			<tbody>
+				<tr dir-paginate="items in qualificationlists|filter:test|itemsPerPage:5">
+					<td>{{::items.qualificationName}}</td>
+					<td><button class="btn btn-primary"
+							class="modal-dialog modal-lg" data-toggle="modal"
+							data-target="#myModal" ng-click="pushqualification(items)">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button></td>
+
+				</tr>
+			</tbody>
+		</table>
+		<div class="col-md-12 text-center"><p><b>{{noData}}</b></div>
+		<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+ </div>
+ <!--modal-->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">
+
+		<div class="modal-content">
+			<div class="modal-header">
+			<h4>Edit Qualification:</h4>
+				<button type="button" data-dismiss="modal" class="close">&times;</button>				
+			</div>
+
+
+			<div class="modal-body">
+				<form class="form-horizontal" name="myForm">
+					<div class="form-group">
+						<label class="control-label col-sm-4" for="role">Qualification
+							Name:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="clickedUser.qualificationName" name="mode" required>
+								<span style="color:red;" ng-show="myForm.mode.$touched && myForm.mode.$invalid">This field is Required</span>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-success pull-right" data-dismiss="modal"
+					ng-click="editqualification()" ng-disabled="myForm.$invalid">Update</button>
+				<button class="btn btn-danger pull-left" data-dismiss="modal">Cancel</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+ </div>

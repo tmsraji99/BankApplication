@@ -1,0 +1,113 @@
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="container list table-responsive panel panel-danger" style="width:500px;" >
+	<div class="panel-heading"><h4>Designations
+	<input class="pull-right" type="search" ng-model="test" placeholder="search here.."/></h4>
+	</div>
+	
+	<div class="panel-body" style="padding:5px">
+	<table class="table col-lg-10 table-bordered" id="rec_List" >
+		<thead class="thead-inverse">
+			<tr>
+				<th>Designation Name</th>
+				<th>Edit</th>
+				
+			
+			</tr>
+		</thead>
+		<tbody>
+			
+             
+     <tr dir-paginate="exist in existingDetails| filter:test | itemsPerPage:5">
+            <td>{{::exist.designation}}</td>
+	       <td>	
+			<button  class="btn btn-primary"
+					class="modal-dialog modal-lg" data-toggle="modal" data-target="#myModal" ng-click="editDesignation(exist)">
+					<span class="glyphicon glyphicon-pencil"></span>
+			</button>
+			</td>
+			
+
+			</tr>
+			
+		</tbody>
+		</table>
+		</div>
+		
+		
+		<div class="pannel panel-fixed-footer " style="background:linear-gradient(	#FFFFFF);">
+		<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+
+		&nbsp;&nbsp; <a href="#!/admin"  type="button"  class="btn btn-info btn-md"><span class="glyphicon glyphicon-home"></span> Home</a>&nbsp;&nbsp;
+		 <a href="#!/addDesignation"  type="button"  class="btn btn-info btn-md pull-center"><span class="glyphicon glyphicon-plus"></span>Add</a>
+	 
+	</div>
+		
+		
+
+	
+	
+	<div class="modal fade" id="myModal" role="dialog">
+	 <form class="form-horizontal" name="myform"  novalidate class="form-horizontal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" data-dismiss="modal" class="close">&times;</button>
+					<h4 class="modal-title">Edit Designation</h4>
+				</div>
+				<div class="modal-body">
+					
+						 <div class="form-group">
+							<label class="control-label col-sm-2" for="name" >Designation:</label>
+						
+							<div class="col-sm-6">
+								<input class="form-control" type="text"
+									placeholder="enter designation" ng-model="clickedDesignation.designation" name="des" required>
+									<span style="color: red;"
+			ng-show="myform.des.$touched && myform.des.$invalid">The
+			field is required.</span>
+							</div>
+						</div>
+						</div>
+						</br>
+					<div class="modal-footer">
+							<div class="col-sm-12">
+								<center>
+									<button type="submit" class="btn btn-success pull-right"
+										data-dismiss="modal" ng-click="updateDesignation()" ng-disabled="myform.$invalid">Update</button>
+									<button type="submit" class="btn btn-danger pull-left"
+										data-dismiss="modal">Cancel</button>
+								</center>
+							</div>
+						
+						
+						
+						
+						</div>
+						</div>					
+						</form>  
+						</div>
+					<!-- <form name="myForm" ng-submit="addMode()" novalidate class="form-horizontal">
+					<div class="form-group">
+		<label class="control-label col-sm-2" for="name">DESIGNATION:</label> 
+		<div class="col-sm-6">
+		<input type="text"
+			class="form-control" id="mode" name="name"
+			placeholder="Enter Designation"
+			ng-model="clickedDesignation.designation" required> <span
+			style="color: red;"
+			ng-show="myForm.mode_val.$touched && myForm.mode_val.$invalid">The
+			field is required.</span>
+		<div style="margin: 10px;">
+			</br>
+			
+		<a href="#!/InterviewModeList" type="button" class="btn btn-info pull-left">Back</a>
+		<button type="submit" class="btn btn-info pull-right" ng-disabled="myForm.$invalid">Save</button>
+		</div>
+		</div>
+	</form> -->
+					
+			</div>
+		<!-- </div>
+		</div>
+	</div> -->

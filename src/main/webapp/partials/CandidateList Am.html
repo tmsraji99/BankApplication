@@ -1,0 +1,535 @@
+
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="container list table-responsive panel panel-danger">
+	<div class="panel-heading">
+		<h4>
+			Candidate Information <input class="pull-right" type="search"
+				ng-model="test" placeholder="search here..">
+		</h4>
+	</div>
+	<div class="panel-body" style="padding: 5px">
+		<table class="table col-lg-10 table-bordered" id="rec_List">
+			<thead class="thead-inverse">
+				<tr>
+					<th>CadidateName</th>
+					<th>Requirement Name</th>
+					<th>Client Name</th>
+					<th>Mobile</th>
+					<th>email</th>
+					<th>CandidateStatus</th>
+					<!-- <th >Education</th>
+			<th>Total Experience</th>
+			<th>Relevant Experience</th>
+			<th>Current CTC</th>
+			<th>Expected CTC</th>
+			<th>Salary Negotiable</th>
+			<th>Notice Period</th>
+			<th>Current Location</th>
+			<th>Willing to Relocate</th>
+			<th>Skype ID</th>
+			<th>Current Job Type</th>
+			<th>PayRoll Company Name</th>
+			<th>Current Company Name</th>
+			<th>PAN CARD Number</th>
+			<th>Skills</th>
+			<th>Certificate Name</th> -->
+					<!--<th></th>-->
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+			
+				<tr dir-paginate="list in candidatelist|filter:test|itemsPerPage:1">
+
+					<td>{{list.firstName}}{{list.lastName}}</td>
+					<td>{{list.bdmReq.nameOfRequirement}}</td>
+					<td>{{list.client.clientName}}</td>
+					<td>{{list.mobile}}</td>
+					<td>{{list.email}}</td>
+					<td>{{list.candidateStatus}}</td>
+				<!--  <td ng-if="visible"><ul ng-repeat="list in list.education"
+					style="display: inline;">{{list.qualificationName}}
+				</ul></td>
+			<td>{{list.totalExperience}}</td>
+			<td>{{list.relevantExperience}}</td>
+			<td>{{list.currentCTC}}</td>
+			<td>{{list.expectedCTC}}</td>
+			<td>{{list.salaryNegotiable}}</td>
+			<td>{{list.noticePeriod}}</td>
+			<td>{{list.address}},{{list.city}},{{list.state}},{{list.country}}.{{list.pincode}}</td>
+			<td>{{list.willingtoRelocate}}</td>
+			<td>{{list.skypeID}}</td>
+			<td>{{list.currentJobType}}</td>
+			<td>{{list.payRollCompanyName}}</td>
+			<td>{{list.currentCompanyName}}</td>
+			<td>{{list.pancardNumber}}</td>
+			<td><ul ng-repeat="list in list.skills" style="display: inline;">
+					{{list.skillName}}
+				</ul></td>
+			<td ng-if="visible"><ul ng-repeat="list in list.certificates"
+					style="display: inline;">{{list.certificationName}} -->
+					<!--<td><button data-toggle="modal" data-target="#myModal"
+							class="btn btn-success" ng-click="userid(list)">Edit</button></td>-->
+					<td><button data-toggle="modal" data-target="#view"
+							class="btn btn-success" ng-click="viewInfo(list)">View</button></td>
+				<td><a href="#!/TypeOfProcess" class="btn btn-info pull-center" data-dismiss="modal" ng-click="updatedata(list)">Type Of Process</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	
+	
+	<div class="pannel panel-fixed-footer " style="background:linear-gradient(	#FFFFFF);">
+		<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+
+		&nbsp;&nbsp; <a href="#!/bdmlead"  type="button"  class="btn btn-info btn-md"><span class="glyphicon glyphicon-home"></span> Home</a>&nbsp;&nbsp;
+		
+		 
+		 
+		 
+	</div>
+	
+
+	
+</div>
+<!--view data-->
+<div class="modal fade" id="view" role="dialog">
+	<div class="modal-dialog">
+
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" data-dismiss="modal" class="close">&times;</button>
+				<h4>View Candidate Details:</h4>
+			</div>
+			<div class="modal-body">
+				<div class="well">
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Total Experience:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.totalExperience}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Relevant Experience:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.relevantExperience}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Current CTC:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.currentCTC}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Expected CTC:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.expectedCTC}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Salary Negotiable:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.salaryNegotiable}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Notice Period:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.noticePeriod}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Address:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.address}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>City:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.city}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>State:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.state}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Country:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.country}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Pincode:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.pincode}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Willing to Relocate:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.willingtoRelocate}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Skype ID:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.skypeID}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Current Job Type:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.currentJobType}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>PayRoll Company Name:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.payRollCompanyName}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Current Company Name:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.currentCompanyName}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>PAN CARD Number:</label>
+						</div>
+						<div class="col-lg-8">{{candidatelist.pancardNumber}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Education:</label>
+						</div>
+						<div class="col-lg-8">
+							<ul>
+								<li ng-repeat="ca in candidatelist.education">{{ca.qualificationName}}</li>
+							</ul>
+
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Skills:</label>
+						</div>
+
+						<div class="col-lg-8">
+							<ul>
+								<li ng-repeat="candi in candidatelist.skills">{{candi.skillName}}</li>
+							</ul>
+
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-4">
+							<label>Certificate Name:</label>
+						</div>
+
+						<div class="col-lg-8">
+							<ul>
+								<li ng-repeat="candidat in candidatelist.certificates">{{candidat.certificationName}}</li>
+							</ul>
+
+						</div>
+					</div>
+					<div class="form-group">
+							<div class="modal-footer">
+								<button class="btn btn-info pull-right" data-dismiss="modal">OK</button>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!--modal-->
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" data-dismiss="modal" class="close">&times;</button>
+				<h4 class="modal-title">Edit User</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">ClientName:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="clintname"
+								ng-model="newUserlist.client.clientName" disabled="disabled"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="lastname">Requirement
+							Name:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="lastname"
+								ng-model="newUserlist.bdmReq.nameOfRequirement"
+								disabled="disabled"></input>
+						</div>
+
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="lastname">First
+							Name:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="lastname"
+								ng-model="newUserlist.firstName"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="lastname">Last
+							Name:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="lastname"
+								ng-model="newUserlist.lastName"></input>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="mobile">Mobile:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter mobile number" id="mobile"
+								ng-model="newUserlist.mobile"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="email">E-mail:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="email"
+								placeholder="enter your mail id" id="email"
+								ng-model="newUserlist.email"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Education</label>
+						<!-- <div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.qualificationName"></input>
+						</div> -->
+						<am-multiselect class="input-lg" multiple="true"
+							ng-model="qualificationName" ms-header="Select education"
+							options="c.id as c.qualificationName for c in educationdetails">
+						</am-multiselect>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Total
+							Experience</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="change status" id="name"
+								ng-model="newUserlist.totalExperience"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Relevant
+							Experience:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.relevantExperience"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Current
+							CTC:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.currentCTC"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Expected
+							CTC:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.expectedCTC"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Salary
+							Negotiable:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.salaryNegotiable"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Notice
+							Period:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.noticePeriod"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Address:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.address"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">City:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.city"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">State:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.state"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Country:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.country"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Pincode:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.pincode"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Willing
+							to Relocate:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.willingtoRelocate"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Skype ID:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.skypeID"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Current
+							Job Type:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.currentJobType"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">PayRoll
+							Company Name:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.payRollCompanyName"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Current
+							Company Name:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.currentCompanyName"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">PAN CARD
+							Number:</label>
+						<div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.pancardNumber"></input>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">PrimarySkills:</label>
+						<!-- <div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.list.skillName"></input>
+						</div> -->
+						<am-multiselect class="input-lg" multiple="true" ng-model="prime"
+							ms-header="Select primaryskill"
+							options="e.id as e.skillName for e in primary">
+						</am-multiselect>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">SecondarySkills:</label>
+						<!-- <div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.list.skillName"></input>
+						</div> -->
+						<am-multiselect class="input-lg" multiple="true" ng-model="second"
+							ms-header="Select secondaryskill"
+							options="s.id as s.skillName for s in secondary">
+						</am-multiselect>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">Certificate
+							Name:</label>
+						<!-- <div class="col-sm-6">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.list.certificationName"></input>
+						</div> -->
+						<am-multiselect class="input-lg" multiple="true"
+							ng-model="certificationName" ms-header="Select certifications"
+							options="m.id as m.certificationName for m in certificatname">
+						</am-multiselect>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-6">
+							<center>
+								<button type="submit" class="btn btn-info " data-dismiss="modal"
+									ng-click="updateCandidatelist()">Update</button>
+								<button type="submit" class="btn btn-danger "
+									data-dismiss="modal">Cancel</button>
+							</center>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+

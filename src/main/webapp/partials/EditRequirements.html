@@ -1,0 +1,480 @@
+<div ng-include=" 'partials/fotter.html' "></div>
+<div ng-include=" 'partials/header.html' "></div>
+
+<script type='text/javascript'>
+	$(document).ready(function(event) {
+		$('#slabcheck').on('click', function() {
+			if ($(this).is(":checked")) {
+				$('#percentage').attr('disabled', 'disabled');
+				$('#fixed').attr('disabled', 'disabled');
+				$('#two').attr('disabled', 'disabled');
+				$('#one').attr('disabled', 'disabled');
+				$('#slab').css('display', 'block');
+			} else {
+				$('#percentage').attr('disabled', false);
+				$('#fixed').attr('disabled', false);
+				$('#two').attr('disabled', false);
+				$('#one').attr('disabled', false);
+				$('#slab').css('display', 'none');
+			}
+		});
+		$('#slabType').on('click', function() {
+			if ($(this).val() == "percentage") {
+				$('#percentage').css('display', 'block');
+				$('#less').css('display', 'none');
+				$('#great').css('display', 'none');
+			} else if ($(this).val() == "less") {
+				$('#percentage').css('display', 'none');
+				$('#less').css('display', 'block');
+				$('#great').css('display', 'none');
+			} else {
+				$('#percentage').css('display', 'none');
+				$('#less').css('display', 'none');
+				$('#great').css('display', 'block');
+			}
+		});
+		$('#clientclick').on('click', function() {
+			$('#getclient').css('display', 'block');
+			$('#default').css('display', 'none');
+		});
+		$('#clientclick').ready(function() {
+			$('#getclient').css('display', 'none');
+			$('#default').css('display', 'block');
+		});
+		
+		
+	});
+</script>
+
+<div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+    <ol class="breadcrumb">
+    <div class="col-md-8">
+    <h3>Edit Requirement </h3>
+    </div>
+    
+    </ol>
+    <div class="col-md-6">
+ <fieldset class="well .scheduler-border"
+			style="width: 790px; height: auto; margin: 0px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+			<legend
+				style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+				align="left"> Edit Requirement </legend>
+				<div class="tab-content">
+			<div id="requirementdetails" class="tab-pane fade in active">
+			
+			<form name="F1" class="myForm" novalidate>
+				
+				<div class="row">
+			
+					<div class="form-group col-md-12">
+						<label>Customer Name *  {{clientId}}</label>			
+						<select id="clientclick" ng-model="clientName"  disabled  class="form-control" ng-options="items.id as items.clientName for items in clientnamesbdm"
+						id="client_name"  ng-change="getRequirement(clientName)"  style="width:100%;height:33.33px">                   
+                       </select>                       
+						<div ng-messages="formone.client_name.$error"
+							ng-if="formone.client_name.$touched">
+							<div ng-message="required">* Required Customer Name </div>
+						</div>
+					</div>
+					 <div class="form-group col-md-12">
+						<label>SPOC Name*</label>
+						<select id="clientclick" ng-model="contactId"   class="form-control" ng-options="x.id as x.contact_Name for x in chiru"
+						 style="width:100%;height:33.33px">                      
+                       </select>
+					</div>												
+					<div class="form-group col-md-12">
+						<label for="requirement">Requirement Name*</label> <input
+							type="text" name="reqname" 
+							id="requirement" class="form-control"
+							ng-model="nameOfRequirement" required></input>
+						<div ng-messages="F1.reqname.$error"
+							ng-if="F1.reqname.$touched">
+							<div ng-message="required">This field is required</div>
+						</div>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="designation">Roles</label>
+						<div ng-dropdown-multiselect0="" options="desigbdm" selected-model="desigarray" 
+						extra-settings="example16settings"></div>
+					</div>
+						<div class="form-group col-md-6">
+							<label for="skill">Skill</label>						
+						<div ng-dropdown-multiselect1="" options="skillbdm" selected-model="skillarray" 
+						extra-settings="example16settings"></div>						
+						</div>
+						<div class="form-group col-md-6">
+						<label for="qualification_required">Qualification</label>			
+						<div ng-dropdown-multiselect2="" options="qualificbdm" selected-model="qualiarray" 
+						extra-settings="example16settings"></div>
+					</div>		
+					<div class="form-group col-md-6">
+						<label for="qualification_required">Certificates</label>				
+						<div ng-dropdown-multiselect3="" options="certificatebdm" selected-model="certiarray" 
+						extra-settings="example16settings"></div>
+
+					</div>
+				
+						<!-- <div class="form-group col-md-6">
+						
+					<label for="date">Requirement Open Date*</label>
+					<input type="text" ng-model="startDate"
+						class="form-control" placeholder="dd/MM/yy"  name="dates" required ng-disabled=true />
+						<div ng-messages="F1.dates.$error"
+							ng-if="F1.dates.$touched">
+							<div ng-message="required">*required date</div>
+						</div>
+						
+						<label for="date">Requirement Open Date*</label>
+						<p class="input-group">							
+							<input type="text" ng-model="startDate" disabled class="form-control" value="{{startDate}}" name="enddates" ng-click="open1()" />
+							 <span class="input-group-btn">
+									<button type="button" class="btn btn-default" disabled><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>	
+							
+						</p>
+	                	</div> -->
+	                		<div class="form-group col-md-6" >
+										<label>Requirement Open Date</label>
+										<p class="input-group">		
+											<input type="text" name="requirementStartdate" placeholder="dd/MM/yyyy" class="form-control"  uib-datepicker-popup="{{format}}"
+											is-open="popup1.opened" datepicker-options="dateOptions" alt-input-formats="altInputFormats" ng-model="requirementStartdate" ng-change="checkErr(requirementStartdate)" required/>
+											 <span class="input-group-btn">
+													<button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+												</span>	
+											<div ng-messages="formone.requirementStartdate.$error" ng-if="formone.requirementStartdate.$touched">
+												<!-- <div ng-message="required">*Required End date</div> -->
+												<span style="color:#ff4c4c;">{{errMessage}}</span>
+											</div>								
+										</p>
+									</div>
+						<div class="form-group col-md-6" >
+								<label>Requirement End Date</label>
+										<p class="input-group">		
+											<input type="text" name="requirementEndDate" placeholder="dd/MM/yyyy" class="form-control"  uib-datepicker-popup="{{format}}"
+											is-open="popup2.opened" datepicker-options="dateOptions" alt-input-formats="altInputFormats" ng-model="requirementEndDate" ng-change="checkErr(requirementEndDate)" required/>
+											 <span class="input-group-btn">
+													<button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+												</span>	
+											<div ng-messages="formone.requirementEndDate.$error" ng-if="formone.requirementEndDate.$touched">
+												<!-- <div ng-message="required">*Required End date</div> -->
+												<span style="color:#ff4c4c;">{{errMessage}}</span>
+											</div>								
+										</p>
+									</div>
+   
+			     <!--   	<div class="form-group col-md-6" >
+						<label> Requirement End Date</label>
+						<p class="input-group" ng-show='enddateflag'>		
+							<input type="text" name="reqEndDate" placeholder="dd/MM/yyyy" class="form-control" value="{{formats}}"  uib-datepicker-popup="{{format}}"
+							is-open="popup1.opened" datepicker-options="dateOptions" alt-input-formats="altInputFormats" ng-model="endDate" ng-change="checkErr(requirementEndDate)" />
+							 <span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>	
+														
+						</p>
+					</div> -->
+			       	
+			       	
+			       	<div class="form-group col-md-6">
+					<label for="relavent_experience">Skill Type</label> </br>
+					<input type="radio" id="generic" ng-model="requirementType" value="Generic" >Generic</input> &nbsp;&nbsp;
+					<input type="radio" id="niche" ng-model="requirementType" value="Niche" ng-checked="true">Niche</input>
+					</div>
+					
+					<!-- <div class="form-group col-md-6">
+					<label>Relevant Experience</label>(Yrs)
+						 <select  class="form-control" name="minexp" ng-model="relavantExperience" style="width: 100%; height: 33.33px"  required>
+				 			<option value="" selected ng-disabled=true>-- Select --</option>
+							<option value="0-3">0-3</option>
+							<option value="4-5">4-5</option>
+							<option value="6-10">7-10</option>
+							<option value="11-15">11-15</option>
+							<option value="16-20">16-20</option>
+							<option value="21-25">25-30</option>
+							<option value="30-40">30-40</option>
+			             </select>							
+						<span style="color:#ff4c4c;">{{messege}}</span>
+					</div> -->
+					<div class="form-group col-md-6">
+									<label>Relevant Experience<sup>*</sup>(Yrs)
+									</label>
+									<div class="col-md-6">
+										<select class="form-control" name="minexp"
+											ng-model="minrelavantExperience" style="width: 100%; height: 33.33px"
+											required>
+											<option value="" selected ng-disabled=true>-- Min--</option>
+											<option value="0">0</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="5">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											<option value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
+											<option value="13">13</option>
+											<option value="14">14</option>
+											<option value="15">15</option>
+											<option value="16">16</option>
+											<option value="17">17</option>
+											<option value="18">18</option>
+											<option value="19">19</option>
+											<option value="20">20</option>
+											<option value="21">21</option>
+											<option value="22">22</option>
+											<option value="23">23</option>
+											<option value="24">24</option>
+											<option value="25">25</option>
+											<option value="26">26</option>
+											<option value="27">27</option>
+											<option value="28">28</option>
+											<option value="29">29</option>
+											<option value="30">30</option>
+
+										</select>
+										<!-- span style="color: #ff4c4c;">{{messege}}</span> -->
+									</div>
+									<div class="col-md-6">
+										<select class="form-control" name="maxrelevant"
+											ng-model="maxrelavantExperience" style="width: 100%; height: 33.33px"
+											required>
+											<option value="" selected ng-disabled=true>-- Max
+												--</option>
+											<!-- <option value="0-3">0-3</option>
+										<option value="4-5">4-5</option>
+										<option value="6-10">6-10</option>
+										<option value="11-15">11-15</option>
+										<option value="16-20">16-20</option>
+										<option value="21-25">25-30</option>
+										<option value="30-40">30-40</option> -->
+											<option value="0">0</option>
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="5">4</option>
+											<option value="5">5</option>
+											<option value="6">6</option>
+											<option value="7">7</option>
+											<option value="8">8</option>
+											<option value="9">9</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
+											<option value="13">13</option>
+											<option value="14">14</option>
+											<option value="15">15</option>
+											<option value="16">16</option>
+											<option value="17">17</option>
+											<option value="18">18</option>
+											<option value="19">19</option>
+											<option value="20">20</option>
+											<option value="21">21</option>
+											<option value="22">22</option>
+											<option value="23">23</option>
+											<option value="24">24</option>
+											<option value="25">25</option>
+											<option value="26">26</option>
+											<option value="27">27</option>
+											<option value="28">28</option>
+											<option value="29">29</option>
+											<option value="30">30</option>
+										</select> <span style="color: #ff4c4c;">{{messege}}</span>
+									</div>
+								</div>
+					<div class="form-group col-md-12">
+						<label for="number of positions">Number of Positions*</label> <input
+							type="text" name="numberofpositions" ng-model="numberOfPositions"
+							 id="number of positions"
+							class="form-control" numbers-only required></input>
+							<div ng-messages="F2.numberofpositions.$error"
+							ng-if="F2.numberofpositions.$touched">
+							<div ng-message="required">This field is required</div>
+						</div>						
+					</div>		
+				
+		
+					
+	</div>
+				
+
+</fieldset>
+</div>
+
+
+
+<div class="col-md-6">
+ <fieldset class="well .scheduler-border"
+			style="width: 790px; height: auto; margin: 0px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+			<legend
+				style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+				align="left"> Edit Additional Information </legend>
+				<div class="form-group col-md-12">
+					<label for="client_name">Type Of Requirement*</label>
+		   <button type="button" class="btn btn-success pull-right" style="margin-top: -40px;" ng-click="updateRequirement()">Submit</button>
+		   <a href="#!/bdmlead"  class="btn btn-danger pull-right" style="margin-right: 70px; margin-top: -40px;">Cancel</a>
+           <input type="text" class="form-control" ng-model="typeOfHiring" ng-click="myFun()" ng-show="showType" ></input> 
+
+					<div ng-show="!showType">
+					<select name="hiringtype" ng-model="typeOfHiring" ng-change="hiringdropfun()" class="form-control"				
+						id="modeOf_Hiring" >
+						<option value="Contract to Hire">Contract to Hire</option>
+						<option value="permanent">Permanent</option>
+						<option value="contract">Contract</option>
+												
+					</select>
+					</div>
+					
+				</div>
+				<div class="form-group col-md-6" ng-show="typeOfHiring=='Contract to Hire'">
+						<label for="requirement">Min Budget*</label> <input
+							type="text" name="netperiod" placeholder="Days"
+							id="requirement" class="form-control"
+							ng-model="minBudgetRate" numbers-only required></input>	
+					<div ng-messages="formtwo.netperiod.$error"
+							ng-if="formtwo.netperiod.$touched">
+							<div ng-message="required">This field is required</div>
+						</div>							
+					</div>
+					<div class="form-group col-md-6" ng-show="typeOfHiring=='Contract to Hire'">
+						<label for="requirement">Max Budget*</label> <input
+							type="text" name="netperiod" placeholder="Days"
+							id="requirement" class="form-control"
+							ng-model="maxBudgetRate" numbers-only required></input>	
+					<div ng-messages="formtwo.netperiod.$error"
+							ng-if="formtwo.netperiod.$touched">
+							<div ng-message="required">This field is required</div>
+						</div>							
+					</div>
+				      <div class="form-group col-md-4" ng-show="typeOfHiring=='contract'">
+						<label>Min Budget*</label>
+						   <input type="text"  class="form-control" ng-model="minBudget" placeholder="Enter Min Budget" />
+					   </div>
+				       <div class="form-group col-md-4"ng-show="typeOfHiring=='contract'">
+				       <label >Max Budget*</label>
+				       <input type="text"  class="form-control" ng-model="maxBudget" placeholder="Enter Max Budget" />
+				       </div>
+				        <div class="form-group"ng-show="typeOfHiring=='contract'">
+				        <label>Select for*</label>
+				       <input type="text" ng-model="newtype" class="form-control" ng-show="show10" style=width:20%;" ng-click='fun10()'>				    
+				       <select name="hiringtype" ng-model="newtype" class="form-control" ng-show="!show10" style="width: 20%;"
+					id="modeOf_Hiring" name="hiringtypedropdown" required>
+						<option value="" selected ng-disabled=true >-- Select -- </option>
+						<option value="permonth">Per Month</option>
+						<option value="perannum">Per Annum</option>											
+					</select>		
+				       </div>
+			          <div class="form-group col-md-12" ng-show="typeOfHiring=='permanent'">
+						<form name="f2" novalidate>
+							<input type="radio" ng-model="amountType" id="percentage" value="percentage" ng-click="showFun1()" ng-checked="true">Percentage</input>	
+							<input type="radio" ng-model="amountType" id="fixed" value="fixed" ng-click="showFun2()">Fixed</input>								
+							<div>
+							<div class="form-group">
+								<label for="fixedrate"></label> 
+								<input type="text" 	placeholder="Enter" name="fixedamount" class="form-control" ng-model="famount" valid-number></input>
+								<p style="color:red;">{{message}}</p> 									
+							</div>	
+							</div>
+							<div>							
+							</div>							
+					</form>					
+		   	</div>
+					
+
+				<div class="form-group col-md-4">
+						<label for="location">Status*</label> 
+						 <input type="text" class="form-control" ng-model="status" ng-click="myFun5()" ng-show="showType5" ></input> 
+
+					<div ng-show="!showType5">
+						<select id="status"
+							name="personlocation" ng-model="status" class="form-control"  required>
+
+							<option value="Open">Open</option>
+							<option value="Closed">Closed</option>
+							<option value="Hold">Hold</option>
+						</select>
+						<div ng-messages="F1.personlocation.$error"
+							ng-if="F1.personlocation.$touched">
+							<div ng-message="required">This field is required</div>
+						</div>
+					</div>
+					</div>
+					
+					
+					
+		
+					<div class="form-group col-md-4">
+						<label for="client_name">Job Location*</label>
+						<!--  <select id="clientclick" ng-model="locationName" ng-options="x.id as x.locationName for x in locationList" 
+						id="client_name" ng-click="getLocationId(locationName)" class="form-control"> -->
+							 <div ng-dropdown-multiselect8="" options="locationList" ng-model="locations"
+							selected-model="locationarray" extra-settings="example16settings"></div>
+                       
+                       </select> 
+                    
+					</div>
+								
+				<div class="form-group col-md-4">
+						<label for="notice_period">Notice Period*</label>(days) 
+						   <input type="textbox" class="form-control" placeholder="in days" ng-model="noticePeriod" name="noticeprd" required></input>
+						
+							<!-- <select id="notice_period" class="form-control" name="noticeprd" ng-model="noticePeriod" style="width: 100%; height: 33.33px"  required>
+							<option value="" selected >Choose Option</option>
+							<option value="0">0</option>
+							<option value="0-7">0-7</option>
+							<option value="0-14">0-14</option>
+							<option value="15-30">15-30</option>
+							<option value="30-60">30-60</option>
+							<option value="60-90">60-90</option>
+						</select> -->
+					</div>
+					<div class="form-group col-md-12">
+						<label for="requirement_description">Requirement
+							Description*</label><br />
+						<textarea type="text" name="reqdesc" class="form-control"
+							ng-model="requirementDescription" rows="3" cols="15"
+							 required></textarea>
+						<div ng-messages="F1.reqdesc.$error"
+							ng-if="F1.reqdesc.$touched">
+							<div ng-message="required">This field is required</div>
+						</div>
+
+					</div>
+						
+						<div class="form-group col-md-12">
+						<label for="requirement_description">Job
+							Description</label><br />
+						<textarea type="text" class="form-control"
+							ng-model="jobDes" rows="3" cols="15"
+							 ></textarea>
+					</div>
+				
+</fieldset>	
+			
+</div>
+
+</div>
+</div>
+ <div class="modal fade" id="response" role="dialog" >
+		<div class="modal-dialog" style="width:45%;height:auto;">   
+		<div class="modal-content">
+        <div class="modal-header">
+		<h4>Add Requirement</h4>
+         </div>       
+        <div class="modal-body">
+		<div class="container">
+		<p style="color:green;">{{responseMes}}</p>
+	      </div>
+        </div>	
+        <div class="modal-footer">
+		<a ng-show="ok"  class="btn btn-info pull-right" data-dismiss="modal" ng-click="redirect()">OK</a>
+        </div>
+		</div>
+        </div>
+	    </div>
+
+

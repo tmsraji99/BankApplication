@@ -1,0 +1,608 @@
+<style>
+.mb-1,.text-gray-800{
+margin-left:20px;
+
+}
+.col-auto{
+margin-right:10px;
+}
+</style>
+<div ng-include="'partials/header.html'"></div>
+ <div ng-include="'partials/fotter.html'"></div>
+ <div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3> <i class="fa fa-fw fa-dashboard"></i>Dashboard </h3>
+        </li>
+      </ol>
+
+
+
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+ 
+	 <uib-tabset active="activeJustified" justified="true">
+    <uib-tab index="0" heading="Quality Reports" class="tabbtnnav">
+	 <!-- <div class="row  mx-3">
+	 		<div class="col-sm-2">
+							Type Of Report 
+						<select class="form-control" ng-model="typeOfReport" ng-change="subVsRej(typeOfReport)"
+							style="border-radius: 0">
+							<option value="date">Datewise</option>
+							<option value="monthly">Monthwise </option>
+							<option value="yearly">Yearwise</option>						
+						</select>
+		        </div>
+		        <div class="col-sm-2" ng-show="(typeOfReport == 'date')">
+							Select By Date 
+					<p class="input-group">
+								<input type="text" class="form-control" ng-model="dateforSearch"
+									placeholder="dd/MM/yyyy" uib-datepicker-popup="{{format}}"
+									is-open="popup1.opened" datepicker-options="dateOptions"
+									alt-input-formats="altInputFormats"
+									ng-change="subVsRejdate(typeOfReport,dateforSearch)" /> <span class="input-group-btn">
+						<button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+				</span>	
+				</p> 
+		        </div>
+		        <div class="col-sm-2" ng-show="(typeOfReport == 'monthly')">
+							Select By Month 
+						<select class="form-control" ng-model="month" 
+							style="border-radius: 0">
+							<option value="" selected></option>
+							<option value="01">01(JAN)</option>
+							<option value="02">02(FEB)</option>
+							<option value="03">03(MAR)</option>
+							<option value="04">04(APR)</option>
+							<option value="05">05(MAY)</option>
+							<option value="06">06(JUN)</option>
+							<option value="07">07(JULY)</option>
+							<option value="08">08(AUG)</option>
+							<option value="09">09(SEPT)</option>
+							<option value="10">10(OCT)</option>
+							<option value="11">11(NOV)</option>
+							<option value="12">12(DEC)</option>
+						</select>
+		        </div>
+		          <div class="col-sm-2" ng-show="(typeOfReport == 'monthly')" style="dispay: none">
+							Select By Year 
+				<select class="form-control" ng-model="year" style="border-radius: 0" ng-change="subVsRejmandy(typeOfReport,month,year)">
+							<option value="2019">2019</option>
+							<option value="2020">2020</option>
+							<option value="2021">2021</option>
+							<option value="2022">2022</option>
+							<option value="2023">2023</option>
+							<option value="2024">2024</option>
+						</select>				
+				</div>
+		         <div class="col-sm-2" ng-show="(typeOfReport == 'yearly')">
+							Select By Year 
+				<select class="form-control" ng-model="year" style="border-radius: 0" ng-change="subVsRej(typeOfReport,year)">
+							<option value="2019">2019</option>
+							<option value="2020">2020</option>
+							<option value="2021">2021</option>
+							<option value="2022">2022</option>
+							<option value="2023">2023</option>
+							<option value="2024">2024</option>
+						</select>				
+				</div> -->
+	<!-- 			<div class="col-sm-2">
+				Type Of Report
+				<select class="form-control" ng-model="typeOfReport" style="border-radius: 0">
+							<option value="monthly">Monthly</option>
+							<option value="yearly">Yearly</option>
+						</select>				
+				</div> -->
+		       <!--   <div class="col-sm-2">
+							Select By Role 
+						<select class="form-control" ng-model="roleSelect"
+							style="border-radius: 0" ng-change="roleChange(roleSelect)">
+							<option value="" selected>--Select --</option>
+							<option value="AM">AM</option>
+							<option value="BDM">BDM</option>
+							<option value="Lead">Team Lead</option>
+							<option value="recruiter">Recruiter</option>
+						</select>
+		        </div>
+						<div class="col-sm-2">
+							Select by Name 
+							<select ng-model="roleName" class="form-control" ng-options="sort.fullNameOfUser as sort.fullNameOfUser for sort in roleNamesList">
+							</select>
+						</div> -->
+				<!-- </div> -->
+	 <h3 class="mx-5">Quality Charts</h3>
+<!-- 	 <div class="row m-5">
+          	 <fieldset>
+          	 <div class="col-md-4">
+		       <fieldset> Report Type :
+		        <select class="form-control" ng-change="reportListChangeFun(reptList)" ng-model="reptList">
+		            <option value='0'>-Select-</option>
+		            <option ng-repeat="rList in reportList" value="{{rList}}" >{{rList}}</option>
+		        </select>
+	       		 </fieldset>
+          	</div>
+          	 <div class="col-md-4">
+		       <fieldset> Recruiter Type :
+		        <select class="form-control" ng-change="recuiterChangeFun(recuiterList)" ng-model="recuiterList">
+		            <option value='0'> -Select- </option>
+		            <option value='recuriter' > Recuriter  </option>
+		            <option value='lead' >  Lead  </option>
+		        </select>
+	       	  </fieldset>
+	       	</div>
+	       	<div class="col-md-4">
+	       		<fieldset>{{reptList}}
+	          		<div class="form-group" ng-if="reptList == 'day'" >
+	          			<input type="date" ng-model="day" class="form-control" ng-change="dateChanges(day)">
+	          		</div>
+	          		<div class="form-group" ng-if="reptList == 'month'" >
+	          			<input type="month" ng-model="month" class="form-control" ng-change="dateChanges(month)">
+	          		</div>
+	          		<div class="form-group" ng-if="reptList == 'year'" >
+	          			 <input type="year" ng-model="year" class="form-control" placeholder="YYYY" ng-change="dateChanges(year)"> 
+	          		</div>
+	          		
+          		</fieldset>
+          		<fieldset>{{recuiterList}}
+          			<div class="form-group" ng-if="recuiterList == 'recuriter'" >
+	          			<select class="form-control"  ng-model="recruiList">
+				            <option value='0'>-Select-</option>
+				            <option ng-repeat="rList in indrecruiters" value="{{rList.id}}" selected>{{rList.fullNameOfUser}}</option>
+				        </select>
+	          		</div>
+	          		<div class="form-group" ng-if="recuiterList == 'lead'" >
+	          			<select class="form-control"  ng-model="recruiList" ng-change="dateChanges(recruiList)">
+				            <option value='0'>-Select-</option>
+				            <option ng-repeat="rList in indrecruiters" value="{{rList.id}}" selected>{{rList.fullNameOfUser}}</option>
+				        </select>
+	          		</div>
+          		</fieldset>
+          	</div>
+          	</fieldset>
+          	 	
+          </div> -->
+		  <div class="row  mx-3">
+		    <!-- <div class="col-sm-6"  ng-init="chartdata()" title="Click to View Table Format">
+		    <div id="chart" dx-chart="chartOptions1" ng-click="showtable()">
+		    <span class="tableviewopen" ></span>
+		    </div>
+		    </div> -->
+		<!--     <div class="col-sm-6">
+		     <img src="data:image/png;base64, {{encodedData}}" alt="getTotalSubmissionsAndRejections" />
+		    </div>
+		    <div class="col-sm-6" ng-if="reptList">
+		    	<img src="data:image/png;base64, {{basString.base64String}}" alt="getRecruiterWiseSubmissionsVsRejectionsByReportType" />
+		    </div>
+		     <div class="col-sm-6" ng-if="reptList">
+		    	<img src="data:image/png;base64, {{b64String.base64String}}" alt="getRecruiterWiseSubmissionsVsRejectionsByReportType" />
+		    </div>
+		    <div class="col-sm-6" ng-if="reptList">
+		    	<img src="data:image/png;base64, {{getLeadWise.base64String}}" alt="getLeadWiseSubmissionsVsRejectionsByReportType" />
+		    </div> -->
+		  <!--   <div class="col-sm-6"  ng-init="chartstack()" title="Click to View Table Format">
+		    <div id="chart" dx-chart="chartOptions2" ng-click="showtable2()" >
+		    <span class="tableviewopen" ></span>
+		    </div>
+		    </div> -->
+	<!-- 	    <div class="col-sm-6">
+			    <div  ng-show="mytable">
+			    	 <h3 class=" text-success mt-5"><i class="fa fa-bar-chart"></i>&nbsp;Table View</h3>
+			    <table class="table table-striped">
+			        <tr>
+			        	<th>S No</th>
+			        	<th>Quality status</th>
+			        	<th>Year 2018</th>
+			        	<th>Year 2019</th>
+			        </tr>
+			        <tr ng-repeat="x in datavalue">
+					    <td>{{ $index + 1 }}</td>
+					    <td>{{ x.state }}</td>
+					    <td>{{ x.year2018 }}</td>
+					    <td>{{ x.year2019 }}</td>
+					  </tr>
+			        
+			        </table>
+			    </div>
+		    
+		    </div> -->
+		    
+		    
+		    
+	<!-- 	    <div class="col-sm-6" >
+				    <div ng-show="mytable2">
+				    	 <h3 class=" text-success mt-5"><i class="fa fa-bar-chart"></i>&nbsp;Table View</h3>
+				    <table class="table table-striped">
+				        <tr>
+				        	<th>Sno</th>
+				        	<th>Quality status</th>
+				        	<th>Year 2018</th>
+				        	<th>Year 2019</th>
+				        </tr>
+				        <tr ng-repeat="x in datavalue2">
+						    <td>{{ $index + 1 }}</td>
+						    <td>{{ x.state }}</td>
+						    <td>{{ x.year2018 }}</td>
+						    <td>{{ x.year2019 }}</td>
+						  </tr>
+				        
+				        </table>
+				    </div>
+		    
+		    </div> -->
+		    </div>
+		 <!--    <div class="row mx-3">
+		    <div class="col-sm-6"  ng-init="CvsJ()" title="Click to View Table Format">
+		    <div id="chart" dx-chart="chartOptions3" ng-click="showtable3()">
+		    <span class="tableviewopen" ></span>
+		    </div>
+		    </div>
+		    <div class="col-sm-6">
+		    
+		    </div>
+		    <div class="col-sm-6" >
+		    <div ng-show="mytable3">
+		    	  <h3 class=" text-success mt-5"><i class="fa fa-bar-chart"></i>&nbsp;Table View</h3>
+		    <table class="table table-striped">
+		        <tr>
+		        	<th>Sno</th>
+		        	<th>Quality status</th>
+		        	<th>Year 2018</th>
+		        	<th>Year 2019</th>
+		        </tr>
+		        <tr ng-repeat="x in datavalue3">
+				    <td>{{ $index + 1 }}</td>
+				    <td>{{ x.state }}</td>
+				    <td>{{ x.year2018 }}</td>
+				    <td>{{ x.year2019 }}</td>
+				  </tr>
+		        
+		        </table>
+		    </div>   
+		    </div>  
+		    </div> -->
+		     
+	</uib-tab>
+	
+	
+	
+    <uib-tab index="1" heading="Revenue Reports" class="tabbtnnav">
+    
+    <!-- <div class="row mt-3  mx-3">
+	    <div class="col-sm-4">
+		    <div class="form-group">
+		  		<label for="sel1">Select list:</label>
+			  <select class="form-control" id="sel1">
+			    <option>Customer</option>
+			    <option>Requirement wise</option>
+			  
+			  </select>
+				</div>
+	    </div>
+    </div> -->
+	<h3 class=" mx-5">Revenue Charts</h3>
+				
+		<div class="row  mx-3">
+		    <div class="col-sm-6"  ng-init="Revenuedata1()" title="Click to View Table Format">
+		    <div id="chart" dx-pie-chart="revenuechart1" ng-click="revenuetable1()">
+		    <!-- <span class="tableviewopen" ></span> -->
+		    </div>
+		    </div>
+		    <div class="col-sm-6"  ng-init="Revenuedata2()" title="Click to View Table Format">
+		    <div id="chart" dx-pie-chart="revenuechart2" ng-click="revenuetable2()" >
+		    <!-- <span class="tableviewopen" ></span> -->
+		    </div>
+		    </div>
+		    <div class="col-sm-6">
+			    <div  ng-show="revenueview1">
+			    	 <h3 class=" text-success mt-5"><i class="fa fa-bar-chart"></i>&nbsp;Table View</h3>
+			    <table class="table table-striped">
+			        <tr>
+			        	<th>Sno</th>
+			        	<th>Category</th>
+			        	<th>Revenue</th>
+			        </tr>
+			        <tr ng-repeat="x in revenuevalue1">
+					    <td>{{ $index + 1 }}</td>
+					    <td>{{ x.region }}</td>
+						<td>{{ x.val }}</td>
+					  </tr>
+			        
+			        </table>
+			    </div>
+		    
+		    </div>
+		    
+		    
+		    
+		    <div class="col-sm-6" >
+				    <div ng-show="revenueview2">
+				    	 <h3 class=" text-success mt-5"><i class="fa fa-bar-chart"></i>&nbsp;Table View</h3>
+				    <table class="table table-striped">
+				        <tr>
+				        	<th>Sno</th>
+				        	<th>Name</th>
+				        	<th>Revenue</th>
+				        </tr>
+				        <tr ng-repeat="x in revenuevalue2">
+						    <td>{{ $index + 1 }}</td>
+						    <td>{{ x.region }}</td>
+						    <td>{{ x.val }}</td>
+						  </tr>
+				        
+				        </table>
+				    </div>
+		    
+		    </div>
+		    </div>
+		    
+		    
+		    <div class="row  mx-3">
+		    <div class="col-sm-6"  ng-init="Revenuedata3()" title="Click to View Table Format">
+		    <div id="chart" dx-pie-chart="revenuechart3" ng-click="revenuetable3()">
+		    <!-- <span class="tableviewopen" ></span> -->
+		    </div>
+		    </div>
+		    <div class="col-sm-6"  ng-init="Revenuedata4()" title="Click to View Table Format">
+		    <div id="chart" dx-pie-chart="revenuechart4" ng-click="revenuetable4()" >
+		    <!-- <span class="tableviewopen" ></span> -->
+		    </div>
+		    </div>
+		    <div class="col-sm-6">
+			    <div  ng-show="revenueview3">
+			    	 <h3 class=" text-success mt-5"><i class="fa fa-bar-chart"></i>&nbsp;Table View</h3>
+			    <table class="table table-striped">
+			        <tr>
+			        	<th>Sno</th>
+			        	<th>Category</th>
+			        	<th>Revenue</th>
+			        </tr>
+			        <tr ng-repeat="x in revenuevalue3">
+					    <td>{{ $index + 1 }}</td>
+					    <td>{{ x.region }}</td>
+						<td>{{ x.val }}</td>
+					  </tr>
+			        
+			        </table>
+			    </div>
+		    
+		    </div>
+		    
+		    
+		    
+		    <div class="col-sm-6" >
+				    <div ng-show="revenueview4">
+				    	 <h3 class=" text-success mt-5"><i class="fa fa-bar-chart"></i>&nbsp;Table View</h3>
+				    <table class="table table-striped">
+				        <tr>
+				        	<th>Sno</th>
+				        	<th>Name</th>
+				        	<th>Revenue</th>
+				        </tr>
+				        <tr ng-repeat="x in revenuevalue4">
+						    <td>{{ $index + 1 }}</td>
+						    <td>{{ x.region }}</td>
+						    <td>{{ x.val }}</td>
+						  </tr>
+				        
+				        </table>
+				    </div>
+		    
+		    </div>
+		    </div>
+		    
+		    <div class="row  mx-3">
+		    <div class="col-sm-6"  ng-init="Revenuedata5()" title="Click to View Table Format">
+		    <div id="chart" dx-pie-chart="revenuechart5" ng-click="revenuetable5()">
+		    <!-- <span class="tableviewopen" ></span> -->
+		    </div>
+		    </div>
+		    <div class="col-sm-6"  ng-init="Revenuedata6()" title="Click to View Table Format">
+		    <div id="chart" dx-pie-chart="revenuechart6" ng-click="revenuetable6()" >
+		    <!-- <span class="tableviewopen" ></span> -->
+		    </div>
+		    </div>
+		    <div class="col-sm-6">
+			    <div  ng-show="revenueview5">
+			    	 <h3 class=" text-success mt-5"><i class="fa fa-bar-chart"></i>&nbsp;Table View</h3>
+			    <table class="table table-striped">
+			        <tr>
+			        	<th>Sno</th>
+			        	<th>Category</th>
+			        	<th>Revenue</th>
+			        </tr>
+			        <tr ng-repeat="x in revenuevalue5">
+					    <td>{{ $index + 1 }}</td>
+					    <td>{{ x.region }}</td>
+						<td>{{ x.val }}</td>
+					  </tr>
+			        
+			        </table>
+			    </div>
+		    
+		    </div>
+		    
+		    
+		    
+		    <div class="col-sm-6" >
+				    <div ng-show="revenueview6">
+				    	 <h3 class=" text-success mt-5"><i class="fa fa-bar-chart"></i>&nbsp;Table View</h3>
+				    <table class="table table-striped">
+				        <tr>
+				        	<th>Sno</th>
+				        	<th>Name</th>
+				        	<th>Revenue</th>
+				        </tr>
+				        <tr ng-repeat="x in revenuevalue6">
+						    <td>{{ $index + 1 }}</td>
+						    <td>{{ x.region }}</td>
+						    <td>{{ x.val }}</td>
+						  </tr>			        
+				        </table>
+				    </div>		    
+		    </div>
+		    </div>				
+	</uib-tab>
+	
+	
+    <uib-tab index="2" heading="Productivity Reports" class="tabbtnnav">
+    <!-- <div class="row mt-3  mx-3">
+	    <div class="col-sm-4">
+		    <div class="form-group">
+		  		<label for="sel1">Select list:</label>
+			  <select class="form-control" id="sel1">
+			    <option>Customer</option>
+			    <option>Requirement wise</option>
+			  
+			  </select>
+				</div>
+	    </div>
+    </div -->
+    <h3 class="mx-5">Productivity Charts</h3>
+    	  <div class="row  mx-3">
+		    <div class="col-sm-6"  ng-init="productivity1()" title="Click to View Table Format">
+		    <div id="chart" dx-chart="productivity1" ng-click="productivitytable1()" >
+		    <!-- <span class="tableviewopen" ></span> -->
+		    </div>
+		    </div>
+		    <div class="col-sm-6"  ng-init="productivity2()" title="Click to View Table Format">
+		    <div id="chart" dx-chart="productivity2"  ng-click="productivitytable2()">
+		    <!-- <span class="tableviewopen"></span> -->
+		    </div>
+		    </div>
+		    <div class="col-sm-6">
+			    <div ng-show="protable1">
+			    	 <h3 class=" text-success mt-5"><i class="fa fa-bar-chart"></i>&nbsp;Table View</h3>
+			    <table class="table table-striped">
+			        <tr>
+			        	<th>Sno</th>
+			        	<th>Productivity status</th>
+			        	<th>Year 2018</th>
+			        	<th>Year 2019</th>
+			        </tr>
+			        <tr ng-repeat="x in provalue1">
+					    <td>{{ $index + 1 }}</td>
+					    <td>{{ x.state }}</td>
+					    <td>{{ x.year2018 }}</td>
+					    <td>{{ x.year2019 }}</td>
+					  </tr>
+			        
+			        </table>
+			    </div>
+		    
+		    </div>
+		    
+		    
+		    
+		    <div class="col-sm-6" >
+				    <div ng-show="protable2">
+				    	 <h3 class=" text-success mt-5"><i class="fa fa-bar-chart"></i>&nbsp;Table View</h3>
+				    <table class="table table-striped">
+				        <tr>
+				        	<th>Sno</th>
+				        	<th>Productivity status</th>
+				        	<th>Year 2018</th>
+				        	<th>Year 2019</th>
+				        </tr>
+				        <tr ng-repeat="x in provalue2">
+						    <td>{{ $index + 1 }}</td>
+						    <td>{{ x.state }}</td>
+						    <td>{{ x.year2018 }}</td>
+						    <td>{{ x.year2019 }}</td>
+						  </tr>
+				        
+				        </table>
+				    </div>
+		    
+		    </div>
+		    </div>
+		      <!-- Fusion Charts -->
+  <div   fusioncharts    width="600"   height="400"   type="mscolumn2d"  dataSource="{{myDataSource}}"></div>
+    </uib-tab>
+  </uib-tabset>
+
+<!--      
+    <script>
+Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Submissions Vs Rejections'
+    },
+    <!-- subtitle: { -->
+        <!-- text: 'Click the columns to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>' -->
+    <!-- },
+    xAxis: {
+        type: 'category'
+    },
+    yAxis: {
+        title: {
+            text: 'count'
+        }
+
+    },
+    legend: {
+        enabled: false
+    },
+    plotOptions: {
+        series: {
+            borderWidth: 0,
+            dataLabels: {
+                enabled: true,
+                format: '{point.y}'
+            }
+        }
+    },
+
+    tooltip: {
+        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y}</b> in  <b>{point.month}</b><br/>'
+    },
+
+    series: [
+        {
+            name: "Submmition vs Rejection",
+            colorByPoint: true,
+            data: [
+                {
+                    name: "Submissions",
+                    y: 62,
+					month:"Jan"
+                },
+                {
+                    name: "Rejections",
+                    y: 10,
+					month:"feb"
+                },
+				{
+                    name: "Submissions",
+                    y: 29,
+					month:"Jul"
+                },
+                {
+                    name: "Rejections",
+                    y: 1,
+					month:"Nov"
+                }
+            ]
+        }
+    ]
+});
+
+</script> -->
+    

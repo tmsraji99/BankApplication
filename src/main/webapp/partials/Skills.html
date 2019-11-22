@@ -1,0 +1,100 @@
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Skills</h3>
+        </li>
+      </ol>
+       <ol class="breadcrumb">
+    <div class="col-md-10">
+    <input class="form-control" style="width:25%" type="search" ng-model="test" placeholder="Search">
+    </div>
+    <div class="col-md-2 pull-right">
+    <a href="#!/skill"  type="button"  class="btn btn-info btn-md pull-center"><span class="glyphicon glyphicon-plus"></span>Add</a>	
+    </div>
+   
+    </ol>
+    <table class="table col-lg-10 table-bordered" id="rec_List">
+		<thead>
+			<tr>
+				<th>Skill Name</th>
+				<th>Skill Type</th>
+				<th>Edit</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr dir-paginate="items in skillNames|filter:test|itemsPerPage:5">
+				<td>{{::items.skillName}}</td>
+				<td ng-show="items.flag==true">Primary</td>
+				<td ng-show="items.flag==false">Secondary</td>
+				<td><button  class="btn btn-primary"
+					class="modal-dialog modal-lg" data-toggle="modal" data-target="#myModal" ng-click="pushSkill(items)"
+					><span class="glyphicon glyphicon-pencil"></span></button></td>
+			</tr>			
+		</tbody>
+	</table>
+	<div class="col-md-12 text-center">
+	<p><b>{{noData}}</b></p>
+	</div>
+<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+
+			<div class="modal-content">
+				<div class="modal-header"><h2 class="modal-title">Update Skill</h2></div>
+
+			
+			<div class="modal-body">
+				<form class="form-horizontal" 
+					name="myform" novalidate  onsubmit="return myFun()">
+					<div class="form-group" id="mod">
+					<div class="col-sm-1">
+					</div>
+					<div class="col-sm-4">
+						<label for="mode">Enter Skill Name</label>
+						
+							<input type="text" class="form-control" id="mode" ng-model="clickedUser.skillName" placeholder="Enter skills" name="des" required>
+							<span style="color: red;"
+			ng-show="myform.des.$touched && myform.des.$invalid">
+			field is required.</span>
+								<!-- placeholder="Ex:Contract/Temporary/Permanent"> -->
+						</div>
+					
+					
+					
+					<div class="col-lg-3">
+					<label>skill Type:</label>
+					<select ng-model="clickedUser.flag" style="width:200px;" class="form-control" ng-selected>
+					<option value="" disabled selected>Please Select</option>
+					<option value="true">primary</option>
+                    <option value="false">Secondary</option>
+					</select>
+					</div>
+					</div>
+
+					<div class="modal-footer">
+				<button class="btn btn-success pull-right" data-dismiss="modal" ng-click="editSkill12()"data-dismiss="modal" ng-disabled="myform.$invalid">Update</button>
+						<button class="btn btn-danger pull-left" data-dismiss="modal">Cancel</button>
+						
+
+					</div>
+				</form>
+
+				
+			</div>
+
+			</div>
+		</div>
+		</div>
+	
+</div>
+
+
+
+
+
+

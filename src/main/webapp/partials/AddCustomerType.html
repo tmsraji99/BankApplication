@@ -1,0 +1,79 @@
+<div ng-include="'partials/header.html'"></div>
+ <div ng-include="'partials/fotter.html'"></div>
+  <div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+     
+     <!-- new existin code here -->
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Customers/Add Customer Type </h3>
+        </li>
+  
+      </ol>
+      <form name="customertypeForm" class="myForm" required novalidate>
+<div class="form-group">
+<div class="col-sm-3">
+<label>Customer Type:</label>
+</div>
+<div class="col-lg-4">
+<input type="text" name="addCustomerType" ng-model="customerType" class="form-control" required>
+<div ng-messages="customertypeForm.addCustomerType.$error" ng-if="customertypeForm.addCustomerType.$touched">
+ 							 <div ng-message="required">This field is required</div>
+      							</div>
+</div>
+</br>
+</div>
+</br>
+
+
+<div class="form-group">
+<div class="col-lg-3">
+<label>Amount:</label>
+</div>
+<div class="col-lg-3">
+<select class="form-control" ng-model="dropdown1" >
+<option value="" disabled selected>Please Select</option>
+<option value="GreaterThan">Greater than</option>
+<option value="LessThan">Less than</option>
+<option value="EqualsTo">Equals To</option>
+</select>
+</div>
+<div class="col-lg-2">
+<input type="text" name="customertypeAmount" class="form-control" ng-model="amount" valid-number required>
+<div ng-messages="customertypeForm.customertypeAmount.$error" ng-if="customertypeForm.customertypeAmount.$touched">
+ 							 <div ng-message="required">This field is required</div>
+      							</div>
+</div>
+<div class="col-lg-3">
+<select class="form-control" ng-model="dropdown2">
+<option value="" disabled selected>Please Select</option>
+<option value="Billions">Billions</option>
+<option value="Millions">Millions</option>
+<option value="Trillions">Trillions</option>
+</select>
+</div>
+</br>
+</div>
+</br>
+
+
+<div class="form-group">
+<div class="col-lg-3">
+<label class="control-label">Commission Rate:</label>( % )
+</div>
+<div class="col-lg-4">
+<input type="text" name="ratePercentage" class="form-control" ng-model="commissionRate" valid-number required>
+<div ng-messages="customertypeForm.ratePercentage.$error" ng-if="customertypeForm.ratePercentage.$touched">
+ 							 <div ng-message="required">This field is required</div>
+      							</div>
+</div>
+</div>
+
+<div class="text-center">
+<a href="#!/ListOfCustomerType" type="button" class="btn btn-info">Cancel</a>
+<button class="btn btn-info" ng-disabled="!customertypeForm.$valid" ng-click="addCustomerType(customerTypeDetails)">Save</button>
+</div>
+</form>
+      </div>
+      </div>

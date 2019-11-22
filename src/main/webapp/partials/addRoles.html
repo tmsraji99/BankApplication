@@ -1,0 +1,52 @@
+<div ng-include="'partials/header.html'"></div>
+ <div ng-include="'partials/fotter.html'"></div>
+  <div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+     
+     <!-- new existin code here -->
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Roles/Add Roles</h3>
+        </li>
+  
+      </ol>
+<!--     <form name="addroleForm" class="myForm" required novalidate >
+      <div class="col-md-3">
+      <input type="text" name="designation" ng-model="role.designation" class="form-control" placeholder="Enter Roles" required> 
+      <div ng-messages="addroleForm.designation.$error" ng-if="addroleForm.designation.$touched">
+ 							 <div ng-message="required">This field is required</div>
+      							</div>
+      </div>
+      <div class="col-md-1">
+      <a href="#!/roles" class="btn btn-info pull-right" ng-disabled="!addroleForm.$valid" ng-click="addRoles(role)">Save</a>
+      </div>
+    
+
+</form> -->
+<form class="form-horizontal" name="d">
+<div class="col-md-12">
+<div class="form-group">
+<label class="control-label col-sm-3">Designation:</label>
+<div class="col-sm-3 col-lg-4">
+<input type="text" class="form-control" name="des" ng-model="designation" ng-minlength="2" ng-maxlength="45" ng-pattern="/^([a-zA-Z]+\s)*[a-zA-Z]+$/" required>
+<span style="color:red;" ng-show="d.des.$dirty && d.des.$error.required">Please enter designation</span>
+					       		<span style="color:red;" ng-show="d.des.$error.pattern">Invalid designation</span>
+					       		<span style="color:red;" ng-show="d.des.$error.maxlength" >Designation is too long.</span>
+	</div>
+</div>
+</div>
+<div style="margin:10px;">
+
+<div class="col-md-12 text-center">
+	<div class="col-md-6 text-right">
+ 		<a href="#!/roles" class="btn btn-info btn-md">Cancel</a>
+ 	</div>
+ 	<div class="col-md-6 text-left">
+		<a class="btn btn-info btn-md" ng-click="desigSave()" ng-disabled="d.$invalid">Save</a>
+	</div>
+ </div>
+
+
+</div>
+</div>

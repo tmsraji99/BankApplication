@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html ng-app="exampleApp">
+<head>
+	<title>RecruitEx</title>
+	
+ <link href="newui/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="newui/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <!-- Page level plugin CSS-->
+  <link href="newui/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  <!-- Custom styles for this template-->
+    <link href="newui/css/sb-admin-3.min.css" rel="stylesheet">
+  <link href="newui/css/sb-admin.css" rel="stylesheet">
+ <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+  
+  
+   
+	
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.19.4/select.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+    <link rel="stylesheet" href="css/select2.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+    
+    <link href="css/custom.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
+	<!-- font change  -->
+	<link href="https://fonts.googleapis.com/css?family=Maven+Pro|Ubuntu" rel="stylesheet">
+	<style type="text/css">
+	 .ng-hide {
+			    display: none;
+		      }
+	</style>
+</head>
+<body>
+	<div class="loader" ng-hide="initialized">
+		
+		<span><i class="fa fa-circle-o-notch fa-spin" style="font-size:100px;color:#3b68a3"></i></span>
+		<p>Loading...</p>
+		  <!--<span><i class="fa fa-spinner fa-spin" style="font-size:100px;color:#3b68a3"></i></span>
+		
+		<span><i class="fa fa-refresh fa-spin" style="font-size:100px;color:#3b68a3"></i><span>-->
+		
+
+		
+	</div>
+     
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">	
+	 <!-- Essential javascripts for application to work-->
+    <script src="newui/js/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+    <script src="newui/js/popper.min.js"></script>
+    <script src="newui/js/bootstrap.min.js"></script>
+    <script src="newui/js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="newui/js/pace.min.js"></script>
+    <!-- Page specific javascripts-->
+ <script type="text/javascript" src="newui/js/chart.js"></script> 
+    <script type="text/javascript" src="newui/js/sb-admin-datatables.js"></script>
+
+	<!--cdn for resume preview  -->
+	 <script src=" https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.8/mammoth.browser.js"></script>
+		<!--cdn for resume preview  end -->
+	
+	
+
+	
+	
+	
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.js"></script>
+	 
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+	<script src="https://code.angularjs.org/1.6.1/angular-messages.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" 
+	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="js/jquery.multiselect.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+		<script src="js/ngf-fileShim.js"></script>
+	<script type="text/javascript" src="js/ngf-onefileUpload.js"></script>
+	<script src="js/app.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+	<script src="https://cdn3.devexpress.com/jslib/19.1.5/js/dx.all.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/19.1.5/css/dx.common.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/19.1.5/css/dx.light.css" />
+	 
+	<script type="text/javascript" src="js/pagination.js"></script>
+	<script src="https://code.angularjs.org/1.6.1/angular-messages.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/js/bootstrap-select.min.js"></script> -->
+   <script src="js/multiSelectapp.js"></script>
+   <script src="js/angular-multiselect.js"></script>
+	<script src="js/angular-multiselecttpls.js"></script>
+	
+	
+	<script src="js/angularjs-dropdown-multiselect.min.js"></script>
+	<script src="js/smart-table.debug.js"></script>
+	
+	
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-resource.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>
+<script type="text/javascript" src="js/config.js"></script>
+
+
+
+	<!-- 	<!===jhansi > -->
+
+	<script src="js/angular-multiselect.js"></script>
+	<script src="js/angular-multiselecttpls.js"></script>
+	
+	<!-- jhansi -->
+	
+	
+	<script type="text/javascript" src="js/pagination.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-resource.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-cookies.js"></script>	
+	
+	
+	<script type="text/javascript" src="js/config.js"></script>
+    <script src="js/app.js"></script>
+	<script src="js/controllers/UserRegController.js"></script>
+	<script src="js/services/UserRegistrationServ.js"></script>
+   	<script type="text/javascript" src="js/services/addroleservice.js"></script>
+	<script type="text/javascript" src="js/controllers/addrolecontroller.js"></script>
+	
+	<script type="text/javascript" src="js/services/AMServices.js"></script>
+	<script type="text/javascript" src="js/controllers/AMController.js"></script>
+	<script type="text/javascript" src="js/services/RecuriterDashBoard.js"></script>
+	<script type="text/javascript" src="js/controllers/RecriterDashBoardCtrl.js"></script>
+	
+	<script type="text/javascript" src="js/controllers/recdashboardCntrl.js"></script>
+	<script type="text/javascript" src="js/services/listroleservice.js"></script>
+	<script type="text/javascript" src="js/controllers/listrolecontroller.js"></script>
+   
+	
+    <script type="text/javascript" src="js/controllers/ListReqCtrl.js"></script>
+   <script type="text/javascript" src="js/controllers/resourcePoolCtrl.js"></script>
+    
+    <script type="text/javascript" src="js/controllers/locationAddCtrl.js"></script>
+    <script type="text/javascript" src="js/services/ListReqSer.js"></script>	
+	<script type="text/javascript" src="js/services/controllerSharingData.js"></script>	
+	<script type="text/javascript" src="js/controllers/reqEditCtrl.js"></script>
+    <script type="text/javascript" src="js/services/reqEditSer.js"></script>	
+	<script src="js/controllers/bdmleadDashboard.js"></script>
+	
+	
+	
+	<script type="text/javascript" src="js/controllers/addSkillController.js"></script>
+	<script type="text/javascript" src="js/controllers/listSkillsController.js"></script>
+	<script type="text/javascript" src="js/services/addSkillService.js"></script>
+	<script type="text/javascript" src="js/services/listSkillService.js"></script>
+	<script type="text/javascript" src="js/controllers/userListController.js"></script>
+	<script type="text/javascript" src="js/services/userListServices.js"></script>
+	<script src="js/controllers/noticePeriodCtrl.js"></script>
+	<script src="js/services/noticePeriodServ.js"></script>
+	<script src="js/controllers/listOfNoticePeriodCtrl.js"></script>
+	<script src="js/services/listOfNoticePeriodServ.js"></script>
+	<script src="js/controllers/statusCtrl.js"></script>
+	<script src="js/services/statusServ.js"></script>
+	<script src="js/controllers/listOfStatusCtrl.js"></script>
+	<script src="js/services/listOfStatusServ.js"></script>
+	<script src="js/controllers/addCustomerTypeCtrl.js"></script>
+	<script src="js/services/CustomerTypeService.js"></script>
+	<script src="js/services/locationService.js"></script>
+	<!-- -------------Jhansi------------ -->
+	<script type="text/javascript" src="js/controllers/bdmdtlsController.js"></script>
+	<script type="text/javascript" src="js/controllers/assignworkcntrl.js"></script>
+	<script type="text/javascript" src="js/controllers/taskAssignController.js"></script>
+	<script type="text/javascript" src="js/controllers/assignListcntrl.js"></script>
+	<!-- <script type="text/javascript" src="js/services/bdmdtlsService.js"></script> -->
+	<script type="text/javascript" src="js/controllers/getHiringModeController.js"></script>
+	<script type="text/javascript" src="js/services/getHiringModeService.js"></script>
+	<script type="text/javascript" src="js/controllers/addrolecontroller.js"></script>
+	<script type="text/javascript" src="js/services/addroleservice.js"></script>
+	<script type="text/javascript" src="js/services/listroleservice.js"></script>
+  
+	
+    <script type="text/javascript" src="js/controllers/modeOfInterviewCntrl.js"></script>
+	<script type="text/javascript" src="js/controllers/designationController.js"></script>
+	<script type="text/javascript" src="js/controllers/designationList.js"></script>
+	<script type="text/javascript" src="js/services/designationService.js"></script>
+	<script type="text/javascript" src="js/controllers/modeOfInterviewCntrl.js"></script>
+	<script type="text/javascript" src="js/controllers/addModeListController.js"></script>
+	<script type="text/javascript" src="js/services/modeOfInterviewService.js"></script>
+	<script type="text/javascript" src="js/controllers/addSkillController.js"></script>
+	<script type="text/javascript" src="js/controllers/listSkillsController.js"></script>
+	<script type="text/javascript" src="js/services/addSkillService.js"></script>
+	<script type="text/javascript" src="js/services/listSkillService.js"></script>
+   	<!-- <script type="text/javascript" src="js/controllers/userListController.js"></script>-->
+	<script type="text/javascript" src="js/services/userListServices.js"></script>
+	<!-- <script type="text/javascript" src="js/controllers/AddQualificationController.js"></script> -->
+	<!-- <script type="text/javascript" src="js/services/AddQualiservice.js"></script> -->
+	<script type="text/javascript" src="js/controllers/viewqualcontroller.js"></script>
+	<script type="text/javascript" src="js/services/viewqualservice.js"></script>
+	<script type="text/javascript" src="js/services/listOfCandidateService.js"></script>
+	<!-- 	client Controller & Client Service -->
+	<script type="text/javascript" src="js/controllers/getClientController.js"></script>
+	<script type="text/javascript" src="js/controllers/locationListCtrl.js"></script>
+	<!-- <script type="text/javascript" src="js/services/getClientService.js"></script> -->
+	<script type="text/javascript" src="js/controllers/addClientController.js"></script>
+	<script type="text/javascript" src="js/services/addClientService.js"></script>
+	<script type="text/javascript" src="js/controllers/EditClientController.js"></script>
+	<script type="text/javascript" src="js/controllers/listofcandidateCtrl.js"></script>
+	 <script type="text/javascript" src="js/controllers/adminController.js"></script>
+	<!-- <script type="text/javascript" src="js/services/getClientService.js"></script> -->
+	<!-- ----------------Jhansi---------------- -->
+	
+	<!-- Nandhini -->
+	<script type="text/javascript" src="js/controllers/modeOfInterviewCntrl.js"></script>
+	<script type="text/javascript" src="js/controllers/addModeListController.js"></script>
+	<script type="text/javascript" src="js/services/modeOfInterviewService.js"></script>
+	
+	<script type="text/javascript" src="js/controllers/userController.js"></script>
+	<script type="text/javascript" src="js/services/adminServices.js"></script>
+	
+	<script type="text/javascript" src="js/controllers/addCertificateCntrl.js"></script>
+	<script type="text/javascript" src="js/services/addCertificateService.js"></script>
+	<script type="text/javascript" src="js/controllers/ListCertificateCntrl.js"></script>
+	
+	<script type="text/javascript" src="js/controllers/addTypeOfAddressCntrl.js"></script>
+	<script type="text/javascript" src="js/services/addTypeOfAddressService.js"></script>
+
+	<script type="text/javascript" src="js/controllers/AddClientContactCntrl.js"></script>
+	<script type="text/javascript" src="js/services/AddClientContactService.js"></script>
+	<script type="text/javascript" src="js/controllers/addAddresstoClient.js"></script>
+	<script type="text/javascript" src="js/controllers/getClientAddressCntrl.js"></script>
+	<script type="text/javascript" src="js/services/ClientAddress.js"></script>
+	
+	<script type="text/javascript" src="js/controllers/CosttypeController.js"></script>
+	<script type="text/javascript" src="js/services/costtypeService.js"></script>
+
+	<script type="text/javascript" src="js/controllers/advSearchCntrl.js"></script>
+	<script type="text/javascript" src="js/services/advSearchService.js"></script>
+	
+	<script type="text/javascript" src="js/controllers/userprofile.js"></script>
+	<script type="text/javascript" src="js/controllers/header.js"></script>
+	<script type="text/javascript" src="js/services/userprofileservice.js"></script>
+	
+	
+	<!-- Mounika -->
+	<script type="text/javascript" src="js/controllers/AddQualificationController.js"></script>
+	<script type="text/javascript" src="js/controllers/viewqualcontroller.js"></script>
+	
+	
+		
+	<script type="text/javascript" src="js/services/AddQualiservice.js"></script>
+	<script type="text/javascript" src="js/services/viewqualservice.js"></script>
+
+	<script type="text/javascript" src="js/services/assignwrkservice.js"></script>
+	<script type="text/javascript" src="js/services/assignListser.js"></script>
+
+	<script type="text/javascript" src="js/services/assignTaskService.js"></script>
+	<script type="text/javascript" src="js/services/getClientService.js"></script> 
+	<script type="text/javascript" src="js/services/bdmdtlsService.js"></script>
+	<!-- priyanka GST -->
+ 	<script type="text/javascript" src="js/controllers/gstCtrl.js"></script>
+ 	<script type="text/javascript" src="js/services/gstService.js"></script>
+ 		<!-- priyanka Bank -->
+ 	<script type="text/javascript" src="js/controllers/bankDetailsController.js"></script>
+    <script type="text/javascript" src="js/controllers/editbankDetailsController.js"></script>
+ 	<script type="text/javascript" src="js/services/bankDetailsService.js"></script>	 
+	<!-- jyothi -->
+	 <script type="text/javascript" src="js/controllers/candidateCtrl.js"></script>
+	<script type="text/javascript" src="js/services/candidateSer.js"></script>
+	<script type="text/javascript" src="js/controllers/candidateListCtrl.js"></script>
+	<script type="text/javascript" src="js/services/candidateListSrc.js"></script>
+	<script type="text/javascript" src="js/services/candidateMappListSrc.js"></script>
+	<script type="text/javascript" src="js/controllers/CandidateReqList.js"></script>
+
+	<script type="text/javascript" src="js/controllers/TypeOfProcess.js"></script>
+	<script type="text/javascript" src="js/services/TypeOfProcessService.js"></script>
+	<script type="text/javascript" src="js/services/invoiceServices.js"></script>
+	<script type="text/javascript" src="js/ui-bootstrap-tpls-0.10.0.js"></script>
+	<script type="text/javascript" src="js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+<!--Nikhil Incentives  -->
+	<script type="text/javascript" src="js/controllers/editCandidateCtrl.js"></script>
+	<script type="text/javascript" src="js/controllers/incentivesCtrl.js"></script>
+	<script type="text/javascript" src="js/controllers/calcincentivesCtrl.js"></script>
+	<script type="text/javascript" src="js/services/incentivesService.js"></script>
+	<script type="text/javascript" src="js/controllers/editincentivesConfigurationCtrl.js"></script>
+	<script type="text/javascript" src="js/controllers/incentivesConfiguration.js"></script>
+    <script type="text/javascript" src="js/services/incentivesConfigService.js"></script>
+	<script type="text/javascript" src="js/controllers/requestforCandidateCtrl.js"></script>
+	<script type="text/javascript" src="js/controllers/reqCandListCtrl.js"></script>
+	<script type="text/javascript" src="js/controllers/onboardedCtrl.js"></script>
+	<script type="text/javascript" src="js/services/reqCandidatesListservice.js"></script>
+	<script data-require="moment.js@*" data-semver="2.10.2" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+	<!-- rakesh -->
+	
+	<script type="text/javascript" src="js/controllers/offerLetter.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>	
+	<script type="text/javascript" src="js/controllers/additional/billingModelCtrl.js"></script>
+	<script type="text/javascript" src="js/services/additionalServices/rpoFactory.js"></script>
+	<script type="text/javascript" src="js/controllers/additional/servicesCtrl.js"></script>
+	<script type="text/javascript" src="js/controllers/additional/paymentTermsCtrl.js"></script>
+	<script type="text/javascript" src="js/controllers/additional/matchRequirementController.js"></script>
+	<script type="text/javascript" src="js/controllers/additional/matchCandidateController.js"></script>
+	<script type="text/javascript" src="js/controllers/additional/canreqDetails.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    		  <!-- live Search starts -->
+        <script src="https://code.angularjs.org/1.5.8/angular-sanitize.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.19.4/select.min.js"></script>
+<script src="js/select.js"></script> 
+<!-- live Search ends -->
+    <!-- sirisha -->
+    <script type="text/javascript" src="js/controllers/poController.js"></script>
+    <div style="background: #faebd700; font-family: 'Ubuntu', sans-serif; font-family: 'Maven Pro', sans-serif;">
+    
+    <ng-view></ng-view>
+    </div>
+     
+  
+ 
+  
+    
+  </body>
+  </html>
+ 

@@ -1,0 +1,299 @@
+<div ng-include="'partials/header.html'"></div>
+ <div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper" ng-init="getReqByReqId();getCandidatesByRole();"> 
+    <div class="container-fluid" style="margin-top: 60px;">
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Candidates Details </h3>
+        </li>
+        
+        </ol>
+        <div class="col-md-4">
+		<fieldset class="well .scheduler-border"
+			style="width: 790px; height: auto; margin: 0px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+			<legend
+				style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+				align="left">Requirement Details </legend>
+				
+				<div class="row" style="margin-top: 25px;">
+					<div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Customer Name</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.client.clientName}}</li>
+					 </div>
+					<div class="col-md-5">
+					    <li class="list-group-item"><strong>Name Of Requirement</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.nameOfRequirement}}</li>
+					 </div>
+					 <div class="col-md-5 ">
+					    <li class="list-group-item"><strong>Skills</strong></li>
+					 </div>
+					   <div class="col-md-7">
+					   <li class="list-group-item"><span ng-repeat="y in skills">{{y.skillName}}, </span></li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>Total Experience</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.totalExperience}}</li>
+					 </div>
+					  <div class="col-md-5">
+					    <li class="list-group-item"><strong>Relevant Experience</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.relavantExperience}}</li>
+					 </div>
+					  <div class="col-md-5">
+					    <li class="list-group-item"><strong>Min Budget</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.minBudgetRate | currency:"₹ "}}</li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>Max Budget</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.maxBudgetRate | currency:"₹ "}}</li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>Type Of Hiring</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.typeOfHiring}}</li>
+					 </div>
+					  <div class="col-md-5">
+					    <li class="list-group-item"><strong>Job Location</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.jobLocation}}</li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>Number Of Positions</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.numberOfPositions}}</li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>Qualification Name</strong></li>
+					 </div>
+					   <div class="col-md-7">
+					   <li class="list-group-item"><span ng-repeat="e in qualifications">{{e.qualificationName}}, </span></li>
+					 </div>
+					  <div class="col-md-5">
+					    <li class="list-group-item"><strong>Roles </strong></li>
+					 </div>
+					   <div class="col-md-7">
+					   <li class="list-group-item"><span ng-repeat="o in designations">{{o.designation}}, </span></li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>Number Of Positions</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.numberOfPositions}}</li>
+					 </div>
+					 <div class="col-md-5">
+					    <li class="list-group-item"><strong>Requirement Description</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.requirementDescription}}</li>
+					 </div>
+				</fieldset>
+				</div>    
+		<div class="col-md-8">
+		<fieldset class="well .scheduler-border"
+			style="width: 790px; height: auto; margin: 0px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+			<legend
+				style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+				align="left"> Candidate Details </legend>
+			
+				<!--  <div class="form-group col-md-6">
+					   <input type="text" placeholder="Search Here.." ng-model="searchText" class="form-control" id="search" style="margin-left: -14px;">
+					   </div> -->	
+			<div class="row"> 
+      	<div class="col-md-6 mb-4">
+      		<div class="row">    
+      			<div class="col-sm-6">
+			      Search By Category
+				     <select class="form-control" ng-model="searchcategory" style="border-radius:0">
+				      <option value="" selected>--Select --</option>
+				      <option value="candidateName">Candidate Name</option>
+					   <option value="totalExperience">Experience</option>
+					   <option value="email">Email</option>
+					   <option value="mobile">Mobile</option>
+				     </select>
+			      </div>
+      			<div class="col-sm-6">
+			       <input class="form-control"  type="search" ng-model="searchtext" placeholder="Search Here.." style="margin-top:21px;border-radius:0">
+			     <!--  <span class="glyphicon glyphicon-search"  style="
+			position: absolute;font-size: 17px; color: #337ab7;right: 22px;top: 31px;z-index: 10;cursor: pointer;"></span> -->
+			     </div>
+      		</div> 
+     	</div>
+       	<div class="col-md-6 mb-4">
+	      <div class="row">    
+	      	<div class="col-sm-4">
+			      Sort By
+			     <select class="form-control" ng-model="order" style="border-radius:0">
+			      <option value="" selected>Select</option>
+			     <option value="candidateName">Candidate Name</option>
+			     <option value="totalExperience">Experience</option>
+			     <option value="email">Email</option>
+			     <option value="mobile">Mobile</option>
+			     </select>
+		      </div>
+		      <div class="col-sm-4">
+		         Order By
+			     <select class="form-control"  ng-model="by" style="border-radius:0">
+			      <option value="" selected>Select</option>
+			     <option value="asc">Ascending</option>
+			     <option value="desc">Descending</option>
+			     </select>
+		      </div>
+		      <div class="col-sm-2 mt-4 pt-2">
+		      <button class="btn btn-primary btn-sm" ng-click="searchText()">Search</button> 
+		      </div>
+		        <div class="col-sm-2  mt-4 pt-2">
+		      <button class="btn btn-danger btn-sm" ng-click="clearText()">Reset</button> 
+		      </div>
+      		</div>   
+     </div>
+     <!-- <div class="col-md-2">
+      <p class="mt-5">Total Number of Records :
+      <strong class="text text-info">{{ListReqData.length}}</strong><p>
+      </div> --> 
+      <div class="col-md-12 mb-4">
+	      <div class="row">    
+	      	<div class="col-md-12 mt-4 pt-2">     
+		      <select class="form-control pull-right" ng-model="pageSize" style="width:65px;margin-bottom: 6px;">
+		      <option>10</option>
+		      <option>15</option>
+		      <option>20</option>
+		      <option>25</option>
+		      </select>
+		        <span style="margin-right: 8px; margin-top: 6px;"class="pull-right text text-info">Items per page{{totalCount}}</span>
+		  </div>
+      		</div>   
+     </div>    
+	       
+	      <!-- <div class="col-md-2 mt-4 pt-2">
+	    	<a href="#!/bdmreqdtls" class="btn btn-success btn-md right" style="margin-left: 70px;">Add Requirement</a> 	
+	   	 </div> -->
+     </div>									
+	<table class="table">
+    <thead>
+      <tr>
+        	<th class="text-left">Name</th>
+         	<th class="text-left">Experience</th>
+          	<th class="text-left">Email</th>
+          	<th class="text-left">Mobile</th>
+	        <th class="text-left">View</th>
+	        <th class="text-left">Map to Requirement</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr  ng-repeat="candidateDetails in candidateData|filter:test">      
+        <td class="text-left">{{candidateDetails.candidateName}}</td>
+        <td class="text-left">{{candidateDetails.totalExperience}}</td>
+        <td class="text-left">{{candidateDetails.email}}</td>
+         <td class="text-left">{{candidateDetails.mobile}}</td>
+        <td><button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal" ng-click="canDetails(candidateDetails)">View</button></td>
+        <td><button type="button" class="btn btn-success btn-xs " ng-click="mapToRequirement(candidateDetails)">Map</button> 
+			</td>
+      </tr>
+    </tbody>
+  </table>
+  <center><b>{{noData}}</b></center>
+  	<div class="row">  
+      <div class="col-md-12 ">
+      	<div class="float-right">
+		 	<ul uib-pagination total-items="totalCount" max-size="maxSize" items-per-page="pageSizeSelected" boundary-links="true" rotate="false" 
+		 	num-pages="numPages" direction-links="true" ng-model="pageIndex" ng-change="pageChanged()"></ul>
+      	</div>	     		
+     	</div>
+     </div>					
+	</div>
+	</fieldset>
+	</div>   
+			
+			<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+           <h4 class="modal-title">Candidate Details</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+       
+        </div>
+        <div class="modal-body">
+          <div class="row">
+      <div class="col-sm-5"><strong>Candidate Name :</strong></div>
+       <div class="col-sm-5">{{datails.firstName}}{{datails.lastName}}</div>
+        </div><br>
+        <div class="row">
+      <div class="col-sm-5"><strong>Total Experience :</strong></div>
+       <div class="col-sm-5">{{datails.totalExperience}}</div>
+        </div><br>
+         <div class="row">
+      <div class="col-sm-5"><strong>Relevant Experience :</strong></div>
+       <div class="col-sm-5">{{datails.relevantExperience}}</div>
+        </div><br>
+         <div class="row">
+      <div class="col-sm-5"><strong>Current CTC :</strong></div>
+       <div class="col-sm-5">{{datails.currentCTC}}</div>
+        </div><br>
+        <div class="row">
+      <div class="col-sm-5"><strong>Excepted CTC :</strong></div>
+       <div class="col-sm-5">{{datails.expectedCTC}}</div>
+        </div><br>
+         <div class="row">
+      <div class="col-sm-5"><strong>Candidate Source :</strong></div>
+       <div class="col-sm-5">{{datails.candidateSource}}</div>
+        </div><br>
+        <div class="row">
+      <div class="col-sm-5"><strong>Certificates :</strong></div>
+       <div class="col-sm-5"><span ng-repeat='x in datails.certificates'>{{x.certificationName}}</span></div>
+        </div><br>
+         <div class="row">
+      <div class="col-sm-5"><strong>Education :</strong></div>
+       <div class="col-sm-5"><span ng-repeat='xx in datails.education'>{{xx.qualificationName}}</span></div>
+        </div><br>
+         <div class="row">
+      <div class="col-sm-5"><strong>Skills :</strong></div>
+       <div class="col-sm-5"><span ng-repeat='xx in datails.skills'>{{xx.skillName}}</span></div>
+        </div><br>
+          <div class="row">
+      <div class="col-sm-5"><strong>Email :</strong></div>
+       <div class="col-sm-5">{{datails.email}}</div>
+        </div><br>
+        <div class="row">
+      <div class="col-sm-5"><strong>Mobile Number :</strong></div>
+       <div class="col-sm-5">{{datails.mobile}}</div>
+        </div><br>
+         <div class="row">
+      <div class="col-sm-5"><strong>PAN card Number :</strong></div>
+       <div class="col-sm-5">{{datails.pancardNumber}}</div>
+        </div><br>
+         <div class="row">
+      <div class="col-sm-5"><strong>Salary Negotiable :</strong></div>
+       <div class="col-sm-5">{{datails.salaryNegotiable}}</div>
+        </div><br>
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  	
+	</div>
+	
+	
+
+ 

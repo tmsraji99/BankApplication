@@ -1,0 +1,146 @@
+<style>
+.mb-1, .text-gray-800 {
+	margin-left: 20px;
+}
+
+.col-auto {
+	margin-right: 10px;
+}
+</style>
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>
+					<i class="fa fa-fw fa-dashboard"></i>Dashboard
+				</h3>
+			</li>
+		</ol>
+
+
+
+
+		<!-- Page Wrapper -->
+		<div id="wrapper">
+
+
+			<!-- End of Sidebar -->
+
+			<!-- Content Wrapper -->
+			<div id="content-wrapper" class="d-flex flex-column">
+
+				<!-- Main Content -->
+				<div id="content">
+
+					<!-- End of Topbar -->
+
+					<!-- Begin Page Content -->
+
+					<uib-tabset active="activeJustified" justified="true">
+					<uib-tab index="0" heading="Quality Reports" class="tabbtnnav">
+
+					<h3 class="mx-5">Quality Charts</h3>
+					<div class="row m-5">
+						<fieldset>
+							<div class="col-md-6">
+								<fieldset>
+									Report Type : <select class="form-control"
+										ng-change="reportListChangeFun(reptList)" ng-model="reptList">
+										<option value="" selected ng-disabled="true">-Select-</option>
+										<option ng-repeat="rList in reportList" value="{{rList}}">{{rList}}</option>
+									</select>
+								</fieldset>
+							</div>
+							<div class="col-md-6">
+								<fieldset>
+									Recruiter Type : <select class="form-control"
+										ng-change="recuiterChangeFun(recuiterList)"
+										ng-model="recuiterList">
+										<option value="" selected ng-disabled="true">-Select-</option>
+										<option value='recuriter'>Recruiter</option>
+										<option value='lead'>Lead</option>
+										<option value='AM'>AM</option>
+									</select>
+								</fieldset>
+							</div>
+							<div class="col-md-6" style="margin:10px 0px">
+								<fieldset>
+									<div class="form-group" ng-if="reptList == 'day'">
+										<input type="date" id="datesss" ng-model="day"
+											class="form-control" ng-change="dateChanges(day)">
+									</div>
+									<div class="form-group" ng-if="reptList == 'month'">
+										<input type="month" id="months" ng-model="month"
+											class="form-control" ng-change="dateChanges(month)">
+									</div>
+									<div class="form-group" ng-if="reptList == 'year'">
+										<input type="year" ng-model="year" class="form-control"
+											placeholder="YYYY" ng-change="dateChanges(year)">
+									</div>
+
+								</fieldset>
+							</div>
+							<div class="col-md-6" style="margin:10px 0px">
+								<fieldset>
+									<div class="form-group" ng-if="recuiterList == 'recuriter'">
+									<!-- 	<select class="form-control" ng-model="recruiList"
+											id="recruitesList">
+											<option value="" selected ng-disabled="true">-Select-</option>
+											<option ng-repeat="rList in indrecruiters"
+												value="{{rList.id}}">{{rList.fullNameOfUser}}</option>
+										</select> -->
+										<div class="row-fluid">
+										    <ui-select ng-model="recruiList" theme="select2" title="" style="width:598px">
+										        <ui-select-match placeholder="Select recuiter List...">{{$select.selected.fullNameOfUser}}</ui-select-match>
+										        <ui-select-choices repeat="rList in indrecruiters | filter: $select.search">
+										            <span ng-bind-html="rList.fullNameOfUser | highlight: $select.search"></span>
+										        </ui-select-choices>
+										    </ui-select>
+										</div>
+									</div>
+									<div class="form-group" ng-if="recuiterList == 'lead'">
+<!-- 
+										<select class="form-control" ng-model="recruiList"
+											id="recruitesList" ng-change="dateChanges(recruiList)">
+											<option value="" selected ng-disabled="true">-Select-</option>
+											<option ng-repeat="rList in indrecruiters"
+												value="{{rList.id}}">{{rList.fullNameOfUser}}</option>
+										</select> -->
+										<div class="row-fluid">
+										    <ui-select ng-model="recruiList" theme="select2" title="" style="width:598px">
+										        <ui-select-match placeholder="Select recuiter List...">{{$select.selected.fullNameOfUser}}</ui-select-match>
+										        <ui-select-choices repeat="rList in indrecruiters | filter: $select.search">
+										            <span ng-bind-html="rList.fullNameOfUser | highlight: $select.search"></span>
+										        </ui-select-choices>
+										    </ui-select>
+										</div>
+									</div>
+								</fieldset>
+							</div>
+							<div class="col-md-3">
+								<button class="btn btn-success btn-md right"
+									ng-click="getSubmissionsVsRejectionsByReportType(reptList,day,month,year)">Generate
+									Report</button>
+							</div>
+						</fieldset>
+					</div>
+					<div class="row  mx-3">
+						<div class="col-sm-6">
+							<img src="data:image/png;base64, {{encodedData}}" />
+						</div>
+						<div class="col-sm-6">
+							<img src="data:image/png;base64, {{subvsclosures}}" />
+						</div>
+					</div>
+					<div class="row  mx-3">
+						<div class="col-sm-6">
+							<img src="data:image/png;base64, {{closuresvsJoinings}}" />
+						</div>
+						<div class="col-sm-6">
+							<img
+								src="data:image/png;base64, {{submissionsVsRejectionsByReportTypeList}}" />
+						</div>
+					</div>
+					</uib-tab> </uib-tabset>

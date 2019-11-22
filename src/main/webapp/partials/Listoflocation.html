@@ -1,0 +1,117 @@
+
+<<<<<<< .mine
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="../css/style.css">
+ <script src="../js/angular.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+
+
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script src="../js/jquery.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="../css/style.css">
+ <script src="../js/angular.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+
+
+<script type='text/javascript'>
+$(document).ready(function(){
+$(function () {
+    $("table#rec_List").on("click", ".remove", function () {
+        $(this).closest('tr').remove();
+    });
+});
+$(function () {
+    $(".show_tip").tooltip({
+        container: 'body'
+    });
+});
+$(document).click(function () {
+    $('.tooltip').remove();
+    $('[title]').tooltip();
+});
+});
+</script>
+
+
+<div ng-include=" 'header&footer.html' "></div>
+<div class="container">
+	<h3>Location</h3>
+	<table  class="table table-bordered" id="rec_List">
+		<thead>
+		<tr>
+			<th>Country</th>
+			<th>State</th>
+			<th>City</th>
+			<th></th>
+			<th></th>
+		</tr>
+		<thead>
+		<tbody>
+			<tr>
+				<td>India</td>
+				<td>Telangana</td>
+				<td>Hyderabad</td>
+				<td><a  data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil fa-1x"></td>
+				<td> <button title="" type="button" class="btn btn-danger remove show_tip" data-original-title="Remove from list">
+            <i class="fa fa-trash-o"></i>
+          </button></td>
+			</tr>
+			<tr>
+				<td>India</td>
+				<td>Telangana</td>
+				<td>Hyderabad</td>
+				<td><a  data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil fa-1x"></td>
+				<td> <button title="" type="button" class="btn btn-danger remove show_tip" data-original-title="Remove from list">
+            <i class="fa fa-trash-o"></i>
+          </button></td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	<!--modal-->
+	 <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+   
+      
+      <div class="modal-content">
+        <div class="modal-header">
+		<button type="button" data-dismiss="modal" class="close">&times;</button>
+		<h4>Edit Location:</h4>
+         </div>
+         
+      
+        <div class="modal-body">
+		<form class="form-horizontal">
+		<div class="form-group">
+		<label class="control-label col-sm-4" for="role">Country:</label>
+		<div class="col-sm-6">
+		<input class="form-control" type="text" placeholder="enter your name" id="name" ></input>
+		</div>
+		</div>
+		<div class="form-group">
+		<label class="control-label col-sm-4" for="role">State:</label>
+		<div class="col-sm-6">
+		<input class="form-control" type="text" placeholder="enter your name" id="name" ></input>
+		</div>
+		</div>
+		<div class="form-group">
+		<label class="control-label col-sm-4" for="role">City:</label>
+		<div class="col-sm-6">
+		<input class="form-control" type="text" placeholder="enter your name" id="name" ></input>
+		</div>
+		</div>
+		</form>
+        </div>
+        <div class="modal-footer">
+		<button class="btn btn-success pull-left"data-dismiss="modal" >Update</button>
+          <button class="btn btn-danger pull-right"data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+      </div>
+	  </div>

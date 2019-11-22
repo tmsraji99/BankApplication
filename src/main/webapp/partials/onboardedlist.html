@@ -1,0 +1,526 @@
+<div ng-show="isLoading" class="Applicationloader">
+	<img src="images/rpoloader.gif">
+</div>
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;">
+
+		<!-- new existin code here -->
+		<!-- Breadcrumbs-->
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>
+					<i class="fa fa-envelope" aria-hidden="true"></i> &nbsp;On Boarded List
+				</h3>
+			</li>
+
+		</ol>
+
+		<div class="row">
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-sm-6">
+						Search By Category <select class="form-control"
+							ng-model="searchcategory" style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="clientName">Client Name</option>
+							<option value="candidateName">Candidate Name</option>
+							<option value="candidateStatus">Candidate Status</option>
+							<option value="nameOfTheReq">Requirement Name</option>
+							<option value="nameOftheRecruiter">Recruiter Name</option>
+						</select>
+					</div>
+					<div class="col-sm-6 ">
+						<input class="form-control" type="search" ng-model="searchtext"
+							placeholder="Search Here.."
+							style="margin-top: 21px; border-radius: 0">
+						<!-- <span class="glyphicon glyphicon-search" ng-click="searchsub(searchitem)"  style="
+position: absolute;font-size: 17px; color: #337ab7;right: 22px;top: 31px;z-index: 10;cursor: pointer;"></span> -->
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-sm-4">
+						Sort By <select class="form-control" ng-model="order"
+							style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="clientName">Client Name</option>
+							<option value="candidateName">Candidate Name</option>
+							<option value="candidateStatus">Candidate Status</option>
+							<option value="nameOfTheReq">Requirement Name</option>
+							<option value="nameOftheRecruiter">Recruiter Name</option>
+						</select>
+					</div>
+					<div class="col-sm-4">
+						<!--    <input class="form-control"  type="search" ng-model="searchitem.searchtext" placeholder="Search Here.." style="margin-top:21px;border-radius:0">
+      <span class="glyphicon glyphicon-search" ng-click="searchsub(searchitem)"  style="
+position: absolute;font-size: 17px; color: #337ab7;right: 22px;top: 31px;z-index: 10;cursor: pointer;"></span> -->
+						Order By <select class="form-control" ng-model="by"
+							style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="asc">Ascending</option>
+							<option value="desc">Descending</option>
+						</select>
+					</div>
+					<div class="col-sm-2 mt-4 pt-2">
+						<button class="btn btn-primary btn-sm" ng-click="searchText()">Search</button>
+					</div>
+					<div class="col-sm-2 mt-4 pt-2">
+						<button class="btn btn-danger btn-sm" ng-click="clearText()">Reset</button>
+					</div>
+				</div>
+
+
+			</div>
+			<!--      <div class="col-md-2">
+      <p class="mt-5">Total Number of Records :
+      <strong class="text text-info">{{candidatelist.length}}</strong><p>
+      </div> -->
+
+			<div class="col-md-4 mt-4 pt-2">
+
+				<select class="form-control pull-right" ng-model="pageSize"
+					style="width: 65px; margin-bottom: 6px;">
+					<option>10</option>
+					<option>15</option>
+					<option>20</option>
+					<option>25</option>
+				</select> <span style="margin-right: 8px; margin-top: 6px;"
+					class="pull-right text text-info">Items per
+					page{{totalCount}}</span>
+			</div>
+
+		</div>
+		<table class="table table-hover datatable" id="CandidateSubmissions"
+			ui-jq="dataTable" ui-options="dataTableOpt">
+			<thead>
+				<tr>
+					<th class="text-left" ng-click="sortData('candidateid')">Candidate
+						Id
+						<div ng-class="getSortClass('candidateid')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('candidateName')">Candidate
+						Name
+						<div ng-class="getSortClass('candidateName')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('bdmReqId')">Requirement
+						Id
+						<div ng-class="getSortClass('bdmReqId')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('nameOfTheReq')">Requirement
+						Name
+						<div ng-class="getSortClass('nameOfTheReq')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('clientName')">Client
+						Name
+						<div ng-class="getSortClass('clientName')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('nameOftheRecruiter')">Recruiter
+						<div ng-class="getSortClass('nameOftheRecruiter')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('candidateSubmitionDate')">Submission
+						Date
+						<div ng-class="getSortClass('candidateSubmitionDate')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('lastUpdatedDate')">Last
+						Updated Date
+						<div ng-class="getSortClass('lastUpdatedDate')"></div>
+					</th>
+
+					<th class="text-left" ng-click="sortData('candidateStatus')">Candidate
+						Status
+						<div ng-class="getSortClass('candidateStatus')"></div>
+					</th>
+					 <th class="text-left" ng-click="sortData('typeOfHiring')">
+						typeOfHiring
+						<div ng-class="getSortClass('typeOfHiring')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('ctc')">
+						CTC
+						<div ng-class="getSortClass('ctc')"></div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr dir-paginate="list in onboardedlist|filter:test|itemsPerPage:pageSize|orderBy:sortColumn:reverseSort">
+					<td class="text-left"><a data-toggle="modal"
+						data-target="#view" title="View Candidate"
+						ng-click="viewInfo(list)" style="color: blue; cursor: pointer;">{{list.candidateid}}</a></td>
+					<td class="text-left">{{list.candidateName}}</td>
+					<td class="text-left"><a data-toggle="modal"
+						data-target="#viewRequriement" title="View Requirement"
+						ng-click="viewReqInfo(list)" style="color: blue; cursor: pointer;">{{list.bdmReqId}}</a></td>
+					<td class="text-left">{{list.nameOfTheReq}}</td>
+					<td class="text-left">{{list.clientName}}</td>
+					<td class="text-left">{{list.nameOftheRecruiter}}</td>
+					<td class="text-left">{{list.candidateSubmitionDate |
+						date:"dd-MM-yyyy"}}</td>
+					<td class="text-left">{{list.lastUpdatedDate |
+						date:"dd-MM-yyyy"}}</td>
+					<td class="text-left">{{list.candidateStatus }}</td>
+					<td class="text-left">{{list.typeOfHiring}}</td>
+						<td class="text-left">{{list.ctc}}</td>
+				</tr>
+			</tbody>
+		</table>
+			<div class="col-md-12 text-center">
+			<b>{{noData}}</b>
+		</div>
+
+		<div class="col-md-12" ng-show="onboardedlist.length>0">
+			<div class="float-right">
+				<ul uib-pagination total-items="totalCount" max-size="maxSize"
+					items-per-page="pageSizeSelected" boundary-links="true"
+					rotate="false" num-pages="numPages" direction-links="true"
+					ng-model="pageIndex" ng-change="pageChanged()"></ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- View  Candidate Info  -->
+<div class="modal fade" id="view" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">View Candidate Details:</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="col-md-12">
+						<div class="row">
+								<div class="col-sm-6">
+									<label>Applied as A:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.applyingAs}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Applied Position For:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.appliedPossitionFor}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Candidate Id:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.id}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Candidate Name:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.firstName}}&nbsp;&nbsp;{{candidatelist1.lastName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Candidate Source:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.candidateSource}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Email:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.email}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Alternate Email:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.altenateEmail}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Mobile:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.mobile}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Alternate Mobile:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.alternateMobile}}</div>
+							</div>
+							<!-- <div class="row">
+								<div class="col-sm-6">
+									<label>Related Requirement:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.bdmReq.nameOfRequirement}}</div>
+							</div> -->
+							<!-- <div class="row">
+								<div class="col-sm-6">
+									<label>Related Client:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.client.clientName}}</div>
+							</div> -->
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Total Experience:(Yrs)</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.totalExperience +"years"+"-"+ candidatelist1.noOfMonths +"months"}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Relevant Experience:(Yrs)</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.relevantExperience}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Current CTC:(PA)</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.currentCTC}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Expected CTC:(PA)</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.expectedCTC}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Salary Negotiable:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.salaryNegotiable}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Notice Period:(Days)</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.noticePeriod}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Address:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.address}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>City:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.city}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>State:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.state}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Country:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.country}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Pincode:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.pincode}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Willing to Relocate:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.willingtoRelocate}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Current Location:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.currentLocation}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Preferred Location:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.location.locationName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Skype ID:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.skypeID}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Current Job Type:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.currentJobType}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>PayRoll Company Name:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.payRollCompanyName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Current Company Name:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.currentCompanyName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>PAN CARD Number:</label>
+								</div>
+								<div class="col-lg-6">{{candidatelist1.pancardNumber}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Education:</label>
+								</div>
+								<div class="col-lg-6">
+									<ol>
+										<li ng-repeat="ca in candidatelist1.education">{{ca.qualificationName}}</li>
+									</ol>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Skills:</label>
+								</div>
+								<div class="col-lg-6">
+									<ol>
+										<li ng-repeat="candi in candidatelist1.skills">{{candi.skillName}}</li>
+									</ol>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Certificate Name:</label>
+								</div>
+								<div class="col-lg-6">
+									<ol>
+										<li ng-repeat="candidat in candidatelist1.certificates">{{candidat.certificationName}}</li>
+									</ol>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="modal-footer">
+									<button class="btn btn-info pull-right" data-dismiss="modal">OK</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- View  Candidate Info End -->
+			<!-- View  Requirement  start -->
+		<div class="modal fade" id="viewRequriement" role="dialog">
+			<div class="modal-dialog" ng-init="getReqByReqId();">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">View Requirement Details:</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<div class="col-md-12">
+							<div class="row">
+
+								<div class="col-sm-6">
+									<label>Customer Name:</label>
+								</div>
+								<div class="col-lg-6">{{reqDetails.client.clientName}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Name Of Requirement:</label>
+								</div>
+								<div class="col-lg-6">{{reqDetails.nameOfRequirement}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Skills:</label>
+								</div>
+								<div class="col-lg-6">
+									<span ng-repeat="y in skills">{{y.skillName}}</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Relevant Experience:</label>
+								</div>
+								<div class="col-lg-6">{{reqDetails.relavantExperience}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Min Budget:</label>
+								</div>
+								<div class="col-lg-6">{{reqDetails.minBudgetRate |
+									currency:"₹ "}}</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									<label>Max Budget</label>
+								</div>
+								<div class="col-lg-6">{{reqDetails.maxBudgetRate |
+									currency:"₹ "}}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Type Of Hiring:</label>
+								</div>
+								<div class="col-md-6">{{reqDetails.typeOfHiring}}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Job Location:</label>
+								</div>
+								<div class="col-md-6">
+									<span ng-repeat="location in locations">{{location.locationName}},</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Qualification Name:</label>
+								</div>
+								<div class="col-md-6">
+									<span ng-repeat="e in qualifications">{{e.qualificationName}},
+									</span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Roles:</label>
+								</div>
+								<div class="col-md-6">
+									<span ng-repeat="o in designations">{{o.designation}}, </span>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Number Of Positions</label>
+								</div>
+								<div class="col-md-6">{{reqDetails.numberOfPositions}}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Requirement Description:</label>
+								</div>
+								<div class="col-md-6">{{reqDetails.requirementDescription}}</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label>Job Description:</label>
+								</div>
+								<div class="col-md-6">{{reqDetails.jobDes}}</div>
+							</div>
+							<div class="form-group">
+								<div class="modal-footer">
+									<button class="btn btn-info pull-right" data-dismiss="modal">OK</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- View  Requirement  end -->

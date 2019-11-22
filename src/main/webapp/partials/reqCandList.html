@@ -1,0 +1,144 @@
+<!-- <div ng-show="isLoading" class="Applicationloader">
+     <img  src="images/rpoloader.gif">
+  </div> -->
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>Requested Candidates List</h3>
+			</li>
+		</ol>
+		<div class="row">
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-sm-6">
+						Search By Category <select class="form-control"
+							ng-model="searchcategory" style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="clientName">Client Name</option>
+							<option value="nameOfRequirement">Requirement Name</option>
+							<option value="contactName">SPOC Name</option>
+							<option value="email">Email</option>
+							<option value="mobile">Mobile</option>
+						</select>
+					</div>
+					<div class="col-sm-6">
+						<input class="form-control" type="search" ng-model="searchtext"
+							placeholder="Search Here.."
+							style="margin-top: 21px; border-radius: 0">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-sm-4">
+						Sort By <select class="form-control" ng-model="sortingOrder"
+							style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="clientName">Client Name</option>
+							<option value="nameOfRequirement">Requirement Name</option>
+							<option value="contactName">SPOC Name</option>
+							<option value="email">Email</option>
+							<option value="mobile">Mobile</option>
+						</select>
+					</div>
+					<div class="col-sm-4">
+						Order By <select class="form-control" ng-model="sortingField"
+							style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="asc">Ascending</option>
+							<option value="desc">Descending</option>
+						</select>
+					</div>
+					<div class="col-sm-2 mt-4 pt-2">
+						<button class="btn btn-primary btn-sm" ng-click="searchText()">Search</button>
+					</div>
+					<div class="col-sm-2  mt-4 pt-2">
+						<button class="btn btn-danger btn-sm" ng-click="clearText()">Reset</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-md-6 mt-4 pt-2">
+						<select class="form-control pull-right" ng-model="pageSize"
+							style="width: 65px; margin-bottom: 6px;">
+							<option>10</option>
+							<option>15</option>
+							<option>20</option>
+							<option>25</option>
+						</select> <span style="margin-right: 8px; margin-top: 6px;"
+							class="pull-right text text-info">Items per page
+							{{totalCount}}</span>
+					</div>
+					<!--  <div class="col-md-6 mt-4 pt-2">
+						<a class="btn btn-default btn btn-primary btn-xs"
+							href="#!/addCandidate">Add Candidate</a>
+					</div> -->
+				</div>
+			</div>
+
+
+		</div>
+		<table st-table="ListReqData" st-safe-src="rowCollection"
+			class="table">
+			<thead>
+				<tr>
+					<th class="text-left">Candidate Id</th>
+					<th class="text-left">Candidate Name</th>
+					<th class="text-left">Candidate Email</th>
+					<th class="text-left">Candidate Mobile</th>
+					<th class="text-left">Current Recruiter ID</th>
+					<th class="text-left">Current Recruiter Name</th>
+					<th class="text-left">Status</th>
+					<th class="text-left">Requested Date</th>
+					<th class="text-left">Requested User Id</th>
+					<th class="text-left">Requested Recruiter Name</th>			
+					<th class="text-left">Approve</th>
+					<th class="text-left">Reject </th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="x in reqcandidatelist|filter:test">
+					<td class="text-left">{{x.candidateId}}</td>
+					<td class="text-left">{{x.candidateName}}</td>
+					<td class="text-left">{{x.email}}</td>
+					<td class="text-left">{{x.mobile}}</td>
+					<td class="text-left">{{x.ownerUserId }}</td>
+					<td class="text-left">{{x.requestedRecuiterName}}</td>
+					<td class="text-left">{{x.requestStatus}}</td>
+					<td class="text-left">{{x.requestedDate|date:"dd-MM-yyyy"}}</td>
+					<td class="text-left">{{x.requestedUserId}}</td>					
+					<td class="text-left">{{x.ownerName}}</td>
+					<td class="text-left">
+					<span ng-show="(userId == x.ownerUserId && (x.requestStatus== 'Requested' || x.requestStatus== 'rejected'))">
+					<button class="btn btn-success btn-xs pull-center"  ng-click="approveCand(x.candidateId,x.ownerUserId,x.requestedUserId,x.id)">Approve</button>
+					</span>
+					<span ng-show="x.requestStatus=='approved'">Approved</span>
+					</td>				
+					<td>
+						<span ng-show="(userId == x.ownerUserId && x.requestStatus== 'Requested')">
+					<button class="btn btn-danger btn-xs pull-center"  ng-click="rejCand(x.candidateId,x.ownerUserId,x.requestedUserId,x.id)">Reject</button></span>
+					<span ng-show="x.requestStatus=='rejected'">Rejected</span>
+					</td>
+					
+					
+				</tr>
+			</tbody>
+		</table>
+		<div class="col-md-12 text-center">
+			<p><b>{{noData}}</b></p>
+		</div>
+		<div class="col-md-12" ng-show="reqcandidatelist.length>0">
+			<div class="float-right">
+				<ul uib-pagination total-items="totalCount" max-size="maxSize"
+					items-per-page="pageSizeSelected" boundary-links="true"
+					rotate="false" num-pages="numPages" direction-links="true"
+					ng-model="pageIndex" ng-change="pageChanged()"></ul>
+			</div>
+		</div>
+	</div>
+</div>

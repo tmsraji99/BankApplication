@@ -1,0 +1,261 @@
+
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"
+	rel="stylesheet"
+	integrity="sha384-hQpvDQiCJaD2H465dQfA717v7lu5qHWtDbWNPvaTJ0ID5xnPUlVXnKzq7b8YUkbN"
+	crossorigin="anonymous" />
+
+<!--dashboard container-->
+
+<!-- <nav class="navbar navbar-fixed-top navbar-default ng-hide" role="navigation" ng-show="initialized">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span> 
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Angular+Rest+SpringSecurity</a>
+			</div>
+
+			<div id="navbar-collapse" class="collapse navbar-collapse">
+				
+				<ul class="nav navbar-nav navbar-right">
+					
+						
+					
+					
+					<li class="dropdown" ng-show="user">
+						<a href="" class="dropdown-toggle" data-toggle="dropdown">{{user.name}} <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="" ng-click="logout()"><span class="fa fa-sign-out"></span> Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav> -->
+<div class="navbar  navbar-static-top"
+	style="background: linear-gradient(#eae38d, #3c80bb);">
+
+	<img class="navbar-brand" src="images\ojas-logo.png"
+		style="width: 150px; height: 100px">
+	<!-- <h2 class="navbar-brand pull-right">RPO</h4> -->
+	<ul class="nav navbar-nav navbar-right user">
+
+
+
+
+		<li class="dropdown" ng-show="user"><a href=""
+			class="dropdown-toggle" data-toggle="dropdown">{{user.name}} <b
+				class="caret"></b></a>
+			<ul class="dropdown-menu">
+				<li><a href="" ng-click="logout()"><i
+						class="fa fa-sign-out" aria-hidden="true">Logout</i> </a></li>
+			</ul></li>
+	</ul>
+</div>
+<!--footer-->
+<div class="navbar  navbar-fixed-bottom"
+	style="background: linear-gradient(#3b5c98, #3c80bb);">
+	<center style="color: white">&copy;2011-2016 Ojas Innovative
+		Technologies. All rights reserved.</center>
+</div>
+
+<div class="col-lg-2 sidebar">
+	<ul class="nav nav-sidebar">
+
+		<li><a href="#" style="background: #337ab7; color: white;"><i
+				class="fa fa-tachometer fa-2x pull-right" aria-hidden="true"></i>Dashboard</a></li>
+		<li><a href="#!/listOfUsers">Users <i
+				class="fa fa-user pull-right" aria-hidden="true"></i></a></li>
+
+		<!-- <li><a href="CandidateList.html">Candidates <i
+				class="fa fa-users pull-right" aria-hidden="true"></i></a></li>
+		<li><a href="requirements.html">Requirements<i
+				class="fa fa-object-group pull-right" aria-hidden="true"></i></a></li>
+		<li><a href="AddClient.html">Clients<i
+				class="fa fa-building  pull-right" aria-hidden="true"></i></a></li>
+		<li><a href="Assign.html">Assignments <i
+				class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li> -->
+
+
+		<li><a href="#!/addCandidate">Candidates <i
+				class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li>
+
+
+
+		<li><a href="#!/ListDesignation">Designation<i
+				class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li>
+
+		<li><a href="#!/listSkill">skill <i
+				class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li>
+		<li><a href="#!/InterviewModeList">Mode of Interview<i
+				class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li>
+
+
+		<li><a href="#!/Listcosttype">Cost Type <i
+				class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li>
+
+		<li><a href="#!/ListOfStatus">Status <i
+				class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li>
+		<li><a href="#!/ListOfCustomerType">CustomerType <i
+				class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li>
+		<li><a href="#!/ListOfNoticeperiod">Notice Period <i
+				class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li>
+
+
+
+		<!-- <li><a href="#!/listrole">roles <i class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li> -->
+
+		<li><a href="#!/listqualification">Qualification <i
+				class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li>
+		<li><a href="#!/certificateList">Certificates<i
+				class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li>
+
+		<li><a href="#!/typeAddList">Address Type<i
+				class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li>
+		<!-- <li><a href="#!/getclient">Client<i
+				class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li> -->
+
+		<li><a href="#!/getclient">Client<i
+				class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li>
+
+		<li><a href="#!/viewClientContact">Client Contact<i
+				class="fa fa-tasks pull-right" aria-hidden="true"></i></a></li>
+
+
+
+
+	</ul>
+</div>
+
+<div class="col-lg-10">
+	<div class="navbar navbar-default navbar-static-top">
+		<div class="container">
+			<div class="navbar-brand">Dashboard</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4 col-sm-4 col-xs-12 col-lg-3">
+			<div class="well" style="background-color: #A5A5A5;">
+
+				<span><i class="fa fa-user fa-2x"></i>Users</span>
+				<hr>
+				<span>1000+ Users</span>
+				<ul class="profile">
+					<li><a href="#!/users"><i class="fa fa-user-plus fa-2x"
+							aria-hidden="true"></i></a></li>
+
+					<li><a href="#!/listOfUsers"><i class="fa fa-eye fa-2x"
+							aria-hidden="true"></i></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-4 col-xs-12 col-lg-3">
+			<div class="well" style="background-color: #FF7F55;">
+				<span><i class="fa fa-server fa-2x" aria-hidden="true"></i>Hiring
+					Mode</span>
+				<hr>
+				<span>50+ Recruiters</span>
+				<ul class="profile">
+					<li><a href="recruitmentType_List.html"><i
+							class="fa fa-eye fa-2x" aria-hidden="true"></i>Visit</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-4 col-xs-12 col-lg-3">
+			<div class="well" style="background-color: #78CD4D;">
+				<span><i class="fa fa fa-users fa-2x" aria-hidden="true"></i>Candidates</span>
+				<hr>
+				<span>500+ Candidates</span>
+				<ul class="profile">
+					<li><a href="#!/addCandidate"><i
+							class="fa fa-user-plus fa-2x" aria-hidden="true"></i></a></li>
+
+					<li><a href="#!/CandidateList1"><i
+							class="fa fa-address-card-o fa-2x" aria-hidden="true"></i></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-4 col-xs-12 col-lg-3">
+			<label>Total Availability</label>
+			<canvas id="myCanvas" width="200" height="190"></canvas>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4 col-sm-4 col-xs-12 col-lg-3">
+			<div class="well" style="background-color: #67BCBC;">
+
+				<span><i class="fa fa-object-group fa-2x" aria-hidden="true"></i>Requirements</span>
+				<hr>
+				<span>100+ Requirements</span>
+				<ul class="profile">
+					<li><a href="requirements.html"><i
+							class="fa fa-user-plus fa-2x" aria-hidden="true"></i></a></li>
+
+					<li><a href="Acc manager- NewRequirement.html"><i
+							class="fa fa-address-card-o fa-2x" aria-hidden="true"></i></a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-4 col-xs-12 col-lg-3">
+			<div class="well" style="background-color: #D4D4FF">
+				<span><i class="fa fa-building fa-2x" aria-hidden="true"></i>Clients</span>
+				<hr>
+				<span>50+ clients</span>
+				<ul class="profile">
+					<li><a href="#!/addClient"><i
+							class="fa fa-user-plus fa-2x" aria-hidden="true"></i></a></li>
+
+					<li><a href="#!/getclient"><i class="fa fa-eye"
+							aria-hidden="true"></i>Visit</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-4 col-xs-12 col-lg-3">
+			<div class="well" style="background-color: #E3B8B8;">
+				<span><i class="fa fa-briefcase fa-2x" aria-hidden="true"></i></i>Assign
+					Work</span>
+				<hr>
+				<span>Team work</span>
+				<ul class="profile">
+					<li><a href="Assign.html"><i class="fa fa-user-plus fa-2x"
+							aria-hidden="true"></i></a></li>
+
+					<li><a href="Acc.Manager-AssignedWork.html"><i
+							class="fa fa-address-card-o fa-2x" aria-hidden="true"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function() {
+		var ctx = $('#myCanvas').get(0).getContext("2d");
+
+		var data = [ {
+			value : 1000,
+			color : "#A5A5A5",
+			indexLabel : "Users"
+		}, {
+			value : 150,
+			color : "#FF7F55",
+			label : "Recruiters"
+		}, {
+			value : 500,
+			color : "#78CD4D",
+			label : "Candidates"
+		}, {
+			value : 160,
+			color : "#67BCBC",
+			label : "Requirements"
+		}, {
+			value : 50,
+			color : "#D4D4FF",
+			indexLabel : "Clients"
+		} ];
+		var chart = new Chart(ctx).Pie(data);
+	});
+</script>

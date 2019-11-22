@@ -1,0 +1,220 @@
+<div ng-show="isLoading" class="Applicationloader">
+	<img src="images/rpoloader.gif">
+</div>
+<div ng-include=" 'partials/fotter.html' "></div>
+<div ng-include=" 'partials/header.html' "></div>
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;">
+		<ol class="breadcrumb">
+			<div class="col-md-8">
+				<h3>
+					<i class="fa fa-compress" aria-hidden="true"></i> Client-Contact
+					Information
+				</h3>
+			</div>
+			<!-- <div class="col-md-4">
+    	<ol class="breadcrumb">
+ 				<li><a href="#">Dashboard</a></li>
+  				<li><a href="#" class="active">Client-Contact Information</a></li>
+		</ol>
+    </div> -->
+		</ol>
+
+		<!--  <div class="row"> 
+      <div class="col-md-3">
+     <input class="form-control"  type="search" ng-model="test" placeholder="Search Here..">
+     </div>
+     <div class="col-md-3">
+      <p>Total Number of Records :
+      <strong class="text text-info">{{clientdata.length}}</strong><p>
+      </div>
+      
+       <div class="col-md-6">
+      
+      <select class="form-control pull-right" ng-model="pageSize" style="width:120px;margin-bottom: 6px;">
+      <option>10</option>
+      <option>15</option>
+      <option>20</option>
+      <option>25</option>
+      </select>
+        <span style="margin-right: 8px; margin-top: 6px;"class="pull-right text text-info">Items per page</span>
+      </div>
+     
+     </div> -->
+		<div class="row">
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-sm-6">
+						Search By Category <select class="form-control"
+							ng-model="searchcategory" style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="clientName">Client Name</option>
+							<option value="contactName">Contact Name</option>
+							<option value="mobile">Mobile Number</option>
+							<option value="email">Email Id</option>
+							
+						</select>
+					</div>
+					<div class="col-sm-6">
+						<input class="form-control" type="search" ng-model="searchtext"
+							placeholder="Search Here.."
+							style="margin-top: 21px; border-radius: 0">
+						<!-- <span class="glyphicon glyphicon-search" ng-click="searchclient(searchitem)" style="
+		position: absolute;font-size: 17px; color: #337ab7;right: 22px;top: 31px;z-index: 10;cursor: pointer;"></span> -->
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-sm-4">
+						Sort By <select class="form-control" ng-model="order"
+							style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="clientName">Client Name</option>
+							<option value="contactName">Contact Name</option>
+							<option value="mobile">Mobile Number</option>
+							<option value="email">Email Id</option>
+						</select>
+					</div>
+					<div class="col-sm-4">
+						<!--   <input class="form-control"  type="search" ng-model="searchitem.searchtext" placeholder="Search Here.." style="margin-top:21px;border-radius:0">
+      <span class="glyphicon glyphicon-search" ng-click="searchclient(searchitem)" style="
+position: absolute;font-size: 17px; color: #337ab7;right: 22px;top: 31px;z-index: 10;cursor: pointer;"></span> -->
+						Order By <select class="form-control" ng-model="by"
+							style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="asc">Ascending</option>
+							<option value="desc">Descending</option>
+						</select>
+					</div>
+					<div class="col-sm-2 mt-4 pt-2">
+						<button class="btn btn-primary btn-sm" ng-click="searchText()">Search</button>
+					</div>
+					<div class="col-sm-2  mt-4 pt-2">
+						<button class="btn btn-danger btn-sm" ng-click="clearText()">Reset</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mb-4 mt-4 pt-2">
+				<div class="col-sm-12 pr-0">
+					<!--  <p class="mt-5">Total Number of Records :
+      <strong class="text text-info">{{client1.length}}</strong><p>-->
+					<select class="form-control pull-right" ng-model="pageSize"
+						style="width: 120px; margin-bottom: 6px;">
+						<option>10</option>
+						<option>15</option>
+						<option>20</option>
+						<option>25</option>
+					</select> <span style="margin-right: 8px; margin-top: 6px;"
+						class="pull-right text text-info">Items per
+						page{{totalCount}}</span>
+				</div>
+				<!-- <div class="col-sm-4 pr-0"> 
+		       <a href="#!/client"  type="button"  class="btn btn-info btn-md">Add Customer</a>
+		      </div> -->
+			</div>
+		</div>
+		<table st-table="clientdata" st-safe-src="rowCollection" class="table">
+			<thead>
+				<tr>
+					<th class="text-left">Sr.No.</th>
+					<!-- <th class="text-left">Client Id</th> -->
+					<th class="text-left" ng-click="sortData('clientName')">Client Name<div  ng-class="getSortClass('clientName')"></div></th>
+					<th class="text-left"ng-click="sortData('contactName')">Contact Name<div  ng-class="getSortClass('contactName')"></div></th>
+					<th class="text-left" ng-click="sortData('email')">Email ID<div  ng-class="getSortClass('email')"></div></th>
+					<!-- <th class="text-left">Phone No</th> -->
+					<th class="text-left" ng-click="sortData('mobile')">Mobile No<div  ng-class="getSortClass('mobile')"></div></th>
+					<th class="text-left" ng-click="sortData('bdmName')">BDM<div  ng-class="getSortClass('bdmName')"></div></th>
+					<th class="text-left" ng-click="sortData('amName')">AM<div  ng-class="getSortClass('amName')"></div></th>
+					<th class="text-left" ng-click="sortData('leadName')">Lead<div  ng-class="getSortClass('leadName')"></div></th>
+					<th class="text-left" ng-click="sortData('lastUpdatedDate')">Last Updated On<div  ng-class="getSortClass('lastUpdatedDate')"></div></th>
+					<th class="text-left">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr
+					dir-paginate="value in clientdata |filter:test |itemsPerPage:pageSize|orderBy:sortColumn:reverseSort">
+					<td class="text-left">{{$index+1}}</td>
+					<!-- 				<td class="text-left">OJAS-CC-{{value.id}}</td>-->
+					<td class="text-left">{{value.clientName}}</td>
+					<td class="text-left">{{value.contactName}}</td>
+					<td class="text-left">{{value.email}}</td>
+					<!-- <td class="text-left">{{value.phone}}</td> -->
+					<td class="text-left">{{value.mobile}}</td>
+					<td class="text-left">{{value.bdmName}}</td>
+						<td class="text-left">{{value.amName}}</td>
+							<td class="text-left">{{value.leadName}}</td>
+								<td class="text-left">{{value.lastUpdatedDate | date:"dd-MM-yyyy"}}</td>
+							
+					<td class="text-left"><a href="{{getidURL}}"
+						ng-click="getListAddress(value.id)" style="color: green;"> <span
+							class="glyphicon glyphicon-pencil" title="click here to edit"></span></a></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="col-md-12 text-center">
+			<b>{{noData}}</b>
+		</div>
+	</div>
+
+	<div class="col-md-12">
+		<div class="float-right">
+			<ul uib-pagination total-items="totalCount" max-size="maxSize"
+				items-per-page="pageSizeSelected" boundary-links="true"
+				rotate="false" num-pages="numPages" direction-links="true"
+				ng-model="pageIndex" ng-change="pageChanged()"></ul>
+		</div>
+	</div>
+</div>
+</div>
+
+
+
+
+
+
+<!-- <div ng-include=" 'partials/fotter.html' "></div>
+<div ng-include=" 'partials/header.html' "></div>
+
+  <div class="content-wrapper">
+<div class="container list table-responsive panel panel-success" style="margin-top: 80px;"" >
+	<div class="panel-heading"><h4>Client-Contact Information
+	<input class="form-control col-md-4 pull-right" type="search" ng-model="test" placeholder="Search"></h4>
+	</div>
+
+	<div class="panel-body" style="padding:5px">
+	<table st-table="clientdata" st-safe-src="rowCollection" class="table table-striped">
+			<thead>
+				<tr>
+					<th st-sort="id">Client Id</th>
+					<th st-sort="client.clientName">Client Name</th>
+					<th st-sort="contact_Name">Contact Name</th>
+					<th st-sort="email">Email Id</th>
+					<th st-sort="phone">Phone No</th>
+					<th st-sort="mobile">Mobile No</th>
+			     	<th>Action</th>
+
+				</tr>
+				
+			</thead>
+			<tbody>
+				<tr dir-paginate="value in clientdata |filter:test |itemsPerPage:5">
+					<td>OJAS-CC-{{value.id}}</td>
+					<td>{{value.client.clientName}}</td>
+					<td>{{value.contact_Name}}</td>
+					<td>{{value.email}}</td>
+					<td>{{value.phone}}</td>
+					<td>{{value.mobile}}</td>
+					<td><a href="{{getidURL}}" ng-click="getListAddress(value.id)" style="color:#0645AD;">Edit</a></td>
+					</tr>
+			</tbody>
+		</table>
+	</div>
+	
+		<div class="panel-footer" >
+		<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+		 <button type="submit" class="btn btn-info btn-md" ng-click="redirect()"><span class="glyphicon glyphicon-home"></span> Home</button>
+		 <a href="#!/addClientContact"  type="button"  class="btn btn-info btn-md pull-center" ><span class="glyphicon glyphicon-plus"></span>Add</a>
+	</div>
+	</div>
+	</div> -->

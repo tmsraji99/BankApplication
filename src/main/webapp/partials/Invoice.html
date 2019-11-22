@@ -1,0 +1,132 @@
+
+
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+
+
+<div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Invoice Details</h3>
+        </li>
+      </ol>
+ </div>
+ <form name="interviewform" >
+ <div class="form-group col-lg-4">
+					<label for="company_name">Reqirement name</label> <input type="text"
+						ng-model="companyname" placeholder="Reqirement name"
+						class="form-control" ng-readonly="">
+
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="candidate_email">Candidate name</label> <input type="text"
+						ng-model="candidateemail" placeholder="Candidate name"
+						class="form-control" ng-readonly="">
+
+				</div>
+					<div class="form-group col-lg-4">
+					<label for="date">Invoice Date</label> <input type="text" ng-model="idate"
+						class="form-control" placeholder="dd/MM/yy"
+						ng-change="getDatefuns(idate)" value={{idate}} name="dates"
+						datepicker-popup="dd/MM/yy" datepicker-append-to-body="true" required/>
+                        <span style="color: red;"
+						ng-show="interviewform.dates.$dirty && interviewform.dates.$error.required">Please
+						enter date</span> 
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="company_total">Invoice amount:</label> <input type="text"
+						ng-model="total" placeholder="Invoice amount"
+						class="form-control" ng-readonly="">
+				</div>
+				
+				<div class="form-group col-lg-4">
+			<label for="candidate_name">Invoice Status</label>
+			<select class="form-control" ng-model="round">
+			<option value="" selected ng-disabled="true">select</option>
+             <option value="partialy">Partialy Raised</option>
+             <option value="completed">Completed</option>
+            
+     </select>
+		</div>	
+		
+		<div class="form-group col-lg-4" >
+				<a href="#!" class="btn btn-info btn-lg pull-right"
+								ng-click="saveInterviewSchedule()" style="margin-top: 30px;">Save</a>	
+									<a href="#!" class="btn btn-danger btn-lg pull-right" style="margin-top: 30px;    margin-right: 12px;">Reset</a>	
+		</div>
+				
+			</form>	
+ </div>   
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- 
+
+<div class="container">
+
+	<div class="panel panel-success">
+		<div class="panel-heading">
+			<label>Invoice Details:</label>
+		</div>
+	</div>
+	<form name="interviewform" >
+		
+		<div class="row" >
+		<div class="form-group col-lg-4">
+					<label for="company_name">Reqirement name</label> <input type="text"
+						ng-model="companyname" placeholder="Reqirement name"
+						class="form-control" ng-readonly="">
+
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="candidate_email">Candidate name</label> <input type="text"
+						ng-model="candidateemail" placeholder="Candidate name"
+						class="form-control" ng-readonly="">
+
+				</div>
+					<div class="form-group col-lg-4">
+					<label for="date">Invoice Date</label> <input type="text" ng-model="idate"
+						class="form-control" placeholder="dd/MM/yy"
+						ng-change="getDatefuns(idate)" value={{idate}} name="dates"
+						datepicker-popup="dd/MM/yy" datepicker-append-to-body="true" required/>
+                        <span style="color: red;"
+						ng-show="interviewform.dates.$dirty && interviewform.dates.$error.required">Please
+						enter date</span> 
+				</div>
+				<div class="form-group col-lg-4">
+					<label for="company_total">Invoice amount:</label> <input type="text"
+						ng-model="total" placeholder="Invoice amount"
+						class="form-control" ng-readonly="">
+				</div>
+				
+				<div class="form-group col-lg-4">
+			<label for="candidate_name">Invoice Status</label>
+			<select class="form-control" ng-model="round">
+			<option value="" selected ng-disabled="true">select</option>
+             <option value="partialy">Partialy Raised</option>
+             <option value="completed">Completed</option>
+            
+     </select>
+		</div>	
+   	
+	</div>
+<a href="#!" class="btn btn-info btn-lg pull-right"
+								ng-click="saveInterviewSchedule()">Save</a>
+
+	
+	
+</div>		
+ -->
+    

@@ -1,0 +1,502 @@
+<div ng-show="isLoading" class="Applicationloader">
+	<img src="images/rpoloader.gif">
+</div>
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;">
+
+
+		<ol class="breadcrumb">
+			<div class="col-md-9">
+				<h3>
+					<i class="fa fa-users" aria-hidden="true"></i> Customers
+				</h3>
+			</div>
+		</ol>
+
+		<div class="row">
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-sm-6">
+						Search By Category <select class="form-control"
+							ng-model="searchcategory" style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="clientName">Client Name</option>
+							<option value="customerType">Customer Type</option>
+							<option value="primaryContact">Primary Contact</option>
+							<option value="secondaryContact">Secondary Contact</option>
+
+						</select>
+					</div>
+					<div class="col-sm-6">
+						<input class="form-control" type="search" ng-model="searchtext"
+							placeholder="Search Here.."
+							style="margin-top: 21px; border-radius: 0">
+						<!--   <span class="glyphicon glyphicon-search" ng-click="searchclient(searchitem)" style="
+		position: absolute;font-size: 17px; color: #337ab7;right: 22px;top: 31px;z-index: 10;cursor: pointer;"></span> -->
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-sm-4">
+						Sort By <select class="form-control" ng-model="order"
+							style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="clientName">Client Name</option>
+							<option value="customerType">Customer Type</option>
+							<option value="primaryContact">Primary Contact</option>
+							<option value="secondaryContact">Secondary Contact</option>
+						</select>
+					</div>
+					<div class="col-sm-4">
+						<!--   <input class="form-control"  type="search" ng-model="searchitem.searchtext" placeholder="Search Here.." style="margin-top:21px;border-radius:0">
+      <span class="glyphicon glyphicon-search" ng-click="searchclient(searchitem)" style="
+position: absolute;font-size: 17px; color: #337ab7;right: 22px;top: 31px;z-index: 10;cursor: pointer;"></span> -->
+						Order By <select class="form-control" ng-model="by"
+							style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="asc">Ascending</option>
+							<option value="desc">Descending</option>
+						</select>
+					</div>
+					<div class="col-sm-2 mt-4 pt-2">
+						<button class="btn btn-primary btn-sm" ng-click="searchText()">Search</button>
+					</div>
+					<div class="col-sm-2  mt-4 pt-2">
+						<button class="btn btn-danger btn-sm" ng-click="clearText()">Reset</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mb-4 mt-4 pt-2">
+				<div class="row">
+					<div class="col-sm-8 pr-0">
+						<!--  <p class="mt-5">Total Number of Records :
+      <strong class="text text-info">{{client1.length}}</strong><p>-->
+						<select class="form-control pull-right" ng-model="pageSize"
+							style="width: 65px; margin-bottom: 6px;">
+							<option>10</option>
+							<option>15</option>
+							<option>20</option>
+							<option>25</option>
+						</select> <span style="margin-right: 8px; margin-top: 6px;"
+							class="pull-right text text-info">Items per page</span>
+					</div>
+					<div class="col-sm-4 pr-0">
+						<a href="#!/client" type="button" class="btn btn-info btn-sm">Add
+							Customer</a>{{totalCount}}
+					</div>
+				</div>
+			</div>
+		</div>
+		<table class="table" style="background: white">
+			<thead>
+				<th class="text-left" ng-click="sortData('id')">Client Id
+					<div ng-class="getSortClass('id')"></div>
+				</th>
+				<th class="text-left">Expand/Close</th>
+				<th class="text-left" ng-click="sortData('clientName')">Customer
+					Name
+					<div ng-class="getSortClass('clientName')"></div>
+				</th>
+				<th class="text-left" ng-click="sortData('customerType')">Customer
+					Type
+					<div ng-class="getSortClass('customerType')"></div>
+				</th>
+				<th class="text-left" ng-click="sortData('startDate')">Empanelment
+					Date
+					<div ng-class="getSortClass('startDate')"></div>
+				</th>
+				<th class="text-left" ng-click="sortData('lastUpdatedDate')">Last
+					Updated On
+					<div ng-class="getSortClass('lastUpdatedDate')"></div>
+				</th>
+				<th>Edit</th>
+				<th class="text-center">Add Contact</th>
+			</thead>
+			<tbody>
+				<tr
+					ng-repeat-start="x in client1|filter:test|itemsPerPage:pageSize|orderBy:sortColumn:reverseSort">
+					<td class="text-left">{{x.id}}</td>
+					<td class="text-left">
+						<button class='btn btn-danger' ng-if="x.expanded"
+							ng-click="x.expanded = false">-</button>
+						<button class='btn btn-success' ng-if="!x.expanded"
+							ng-click="expandSelected(x)">+</button>
+					</td>
+					<td class="text-left">{{x.clientName}}</td>
+					<td class="text-left">{{x.customerType}}</td>
+					<td class="text-left">{{x.startDate | date:"dd-MM-yyyy"}}</td>
+					<td class="text-left">{{x.lastUpdatedDate| date:"dd-MM-yyyy"}}</td>
+					<!-- <td class="text-left">{{x.leadName}}</td> -->
+					<td class="text-left"><a href={{urlForEdit}}
+						ng-click="editClientfun(x)"> <span
+							class="glyphicon glyphicon-pencil" style="color: green"></span></a></td>
+					<td><a href="#!addClientContact" type="button"
+						class="btn btn-info pull-center" ng-click="addclientfun(x)"><span
+							class="glyphicon glyphicon-plus" title="Contact  Person"></span></a></td>
+
+				</tr>
+
+				<tr ng-if="x.expanded" ng-repeat-end="">
+					<td colspan="10">
+						<div class="col-md-offset-3 col-md-5">
+							<h4 style="color: red" ng-show="!flag">No Requirement Found</h4>
+						</div>
+						<div class="col-md-4 mt-4">
+							<button ng-click="movetoRequirement(x.id,x.spocName)"
+								type="button" class="btn btn-primary btn-sm pull-right">Add
+								Requirement</button>
+						</div>
+						<div class="clearfix"></div>
+
+						<div class="col-md-4">
+							<!--   <input class="form-control input-sm" type="search" ng-model="searchReq" placeholder="Search"  ng-show="flag"> -->
+						</div>
+						<div class="col-md-4">
+							<h4 style="color: green;" ng-show="flag">Requirements
+								Details</h4>
+						</div>
+						<div class="col-md-4" ng-hide="!flag">
+							<ul uib-pagination total-items="totalCount" max-size="maxSize"
+								items-per-page="pageSizeSelected" boundary-links="true"
+								rotate="false" num-pages="numPages" direction-links="true"
+								ng-model="pageIndex" ng-change="pageChanged()"></ul>
+						</div>
+						<div class="clearfix"></div>
+
+						<table st-table="ListReqData" class="table table-hover bord"
+							ng-show="flag">
+							<thead style="font-size: 12px;">
+								<tr>
+									<th class="text-left">Req. Name</th>
+									<th class="text-left">Open Date</th>
+									<th class="text-left">Valid Up to</th>
+									<th class="text-left">SPOC</th>
+									<th class="text-left">Mobile</th>
+									<th class="text-left">Email</th>
+									<th class="text-left">Skills</th>
+									<th class="text-left">Status</th>
+									<th class="text-left">Location</th>
+									<th class="text-left">Action</th>
+									<th class="text-left">Assign to Recruiter</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr
+									dir-paginate="list in ListReqData|filter:searchReq|itemsPerPage:pageSize">
+									<td class="text-left">{{list.nameOfRequirement}}</td>
+									<td class="text-left">{{list.startDate|date:'dd-MM-yyyy'}}</td>
+									<td class="text-left">{{list.endDate|date:'dd-MM-yyyy'}}</td>
+									<td class="text-left">{{list.contact_Name}}</td>
+									<td class="text-left">{{list.mobile}}</td>
+									<td class="text-left">{{list.email}}</td>
+									<td class="text-left"><span ng-repeat="x in list.skills">
+											{{x.skillName}}, </span></td>
+									<td class="text-left"><span ng-if="list.status=='Open'"
+										style="color: green;">{{list.status}}</span> <span
+										ng-if="list.status=='Closed'" style="color: red;">{{list.status}}</span>
+									</td>
+									<td class="text-left">{{list.locationName}}</td>
+									<td class="text-left">&nbsp;&nbsp; <a href={{urlForEdit}}
+										ng-click="editFun(list)"> <span
+											class="glyphicon glyphicon-pencil" title="click here to edit"
+											style="color: green"></span></a>
+									</td>
+									<td class="text-left"><a href="#!/Assignlistwork"
+										class="btn btn-default  pull-center"
+										style="background-color: #D8E7A2;" ng-click="assignFun(list)">Assign</a>
+									</td>
+								</tr>
+
+
+
+							</tbody>
+						</table> <!--  <hr ng-show="flag">
+      <div class="col-md-2" ng-show="flag">
+      <p style="margin-right: 12px;"> Items Per Page</p>
+
+     <select style="width:120px" ng-model="id" ng-options="items.id as items.pageSize for items in options"  ng-click="pageSelected(id)"></select>
+      </div>
+      
+      <div class="col-md-10" ng-show="flag">
+      <dir-pagination-controls class="pull-right"></dir-pagination-controls>
+      </div> -->
+
+
+					</td>
+				</tr>
+			<tbody>
+		</table>
+		<div class="col-md-12 text-center">
+			<p>
+				<b>{{nodata}}</b>
+			</p>
+		</div>
+		<div class="col-md-12" ng-show="client1.length>0">
+			<div class="float-right">
+				<ul uib-pagination total-items="totalCount" max-size="maxSize"
+					items-per-page="pageSizeSelected" boundary-links="true"
+					rotate="false" num-pages="numPages" direction-links="true"
+					ng-model="pageIndex" ng-change="pageChanged()"></ul>
+			</div>
+		</div>
+	</div>
+	<div></div>
+</div>
+
+
+
+</div>
+</div>
+
+
+<div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<h4>Address Details</h4>
+				<button type="button" data-dismiss="modal" class="close">&times;</button>
+
+			</div>
+
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="form-group">
+
+						<div
+							style="width: 45%; height: auto; line-height: 3em; overflow: auto; margin: 10px; padding: 5px; border: 1px ridge #000; float: right;">
+							<div class="table-responsive">
+								<table class="table">
+									<center>
+										<label>{{addressdetails[1].typeOfAddress}} Address</label>
+									</center>
+									<tbody>
+										<tr>
+											<td>Country:</td>
+											<td>{{addressdetails[1].country}}</td>
+										</tr>
+										<tr>
+											<td>State:</td>
+											<td>{{addressdetails[1].state}}</td>
+										</tr>
+										<tr>
+											<td>District:</td>
+											<td>{{addressdetails[1].city}}</td>
+										</tr>
+										<tr>
+											<td>City:</td>
+											<td>{{addressdetails[1].addressLane1}}</td>
+										</tr>
+										<tr>
+											<td>Address :</td>
+											<td>{{addressdetails[1].addressLane2}}</td>
+										</tr>
+										<tr>
+											<td>Pincode :</td>
+											<td>{{addressdetails[1].pincode}}</td>
+										</tr>
+
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+
+						<div
+							style="width: 45%; height: auto; line-height: 3em; overflow: auto; margin: 10px; padding: 5px; border: 1px ridge #000; float: left;">
+							<div class="table-responsive">
+								<table class="table">
+									<center>
+										<label>{{addressdetails[0].typeOfAddress}} Address</label>
+									</center>
+									<tbody>
+										<tr>
+											<td>Country:</td>
+											<td>{{addressdetails[0].country}}</td>
+										</tr>
+										<tr>
+											<td>State:</td>
+											<td>{{addressdetails[0].state}}</td>
+										</tr>
+										<tr>
+											<td>District:</td>
+											<td>{{addressdetails[0].city}}</td>
+										</tr>
+										<tr>
+											<td>City:</td>
+											<td>{{addressdetails[0].addressLane1}}</td>
+										</tr>
+										<tr>
+											<td>Address :</td>
+											<td>{{addressdetails[0].addressLane2}}</td>
+										</tr>
+										<tr>
+											<td>Pincode :</td>
+											<td>{{addressdetails[0].pincode}}</td>
+										</tr>
+
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-info pull-right" data-dismiss="modal">OK</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+<div class="modal fade" id="myModal2" role="dialog">
+	<div class="modal-dialog" style="width: 45%; height: auto;">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" data-dismiss="modal" class="close">&times;</button>
+				<h4>Add Contact Person For {{clientName}}</h4>
+			</div>
+
+			<div class="modal-body">
+				<div class="container">
+					<form name="myForm" ng-submit="addContactSave()" novalidate>
+
+						<div class="row">
+
+							<div class="form-group col-lg-3" ng-hide=true>
+								<label>Client Name</label> <input type="text" name="clientname1"
+									ng-model="clientName" class="form-control" readonly></input> <span
+									style="color: red;"
+									ng-show="myForm.contact_name.$touched && myForm.contact_name.$invalid">*The
+									field is required.</span>
+							</div>
+
+
+							<div class="form-group col-lg-3">
+								<label>Contact Name*</label> <input type="text"
+									placeholder="contact person Name" name="contact_name"
+									ng-model="contact_Name" class="form-control" required></input>
+								<span style="color: red;"
+									ng-show="myForm.contact_name.$touched && myForm.contact_name.$invalid">*The
+									field is required.</span>
+							</div>
+							<div class="form-group col-lg-3">
+								<label for="email">Email Id*</label> <input type="email"
+									placeholder="email id" name="email" ng-model="email"
+									class="form-control"
+									ng-pattern='/^[a-z]+[a-z0-9._]+@[a-z-]+\.[a-z.]{2,5}$/'
+									required></input> <span style="color: red;"
+									ng-show="myForm.email.$touched && myForm.email.$invalid">*The
+									field is required.</span>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group col-lg-3">
+								<label for="phone">Phone*</label> <input type="text"
+									placeholder="phone number" name="phone" ng-model="phone"
+									ng-minlength="10" ng-maxlength="10" class="form-control"
+									numbers-only required></input> <span style="color: red;"
+									ng-show="myForm.phone.$touched && myForm.phone.$invalid">*The
+									field is required.</span> <span style="color: red;"
+									ng-show="myForm.phone.$error.minlength">*Number is
+									Short.</span> <span style="color: red;"
+									ng-show="myForm.phone.$error.maxlength">*Number is long.</span>
+							</div>
+							<div class="form-group col-lg-3">
+								<label for="mobile">Mobile No</label> <input type="text"
+									placeholder="alternate mobile" name="mobile" ng-minlength="10"
+									ng-maxlength="10" ng-model="mobile" class="form-control"
+									numbers-only></input> <span style="color: red;"
+									ng-show="myForm.mobile.$error.minlength">*Number is
+									Short.</span> <span style="color: red;"
+									ng-show="myForm.mobile.$error.maxlength">*Number is
+									long.</span>
+							</div>
+
+						</div>
+
+
+					</form>
+				</div>
+			</div>
+
+
+
+
+			<div class="modal-footer">
+				<button class="btn btn-info pull-left" data-dismiss="modal">Cancel</button>
+				<button class="btn btn-info pull-right" data-dismiss="modal">Save</button>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+<div class="modal fade" id="main" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4>Contact List</h4>
+				<button type="button" data-dismiss="modal" class="close">&times;</button>
+
+			</div>
+
+			<div class="modal-body">
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Client Id</th>
+								<th>Client Name</th>
+								<th>Contact Name</th>
+								<th>Email Id</th>
+								<!-- <th>Phone No</th> -->
+								<th>Mobile No</th>
+								<!-- <th>Action</th> -->
+								<th>Status</th>
+
+							</tr>
+
+						</thead>
+						<tbody>
+							<tr
+								ng-repeat="clientdata in clientdata |filter:test|itemsPerPage:20">
+								<td>{{clientdata.client.id}}</td>
+								<td>{{clientdata.client.clientName}}</td>
+								<td>{{clientdata.contact_Name}}</td>
+								<td>{{clientdata.email}}</td>
+								<!-- <td>{{clientdata.phone}}</td> -->
+								<td>{{clientdata.mobile}}</td>
+								<td>
+									<button class="btn btn-info btn-xs width-full  pull-center"
+										data-dismiss="modal"
+										ng-click="statusChange(clientdata.status,clientdata.id)">{{clientdata.status}}</button>
+								</td>
+
+								<!-- 	<td><a href="{{getidURL}}" ng-click="getListAddress(clientdata.id)" style="color:#0645AD;">Edit</a></td> -->
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-info pull-right" data-dismiss="modal">OK</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+

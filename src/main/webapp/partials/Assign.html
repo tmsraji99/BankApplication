@@ -1,0 +1,66 @@
+<style>
+.dropdown-multiselect{
+margin-left:15px
+}
+</style>
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+
+<div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+    <ol class="breadcrumb">
+    <div class="col-md-8">
+    <h3>Assign </h3>
+    </div>
+
+    </ol>
+ <fieldset class="well .scheduler-border"
+			style="width: 790px; height: auto; margin: 0px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+			<legend
+				style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+				align="left"> Assign Work </legend>
+				<form class="form-horizontal" name="formtwo1">
+	
+		 
+		 <div class="form-group">
+			<label  class="control-label col-lg-4 col-sm-4">Client Name:</label>
+			<div class="col-lg-6">
+			<input type="text" name="clientname1" ng-model="clientName" class="form-control" readonly></input>
+			</div>
+		</div>
+		
+		 <div class="form-group">
+			<label  class="control-label col-lg-4 col-sm-4">Requirement Name:</label>
+			<div class="col-lg-6">
+			<input type="text" name="reqirementname" ng-model="requirementName" class="form-control" readonly></input>
+		</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="control-label col-lg-4 col-sm-4">Target:</label> 
+				<div class="col-lg-6">
+					<input type="text" name="numberofpositions1" ng-model="targetam"
+					   id="number of positions" class="form-control" placeholder="Enter Target" numbers-only ></input>
+						 
+			</div>
+		</div>
+	
+		<!-- <div class="form-group" ng-show="(role== 'AM' || role=='BDM')">
+							<label class="control-label col-lg-4 col-sm-4">Recruiter Name{{role}}</label>						
+						<div  ng-dropdown-multiselect6="" options="recruiters" selected-model="req" 
+						extra-settings="example17settings" ></div>																						
+   		</div> -->
+   		<div class="form-group" ng-show="(role== 'Lead' || role== 'AM' || role=='BDM')">
+							<label class="control-label col-lg-4 col-sm-4">Recruiter Name:{{role}}</label>						
+						<div  ng-dropdown-multiselect9="" options="indrecruiters" selected-model="req" 
+						extra-settings="example17settings"></div>																						
+   		</div>	 
+   		 <button class="btn btn-success pull-right" data-toggle="modal" data-target="#res"  ng-click="Assignwrk()"  ng-disabled="formtwo1.$invalid">Assign</button>		 
+	</form>		
+		
+				</fieldset>
+				</div>
+				</div>
+
+
+

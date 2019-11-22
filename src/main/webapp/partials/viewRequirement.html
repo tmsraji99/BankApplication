@@ -1,0 +1,461 @@
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.js"></script>
+
+
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+ <div class="container-fluid" style="margin-top: 60px;">
+
+
+<ol class="breadcrumb">
+    <div class="col-md-8">
+    <h3> <i class="fa fa-folder-open" aria-hidden="true"></i> Requirement Tracker </h3>
+    </div>
+
+    </ol>
+   
+
+     <div class="row"> 
+      <div class="col-md-3">
+     <input class="form-control"  type="search" ng-model="test" placeholder="Search Here..">
+     </div>
+     <div class="col-md-3">
+      <p>Total Number of Records :
+      <strong class="text text-info">{{ListReqData.length}}</strong><p>
+      </div>
+      
+       <div class="col-md-6">
+      
+      <select class="form-control pull-right" ng-model="pageSize" style="width:120px;margin-bottom: 6px;">
+      <option>10</option>
+      <option>15</option>
+      <option>20</option>
+      <option>25</option>
+      </select>
+        <span style="margin-right: 8px; margin-top: 6px;"class="pull-right text text-info">Items per page</span>
+      </div>
+     
+     </div>
+	<table st-table="ListReqData" st-safe-src="rowCollection" class="table">
+		<thead>
+				
+
+          <tr>
+          <th>Sr. No.</th>
+          <th st-sort="nameOfRequirement">Req Name </th>
+             <th st-sort="client.clientName">Client</th>
+            
+             <th st-sort="">Open Date </th>
+              <th st-sort="">Valid Up to </th>
+               <th st-sort="">SPOC</th>
+                 <th st-sort="">SPOC Mobile</th>
+                  <th st-sort="">Email</th>
+         
+			<th st-sort="">Skills</th>
+		
+			<th st-sort="status">Status</th>
+			<th>Location</th>
+            <th>Action</th>
+			<th >Assign to Recruiter</th>
+			
+          </tr>
+		
+        </thead>
+        <tbody>
+       <tr dir-paginate="list in ListReqData|filter:test|itemsPerPage:pageSize">
+         <td>{{$index+1}}</td>
+         <td>{{list.nameOfRequirement}}</td>
+        <td>{{list.client.clientName}}</td>
+           
+             <td>{{list.startDate|date:'dd-MM-yyyy'}}</td>
+             <td>{{list.endDate|date:'dd-MM-yyyy'}}</td>
+             <td>{{list.addContact.contact_Name}}</td>
+              <td>{{list.addContact.mobile}}</td>
+              <td>{{list.addContact.email}}</td>
+             
+              <td>
+            
+              
+              <span ng-repeat="x in list.skills">         
+              {{x.skillName}},
+              </span>
+              
+               
+              </td>
+			
+		
+			<td><span ng-if="list.status=='Open'" style="color:green;">{{list.status}}</span>
+				<span ng-if="list.status=='Closed'" style="color:red;">{{list.status}}</span>
+				<span ng-if="list.status=='Hold'" style="color:orange;">{{list.status}}</span>
+			</td>
+		      <td>{{list.location.locationName}}</td>
+		<td>
+			   
+			&nbsp;&nbsp;
+			<span ng-if="list.status=='Open'">
+	       <a href={{urlForEdit}} ng-click="editFun(list)" >
+		   <span class="glyphicon glyphicon-pencil" style="color:green" title="click here to edit"></span></a>
+			</span>
+			<span ng-if="list.status=='Hold'">
+	       <a href={{urlForEdit}} ng-click="editFun(list)" >
+		   <span class="glyphicon glyphicon-pencil" style="color:green" title="click here to edit"></span></a>
+			</span>
+			<span ng-if="list.status=='closed'">
+	       <a href={{urlForEdit}}> <button  class="btn btn-primary" ng-click="editFun(list)" ng-disabled=true>
+		   <span class="glyphicon glyphicon-pencil" title="click here to edit"></span></button></a>
+			</span>
+		   </td>
+		 
+		<td>
+		<a ng-if="list.status=='Open'" href="#!/Assignlistwork" class="btn btn-default  pull-center"  style="background-color:#D8E7A2;" ng-click="assignFun(list)" >Assign</a>
+		<a ng-if="list.status=='closed'"class="btn btn-default  pull-center"  style="background-color:#D8E7A2;" disabled>Assign</a>
+		<a ng-if="list.status=='Hold'" class="btn btn-default  pull-center"  style="background-color:#D8E7A2;" disabled>Assign</a>
+		
+		
+		   </td>
+		   
+	  </tr>
+         
+         
+         
+        </tbody>
+      </table>
+    <div class="row">
+      <div class="col-md-12">
+      
+      <dir-pagination-controls class="pull-right"></dir-pagination-controls>
+      </div>
+      </div>
+</div>
+</div>
+
+
+
+
+ <div class="modal fade" id="myModal" role="dialog" >
+		<div class="modal-dialog modal-dialog-lg">   
+		<div class="modal-content">
+		
+        <div class="modal-header">
+        <h4>Requirement Details</h4>
+		<button type="button" data-dismiss="modal" class="close">&times;</button>
+		
+         </div>       
+      
+        <div class="modal-body">
+		<form class="form-horizontal">
+			<div class="form-group">
+	
+			       
+		     <!-- style="width:98%;height:550px;line-height:3em;overflow:auto;margin:10px; padding:5px;border:1px ridge #000;" -->
+         <div >
+	   <div class="table-responsive" >          
+  	    <table class="table">
+      	
+      	<tbody>
+		<tr>
+	        <td><b>Requirement Start Date:</b></td>
+	        <td>{{popUPData.startDate}}</td>
+      	</tr>
+		<tr>
+	        <td><b>Requirement End Date:</b></td>
+	        <td>{{popUPData.endDate}}</td>
+      	</tr>
+		<tr>
+	         <td><b>Name Of Requirement:</b></td>
+	        <td>{{popUPData.nameOfRequirement}}</td>
+      	</tr>
+		<tr>
+	        <td><b>Designation:</b></td>
+	         <td><ul ng-repeat="designations in popUPData.designations" style="display: inline;">
+                   {{designations.designation}}
+				  </ul> 
+			   </td>
+      	</tr>
+		<tr>
+	         <td><b>Skills:</b></td>
+	          <td><ul ng-repeat="skill in popUPData.skills" style="display: inline;">
+                   {{skill.skillName}}
+				  </ul> 
+			   </td>
+      	</tr>
+		<tr>
+	         <td><b>Qualifications :</b></td>
+	         <td><ul ng-repeat="qualifications in popUPData.qualifications" style="display: inline;">
+                   {{qualifications.qualificationName}}
+				  </ul> 
+			   </td>
+      	</tr>
+		<tr>
+	         <td><b>Certification :</b></td>
+	         <td><ul ng-repeat="certification in popUPData.certificates" style="display: inline;">
+                   {{certification.certificationName}}
+				  </ul> 
+			   </td>
+      	</tr>
+		<tr>
+	         <td><b>Job Location:</b></td>
+	        <td>{{popUPData.jobLocation|uppercase}}</td>
+      	</tr>
+		<tr>
+	        <td><b>Notice Period:</b></td>
+	        <td>{{popUPData.noticePeriod}}</td>
+      	</tr>
+		<tr>
+	        <td><b>Number Of Positions:</b></td>
+	        <td>{{popUPData.numberOfPositions}}</td>
+      	</tr>
+		<tr>
+	         <td><b>Skill Type:</b></td>
+	        <td>{{popUPData.requirementType}}</td>
+      	</tr>
+		<tr>
+	        <td><b>Requirement Description:</b></td>
+	        <td>{{popUPData.requirementDescription}}</td>
+      	</tr>
+				<tr>
+	    <td><b>Job Description:</b></td>
+	        <td>{{popUPData.gross_Amount}}</td>
+      	</tr>
+		<tr>
+	        <td><b>Total Experience:</b></td>
+			<td>{{popUPData.totalExperience}} years</td>
+ 
+      	</tr>
+		<tr>
+	         <td><b>Relavant Experience :</b></td>
+			<td>{{popUPData.relavantExperience}} years</td>
+ 
+      	</tr>
+		<tr>
+	         <td><b>Interview Mode:</b></td>
+	        <td><ul ng-repeat="interviewMode in popUPData.interviewMode" style="display: inline;">
+                   {{interviewMode.modeofInterview}}
+				  </ul> 
+			   </td>
+			
+      	</tr>
+      	
+		
+		
+      	<tr>
+	         <td><b>Client Name:</b></td>
+	        <td>{{popUPData.client.clientName}}</td>
+      	</tr>
+      	<tr>
+	         <td><b>Contact Person:</b></td>
+	        <td>{{popUPData.addContact.contact_Name}}</td>
+      	</tr>
+      	<tr>
+	         <td><b>Email:</b></td>
+	        <td>{{popUPData.addContact.email}}</td>
+      	</tr>
+      	<tr>
+	         <td><b>Mobile Number :</b></td>
+	        <td>{{popUPData.addContact.mobile}}</td>
+      	</tr>
+		<tr>
+	         <td><b>Phone Number :</b></td>
+	        <td>{{popUPData.addContact.phone}}</td>
+      	</tr>
+		<tr>
+	         <td><b>Number Of Rounds :</b></td>
+	        <td>{{popUPData.numberOfRounds}}</td>
+      	</tr>
+		<tr>
+	         <td><b>Budget :</b></td>
+	        <td>{{popUPData.netPeriod| currency:'&#8360'}} {{popUPData.budgetrate}}</td>
+      	</tr>
+		<tr>
+	        <td><b>Gross Amount :</b></td>
+	        <td>{{popUPData.gross_Amount|currency:'&#8360'}} (per day)</td>
+      	</tr>
+		
+      	<tr >
+	        <td><b>Mode Of Hiring:</b></td>
+	        <td>{{popUPData.typeOfHiring |uppercase}}</td>
+      	</tr>
+		
+		
+		<tr ng-show="c2h">
+	        <td><b>Salary Band :</b></td>
+	        <td>{{popUPData.salaryBand|uppercase}}</td>
+      	</tr>
+		<tr ng-show="c2h">
+	        <td><b>Contract Duration(In month) :</b></td>
+	        <td>{{popUPData.minimumContract}}</td>
+      	</tr>
+		<tr ng-show="c2h">
+	        <td><b>Conversion fee :</b></td>
+	        <td>{{popUPData.conversionFee|currency:'&#8360'}}</td>
+      	</tr>
+      	
+      	
+		<tr ng-show="permanent1">
+	        <td><b>Percentage / Slab :</b></td>
+	        <td>{{permanentAlias}}</td>
+      	</tr>
+		<tr ng-show="permanent1">
+	        <td><b>Amount :</b></td>
+	        <td>{{popUPData.famount|currency:'&#8360'}}</td>
+      	</tr>
+		
+		<tr ng-show="permanent2">
+	        <td><b>Percentage / Slab :</b></td>
+	        <td>{{permanentAlias}}</td>
+      	</tr>
+		<tr ng-show="permanent2">
+		    
+	        <td><b>Slab Info:</b></td>
+			
+	        <td>
+			{{popUPData.newtype}}
+			<table class="table">
+			  <tr>
+			      <th><center>From</center></th>
+			      <th><center>To</center></th>
+			      <th><center>Amount</center></th>
+			      <th><center>Type</center></th>
+			  </tr>
+			  <tr ng-repeat="slabData in popUPData.slab">
+			      <td>{{slabData.startFrom}}</td>
+			      <td>{{slabData.startEnd}}</td>
+			      <td>{{slabData.amount|currency:'&#8360'}}</td>
+			      <td>{{slabData.slabType|uppercase}}</td>
+			  </tr>
+			</table>
+			</td>
+
+      	</tr>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<tr ng-show="contract">
+	        <td><b>Bill Rate :</b></td>
+	        <td>{{popUPData.billRate}}</td>
+      	</tr>
+		<tr ng-show="contract">
+	        <td><b>Rate :</b></td>
+	        <td>{{popUPData.tax}}&nbsp;&nbsp;{{popUPData.per_OR_rupee}}</td>
+      	</tr>
+      	
+      	
+    	</tbody>
+  	</table>
+</div>
+</div>
+
+			 
+				 
+				 
+			</div>
+		</form>
+        </div>
+		
+        <div class="modal-footer">
+        <button class="btn btn-info pull-right"data-dismiss="modal">OK</button>
+        </div>
+		
+      </div>
+      </div>
+	  </div>
+		
+		
+		
+		<div class="modal fade" id="myModal2" role="dialog">
+		<div class="modal-dialog">   
+		<div class="modal-content">
+		
+        <div class="modal-header">
+		<button type="button" data-dismiss="modal" class="close">&times;</button>
+		<h4>Designation:</h4>
+         </div>       
+      
+        <div class="modal-body">
+		<form class="form-horizontal">
+			<div class="form-group">
+	
+			     <ul ng-repeat="designation in designationsData">
+                    <li>{{designation.designation}}</li>
+                 </ul>
+			
+			</div>
+		</form>
+        </div>
+		
+        <div class="modal-footer">
+        <button class="btn btn-info pull-right"data-dismiss="modal">OK</button>
+        </div>
+		
+      </div>
+      </div>
+	  </div>
+		
+		
+		
+		<div class="modal fade" id="myModal3" role="dialog">
+		<div class="modal-dialog">   
+		<div class="modal-content">
+		
+        <div class="modal-header">
+		<button type="button" data-dismiss="modal" class="close">&times;</button>
+		<h4>Qualifications:</h4>
+         </div>       
+      
+        <div class="modal-body">
+		<form class="form-horizontal">
+			<div class="form-group">
+		
+			     <ul ng-repeat="qualifications in qualificationsData">
+                    <li>{{qualifications.qualificationName}}</li>
+                 </ul>
+			
+			</div>
+		</form>
+        </div>
+		
+        <div class="modal-footer">
+        <button class="btn btn-info pull-right"data-dismiss="modal">OK</button>
+        </div>
+		
+      </div>
+      </div>
+	  </div>
+		
+		
+	</div>
+	</div>	
+	
+
+
+
+        <div class="modal fade" id="response" role="dialog" >
+		<div class="modal-dialog" style="width:45%;height:auto;">   
+		<div class="modal-content">
+			
+        <div class="modal-header">
+		
+		<h4>Assign Work</h4>
+         </div>       
+      
+        <div class="modal-body">
+		<div class="container">
+		
+		<p style="color:green;">{{responseMes}}</p>
+	     
+	    </div>
+        </div>	
+        <div class="modal-footer">
+		<a ng-show="ok"  class="btn btn-info pull-right" data-dismiss="modal" ng-click="redirect()">OK</a>
+       
+        </div>
+		
+        </div>
+        </div>
+	    </div>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+			http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+			http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+	<!-- SPRING SETUP -->
+
+	<!-- Load properties so we can easily change them -->
+	<context:property-placeholder
+		location="classpath:application.properties" />
+
+	<!-- Enable Annotation Configuration in order to automatically scan controllers -->
+	<context:annotation-config />
+
+	<!-- Allow @Transactional annotations for transaction management -->
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+	<!-- Search for Rest Resources and configure them automatically -->
+	<context:component-scan
+		base-package="com.ojas.rpo.security.rest.resources" />
+
+
+
+	<!-- DATABASE SETUP -->
+
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="username" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+		<property name="driverClassName" value="${db.driver}" />
+		<property name="url" value="${db.url}" />
+	</bean>
+
+	<!-- <bean id="propertyBean" class="com.ojas.rpo.security.entity.Properties"> 
+		<property name="path" value="${path}" /> </bean> -->
+
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceUnitName" value="examplePU" />
+		<property name="jpaVendorAdapter">
+			<bean
+				class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="generateDdl" value="true" />
+				<property name="showSql" value="true" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory"
+			ref="entityManagerFactory" />
+	</bean>
+
+	<bean id="blogPostDao"
+		class="com.ojas.rpo.security.dao.blogpost.JpaBlogPostDao">
+	</bean>
+
+	<bean id="userDao"
+		class="com.ojas.rpo.security.dao.user.JpaUserDao">
+	</bean>
+
+	<bean id="accessTokenDao"
+		class="com.ojas.rpo.security.dao.accesstoken.JpaAccessTokenDao">
+	</bean>
+
+	<bean id="userService"
+		class="com.ojas.rpo.security.service.DaoUserService">
+		<constructor-arg ref="userDao" />
+		<constructor-arg ref="accessTokenDao" />
+	</bean>
+
+	<bean id="dataBaseInitializer"
+		class="com.ojas.rpo.security.dao.DataBaseInitializer"
+		init-method="initDataBase">
+		<constructor-arg ref="userDao" />
+
+
+	</bean>
+
+	<!-- <bean id="userRegistrationDao" class="com.ojas.rpo.security.dao.userRegistration.JpaUserRegistrationDao"> 
+		</bean> -->
+	<bean id="mailSender"
+		class="com.ojas.rpo.security.util.OutlookMailSender" />
+
+	<bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="5"></property>
+		<property name="maxPoolSize" value="10"></property>
+		<property name="queueCapacity" value="40"></property>
+		<property name="waitForTasksToCompleteOnShutdown"
+			value="true"></property>
+	</bean>
+
+
+
+	<bean id="skillDao"
+		class="com.ojas.rpo.security.dao.location.JpaSkillDao">
+	</bean>
+	<bean id="candidateDao"
+		class="com.ojas.rpo.security.dao.candidate.JpaCandidateDao">
+	</bean>
+	
+   
+	<bean id="Resume" class="com.ojas.rpo.security.entity.Resume">
+	</bean>
+
+
+	<bean id="Document_All"
+		class="com.ojas.rpo.security.entity.Document_All">
+	</bean>
+
+
+	<bean id="DesignationDao"
+		class="com.ojas.rpo.security.dao.designation.JpaDesignationDao">
+	</bean>
+
+	<bean id="addroleDao"
+		class="com.ojas.rpo.security.dao.addrole.Jpaaddrole">
+	</bean>
+	<bean id="costtypeDao"
+		class="com.ojas.rpo.security.dao.costtype.JpaCostTypeDao">
+	</bean>
+	<bean id="userListDao"
+		class="com.ojas.rpo.security.dao.userlist.JpaUserListDao">
+	</bean>
+	<bean id="locationDao"
+		class="com.ojas.rpo.security.dao.location.JpaLocationDao">
+	</bean>
+	<bean id="noticePeriodDao"
+		class="com.ojas.rpo.security.dao.noticePeriod.JpaNoticePeriodDao">
+	</bean>
+	<bean id="statusDao"
+		class="com.ojas.rpo.security.dao.status.JpaStatusDao">
+	</bean>
+	<bean id="customerTypeDao"
+		class="com.ojas.rpo.security.dao.customerType.JpaCustomerTypeDao">
+	</bean>
+
+	<bean id="pastMappingsDao"
+		class="com.ojas.rpo.security.dao.pastmappings.JpaPastAndChangedCandidateMappings">
+	</bean>
+
+	<bean id="CandidateRequestByRecruitersDao"
+		class="com.ojas.rpo.security.dao.candidateRequest.JpaCandidateRequestByRecruiters">
+	</bean>
+
+	<!--*******************Jhansi***************** -->
+	<bean id="clientDao"
+		class="com.ojas.rpo.security.dao.client.ClientDaoImpl" />
+
+	<bean id="bdmReqDao"
+		class="com.ojas.rpo.security.dao.bdmreqdtls.JpaBdmReqDao" />
+	<bean id="hiringModeDao"
+		class="com.ojas.rpo.security.dao.hiringMode.JpaHiringModeDao" />
+	<bean id="slabDao"
+		class="com.ojas.rpo.security.dao.slab.JpaSlabDao" />
+	<!-- **************Jhansi************ -->
+
+	<!-- Nandhini -->
+	<bean id="interviewTypeDao"
+		class="com.ojas.rpo.security.dao.interviewType.JpaInterviewTypeDao" />
+	<bean id="certificateTypeDao"
+		class="com.ojas.rpo.security.certificatenames.JpaCertificateTypeDao" />
+	<bean id="addClientContactDao"
+		class="com.ojas.rpo.security.dao.addClientContact.JpaAddContactDao" />
+	<bean id="typeOfAddressDao"
+		class="com.ojas.rpo.security.dao.typeOfAddres.JpaTypeOfAddressDao" />
+	<bean id="addressDetailsDao"
+		class="com.ojas.rpo.security.dao.addressdetails.JpaAddressDetailsDao" />
+	<bean id="contactAddressMapDao"
+		class="com.ojas.rpo.security.dao.ContactsAddressMapping.JpaContactAddressMapDao" />
+
+	<!-- Nandhini -->
+	<!-- Mounika -->
+	<bean id="qualificationdao"
+		class="com.ojas.rpo.security.dao.Qualification.JpaQualificationDao" />
+	<bean id="assignDao"
+		class="com.ojas.rpo.security.dao.assign.JpaAssignDao" />
+
+	<!-- jyothi -->
+	<bean id="processDao"
+		class="com.ojas.rpo.security.dao.typeofprocess.JpaProcessDao" />
+	<bean id="interviewfeedbackDao"
+		class="com.ojas.rpo.security.dao.interviewfeedback.JpaInterviewFeedbackDao" />
+	<bean id="companyTaxInfoDao"
+		class="com.ojas.rpo.security.dao.companytaxinfo.JpaCompanyTaxInfoDao" />
+	<bean id="companyAddressInfoDao"
+		class="com.ojas.rpo.security.dao.companyAddressinfo.JpaCompanyAddressInfoDao" />
+
+
+	<bean id="incentiveRoleDao"
+		class="com.ojas.rpo.security.dao.incentiveRole.JpaIncentiveRoleDao" />
+	<bean id="incentiveDao"
+		class="com.ojas.rpo.security.dao.incentive.JpaIncentiveDao" />
+	<bean id="incentiveSlabDao"
+		class="com.ojas.rpo.security.dao.incentiveslab.JpaIncentiveSlabDao" />
+
+	<bean id="amrejectedDao"
+		class="com.ojas.rpo.security.dao.Amrejected.AmrejectedJpaDao" />
+
+	<bean id="amQuryDao"
+		class="com.ojas.rpo.security.dao.Amquery.AmQueryJpaDao" />
+
+	<bean id="offeredDao"
+		class="com.ojas.rpo.security.dao.Offered.OfferedJpaDao" />
+	<bean id="submissions"
+		class="com.ojas.rpo.security.dao.DashBoard.JpaSubmissionsImpl" />
+
+	<bean id="servicesDao"
+		class="com.ojas.rpo.security.dao.location.JpaServicesDao" />
+	<bean id="billingModelDao"
+		class="com.ojas.rpo.security.dao.billingModel.JpaBillingModelDao" />
+	<bean id="paymentTermsDao"
+		class="com.ojas.rpo.security.dao.paymentTerms.JpaPaymentTermsDao" />
+	<bean id="candidateReqMappingDao"
+		class="com.ojas.rpo.security.dao.candidateReqMapping.JpaCandidateReqMappingDao" />
+
+	<bean id="user" class="com.ojas.rpo.security.entity.User"></bean>
+
+	<bean id="interviewDetailsDao"
+		class="com.ojas.rpo.security.dao.InterviewDetails.JpaInterviewDetailsDao" />
+	<bean id="timeSlotDao"
+		class="com.ojas.rpo.security.dao.timeslots.jpaTimeSlotsDao" />
+
+
+	<bean id="employeeService"
+		class="com.ojas.rpo.security.service.EmployeeServiceImpl" />
+
+	<bean id="reportsBarChartDaoForBDM"
+		class="com.ojas.rpo.security.dao.datareports.JpaDataReportsDao" />
+
+	<bean id="reportsBarChartTemplates"
+		class="com.ojas.rpo.security.dao.datareports.ReportsBarChartTemplates" />
+
+
+    <bean id="GSTDao"
+		class="com.ojas.rpo.security.dao.GST.JpaGSTDao">
+	</bean>
+
+ <bean id = "BankDao"
+     class = "com.ojas.rpo.security.dao.bank.JpaBankDao">
+    </bean>
+    
+  
+
+	<!-- INIT REST COMPONENTS -->
+
+	<bean id="objectMapper"
+		class="org.codehaus.jackson.map.ObjectMapper" />
+
+	<!-- SPRING SECURITY SETUP -->
+
+	<bean id="passwordEncoder"
+		class="org.springframework.security.crypto.password.StandardPasswordEncoder">
+		<constructor-arg value="${app.secret}" />
+	</bean>
+
+	<security:authentication-manager
+		id="authenticationManager">
+		<security:authentication-provider
+			user-service-ref="userService">
+			<security:password-encoder
+				ref="passwordEncoder"></security:password-encoder>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<security:http entry-point-ref="unauthorizedEntryPoint"
+		authentication-manager-ref="authenticationManager"
+		create-session="stateless">
+		<security:csrf disabled="true" />
+		<security:custom-filter
+			ref="authenticationTokenProcessingFilter" position="PRE_AUTH_FILTER" />
+		<security:intercept-url
+			pattern="/rest/user/authenticate" access="permitAll" />
+		<security:intercept-url method="GET"
+			pattern="/rest/blogposts/**" access="hasRole('USER')" />
+		<security:intercept-url method="PUT"
+			pattern="/rest/blogposts/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="POST"
+			pattern="/rest/blogposts/**" access="hasRole('ADMIN')" />
+		<security:intercept-url method="DELETE"
+			pattern="/rest/blogposts/**" access="hasRole('ADMIN')" />
+	</security:http>
+
+	<bean id="unauthorizedEntryPoint"
+		class="com.ojas.rpo.security.rest.UnauthorizedEntryPoint" />
+
+	<bean id="authenticationTokenProcessingFilter"
+		class="com.ojas.rpo.security.rest.AuthenticationTokenProcessingFilter">
+		<constructor-arg ref="userService" />
+	</bean>
+
+	<bean id="incentiveConfig"
+		class="com.ojas.rpo.security.dao.incentiveconfigs.JpaIncentiveConfigDao" />
+
+</beans>

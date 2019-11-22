@@ -1,0 +1,1330 @@
+<style>
+lable {
+	font-family: "Source Sans Pro", sans-serif;
+	color: #656565;
+}
+</style>
+<div ng-show="isLoading" class="Applicationloader">
+	<img src="images/rpoloader.gif">
+</div>
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper" ng-init="getClientDropDown();">
+	<div class="container-fluid" style="margin-top: 60px;">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>
+					<i class="fa fa-plus-circle" aria-hidden="true"></i>Add Candidate
+				</h3>
+			</li>
+			<div class="col-md-8">
+				<div id="msgss">
+					<div class="alert alert-success" id="login-error"
+						style="display: hidden;">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<strong>{{resMessage}}</strong>
+					</div>
+				</div>
+			</div>
+		</ol>
+
+		<div class="row">
+			<div class="col-md-6">
+				<form name="candidateform" class="myForm" required novalidate>
+
+					<fieldset class="well .scheduler-border"
+						style="width: 790px; height: auto; margin: 0px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+						<legend
+							style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+							align="left"> Add Candidate </legend>
+
+						<div class="row">
+							<div class="form-group col-md-4">
+								<label for="title1">Title<sup>*</sup></label> <select
+									id="title1" class="form-control" name="titlename"
+									ng-model="title" required>
+									<option value="" disabled selected>--Select--</option>
+									<option value="mr">Mr</option>
+									<option value="ms">Ms</option>
+									<option value="miss">Miss</option>
+									<option value="mistress">Mrs</option>
+								</select>
+								<div ng-messages="candidateform.titlename.$error"
+									ng-if="candidateform.titlename.$touched">
+									<div ng-message="required">Select any Option</div>
+								</div>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="fname">First Name<sup>*</sup></label> <input
+									type="text" name="fname" ng-model="firstName"
+									class="form-control" placeholder="Enter First Name" required />
+								<div ng-messages="candidateform.fname.$error"
+									ng-if="candidateform.fname.$touched">
+									<div ng-message="required">Required First Name</div>
+								</div>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="lname">Last Name<sup>*</sup></label> <input
+									type="text" name="lname" class="form-control"
+									ng-model="lastName" placeholder="Enter Last Name" required />
+								<div ng-messages="candidateform.lname.$error"
+									ng-if="candidateform.lname.$touched">
+									<div ng-message="required">Required Last Name</div>
+								</div>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="mobile">Mobile<sup>*</sup></label> <input
+									type="text" name="userContactNumber"
+									placeholder="Enter Mobile Number" class="form-control"
+									ng-model="mobile" numbers-only
+									ng-pattern="/^(\+[\d]{1,5}|0)?[6-9]\d{9}$/" required
+									maxlength="10" /> <span style="color: red"
+									ng-show="candidateform.userContactNumber.$dirty && userForm.userContactNumber.$error.required">Not
+									a valid number</span> <span style="color: red"
+									ng-show="candidateform.userContactNumber.$error.pattern">Enter
+									a valid number</span>
+								<div ng-messages="candidateform.userContactNumber.$error"
+									ng-if="candidateform.userContactNumber.$touched">
+									<div ng-message="required">Required Mobile Number</div>
+								</div>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="mobile">Alternate Mobile</label> <input type="text"
+									name="ContactNumber" placeholder="Enter Contact Number"
+									class="form-control" ng-model="alternateMobile" numbers-only
+									ng-pattern="/^(\+[\d]{1,5}|0)?[7-9]\d{9}$/" required
+									maxlength="10" />
+								<!-- <span style = "color:red" ng-show = "candidateform.ContactNumber.$dirty && userForm.ContactNumber.$error.required">not a valid number</span>
+                    <span style = "color:red" ng-show="candidateform.ContactNumber.$error.pattern"> number should be 10 digits</span>  
+                    <div ng-messages="candidateform.ContactNumber.$error" ng-if="candidateform.ContactNumber.$touched">
+						<div ng-message="required">Required Mobile Number</div>
+					</div>  -->
+							</div>
+							<!-- 		<div class="form-group col-md-4  m-t-25">
+					<label for="gender">Gender<sup>*:</sup></label>
+					<input type="radio" value="male" ng-model="gender" name="gender">Male
+					<input type="radio" value="female" ng-model="gender" name="gender">Female
+					<div ng-messages="candidateform.gender.$error" ng-if="candidateform.gender.$touched">
+						<div ng-message="required">Required Gender</div>
+					</div>
+				</div> -->
+							<div class="form-group col-md-6">
+								<label for="user_email">Email<sup>*</sup></label> <input
+									type="email" placeholder="Enter Email Address" name="userEmail"
+									ng-model="email" required class="form-control" />
+								<div ng-messages="candidateform.userEmail.$error"
+									ng-if="candidateform.userEmail.$touched">
+									<div ng-message="required">Required Email</div>
+									<div ng-message="email">Enter valid email address</div>
+								</div>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="user_email">Alternate Email</label> <input
+									type="email" placeholder="Enter Alternate Email"
+									name="userEmail1" ng-model="altenateEmail" required
+									class="form-control" />
+								<!-- <div ng-messages="candidateform.userEmail1.$error"
+						ng-if="candidateform.userEmail1.$touched">
+						<div ng-message="required">Required Alternate Email</div>
+						<div ng-message="email">Enter valid email address</div>
+					</div> -->
+							</div>
+							<div class="form-group col-md-6">
+								<label for="gender">Candidate Source<sup>*</sup></label> <select
+									id="source" name="cansource" ng-change="changefun()"
+									class="form-control" ng-model="candidateSource" required>
+									<option value="" disabled selected>--Select--</option>
+									<option value="naukri">Naukri</option>
+									<option value="monster">Monster</option>
+									<option value="linkedin">Linkedin</option>
+									<option value="timesJobs">TimesJobs</option>
+									<option value="ojas">Ojas</option>
+									<option value="refered">Referred</option>
+									<option value="other">Other</option>
+								</select>
+								<div ng-messages="candidateform.cansource.$error"
+									ng-if="candidateform.cansource.$touched">
+									<div ng-message="required">Required Candidate Source</div>
+								</div>
+							</div>
+							<div class="form-group col-md-3">
+								<label for="cand_educ">Education<sup>*</sup></label>
+								<div ng-dropdown-multiselect2="" options="educationdetails"
+									selected-model="education" extra-settings="example16settings" events="exampleEvents"></div>
+								<div ng-messages="candidateform.qualification_Name.$error"
+									ng-if="candidateform.qualification_Name.$touched">
+									<div ng-message="required">This field is required</div>
+								</div>
+							</div>
+							<div class="form-group col-md-3">
+								<label for="applyingAS">Applying as a<sup>*</sup></label> <select
+									id="applyingAS" class="form-control" name="applyingAS"
+									ng-model="applyingAS" required>
+									<option value="" disabled selected>-- Select --</option>
+									<option value="fresher">Fresher</option>
+									<option value="experienced">Experienced</option>
+								</select>
+								<div ng-messages="candidateform.applyingAS.$error"
+									ng-if="candidateform.applyingAS.$touched">
+									<div ng-message="required">Select any Option</div>
+								</div>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="exp_yrs">Total Experience<sup>*</sup></label>(Yrs-
+								Months)
+								<!-- <input
+									type="text" placeholder="Enter Total Experience"
+									name="experience" class="form-control"
+									ng-model="totalExperience" valid-number minlength="1"
+									maxlength="4" required /> -->
+								<div class="row">
+									<div class="col-md-6">
+										<select id="sal_negot" name="salary" class="form-control"
+											ng-model="totalExperience" required>
+											<option value="" disabled selected>-- Years --</option>
+											<option value="00">00</option>
+											<option value="01">01</option>
+											<option value="02">02</option>
+											<option value="03">03</option>
+											<option value="04">04</option>
+											<option value="05">05</option>
+											<option value="06">06</option>
+											<option value="07">07</option>
+											<option value="08">08</option>
+											<option value="09">09</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
+											<option value="13">13</option>
+											<option value="14">14</option>
+											<option value="15">15</option>
+											<option value="16">16</option>
+											<option value="17">17</option>
+											<option value="18">18</option>
+											<option value="19">19</option>
+											<option value="20">20</option>
+											<option value="21">21</option>
+											<option value="22">22</option>
+										</select>
+									</div>
+									<div class="col-md-6">
+										<select id="sal_negot" name="salary" class="form-control"
+											ng-model="inMonths" required>
+											<option value="" disabled selected>-- Months --</option>
+											<option value="00">00</option>
+											<option value="01">01</option>
+											<option value="02">02</option>
+											<option value="03">03</option>
+											<option value="04">04</option>
+											<option value="05">05</option>
+											<option value="06">06</option>
+											<option value="07">07</option>
+											<option value="08">08</option>
+											<option value="09">09</option>
+											<option value="10">10</option>
+											<option value="11">11</option>
+											<option value="12">12</option>
+										</select>
+									</div>
+								</div>
+								<div ng-messages="candidateform.experience.$error"
+									ng-if="candidateform.experience.$touched">
+									<div ng-message="required">This field is required</div>
+								</div>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="rel_exp_yrs">Relevant Experience<sup>*</sup></label>(Yrs)
+								<input type="text" name="rel_experience" class="form-control"
+									placeholder="Enter Relevant Experience"
+									ng-model="relevantExperience" valid-number minlength="1"
+									maxlength="4" required />
+								<div ng-messages="candidateform.rel_experience.$error"
+									ng-if="candidateform.rel_experience.$touched">
+									<div ng-message="required">This field is required</div>
+								</div>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="cur_ctc">Current CTC<sup>*</sup></label>(/PA) <input
+									type="text" name="cur_ctc" class="form-control"
+									placeholder="Enter Current CTC" ng-model="currentCTC"
+									valid-number minlength="6" maxlength="7" numbers-only required />
+								<span style="color: red"
+									ng-show="candidateform.cur_ctc.$error.minlength"> CTC
+									should be lakhs only</span> <span style="color: red"
+									ng-show="candidateform.cur_ctc.$error.maxlength"> CTC
+									should be lakhs only</span>
+								<div ng-messages="candidateform.cur_ctc.$error"
+									ng-if="candidateform.cur_ctc.$touched">
+									<div ng-message="required">Enter your current CTC</div>
+								</div>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="exp_ctc">Expected CTC<sup>*</sup></label>(/PA) <input
+									type="text" name="exp_ctc" placeholder="Enter Expected CTC"
+									class="form-control" ng-model="expectedCTC" valid-number
+									minlength="6" maxlength="7" numbers-only required /> <span
+									style="color: red"
+									ng-show="candidateform.exp_ctc.$error.minlength"> CTC
+									should be lakhs only</span> <span style="color: red"
+									ng-show="candidateform.exp_ctc.$error.maxlength"> CTC
+									should be lakhs only</span>
+								<div ng-messages="candidateform.exp_ctc.$error"
+									ng-if="candidateform.exp_ctc.$touched">
+									<div ng-message="required">Enter your Expected CTC</div>
+								</div>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="sal_negot">Salary Negotiable<sup>*</sup></label> <select
+									id="sal_negot" name="salary" class="form-control"
+									ng-model="salaryNegotiable" required>
+									<!-- <option value={{candidateData.salaryNegotiable}} selected >{{candidateData.salaryNegotiable}}</option> -->
+									<option value="" disabled selected>-- Select --</option>
+									<option value="yes">Yes</option>
+									<option value="no">No</option>
+								</select>
+								<div ng-messages="candidateform.salary.$error"
+									ng-if="candidateform.salary.$touched">
+									<div ng-message="required">Select any Option</div>
+								</div>
+
+							</div>
+							<div class="form-group col-md-6">
+								<label for="notice_period">Notice Period<sup>*</sup></label>(Days)<select
+									id="notice_period" class="form-control" name="notice"
+									ng-model="noticePeriod" required>
+									<option value="" selected ng-disabled=true>-- Select--</option>
+									<option value="0">0</option>
+									<option value="0-7">0-7</option>
+									<option value="0-14">0-14</option>
+									<option value="15-30">15-30</option>
+									<option value="30-60">30-60</option>
+									<option value="60-90">60-90</option>
+									<!-- <option value="0">Immediate</option>
+									<option value="7">7</option>
+									<option value="15">15</option>
+									<option value="30">30</option>
+									<option value="45">45</option>
+									<option value="60">60</option>
+									<option value="90">90</option> -->
+								</select>
+								<div ng-messages="candidateform.notice.$error"
+									ng-if="candidateform.notice.$touched">
+									<div ng-message="required">Select any Option</div>
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<form name="candidateScform" class="myForm" required novalidate>
+					<fieldset class="well .scheduler-border"
+						style="width: 790px; height: auto; margin: 0px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+						<legend
+							style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+							align="left"> Additional Details </legend>
+						<div class="row">
+							<div class="form-group col-sm-6 col-md-6">
+								<label>Street 1</label> <input type="text" class="form-control"
+									name="street1" ng-model="street1" placeholder="Enter Street"
+									ng-disabled="false" required />
+								<!-- 	<div ng-messages="candidateScform.street1.$error"
+						ng-if="candidateScform.street1.$touched">
+						<div ng-message="required">This field is required</div>
+					</div> -->
+							</div>
+							<div class="form-group col-sm-6 col-md-6">
+								<label>Street 2</label> <input type="text" ng-model="street2"
+									name="street2" class="form-control" placeholder="Enter Street"
+									ng-disabled="false" required />
+								<!-- 	<div ng-messages="candidateScform.street2.$error"
+						ng-if="candidateScform.street2.$touched">
+						<div ng-message="required">This field is required</div>
+					</div> -->
+							</div>
+							<div class="form-group col-sm-4 col-md-4">
+								<label>City</label> <input type="text" class="form-control"
+									placeholder="Enter City" name="city" ng-model="city"
+									ng-disabled="false" required />
+								<!-- 	<div ng-messages="candidateScform.city.$error"
+						ng-if="candidateScform.city.$touched">
+						<div ng-message="required">This field is required</div>
+					</div> -->
+							</div>
+							<div class="form-group col-sm-4 col-md-4">
+								<label>State</label> <input type="text" class="form-control"
+									placeholder="Enter State" name="state" ng-model="state"
+									ng-disabled="false" required />
+								<!-- 	<div ng-messages="candidateScform.state.$error"
+						ng-if="candidateScform.state.$touched">
+						<div ng-message="required">This field is required</div>
+					</div> -->
+							</div>
+
+							<div class="form-group col-sm-4 col-md-4">
+								<label>Pincode</label> <input type="text" ng-model="pincode"
+									class="form-control" name="pincode" placeholder="Enter Pincode"
+									numbers-only ng-pattern="/^[0-9]{6,6}$/"
+									required/ maxlength="6" minlength="6"> <span
+									style="color: red;"
+									ng-show="candidateScform.pincode.$dirty && candidateScform.pincode.$error.required">Please
+									enter Pincode</span> <span style="color: red;"
+									ng-show="candidateScform.pincode.$error.pattern">Required
+									6 digits pincode</span>
+								<div ng-messages="candidateScform.pincode.$error"
+									ng-if="candidateScform.pincode.$touched">
+									<!-- 	<div ng-message="required">This field is required</div> -->
+								</div>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="relocation">Willing to Relocate</label>
+								<select id="relocation" name="relocate" class="form-control"
+									ng-model="willingtoRelocate" required>
+									<option value="" disabled selected>-- Select --</option>
+									<option value="yes">Yes</option>
+									<option value="no">No</option>
+								</select>
+								<div ng-messages="candidateScform.relocate.$error"
+									ng-if="candidateScform.relocate.$touched">
+									<div ng-message="required">This field is required</div>
+								</div>
+
+							</div>
+							<div class="form-group col-md-6">
+								<label for="skype_id">Skype ID</label> <input type="text"
+									placeholder="Enter SkypeID" name="skypename"
+									class="form-control" ng-model="skypeID" required />
+								<!-- <div ng-messages="candidateScform.skypename.$error" ng-if="candidateScform.skypename.$touched">
+						<div ng-message="required">This field is required</div>
+					</div> -->
+							</div>
+							<div class="form-group col-md-4">
+								<label for="cur_job_type">Current Job Type<sup>*</sup></label> <select
+									id="cur_job_typ" class="form-control" name="cjobtype"
+									ng-model="currentJobType" required>
+									<option value="" disabled selected>-- Select --</option>
+									<option value="permanent">Permanent</option>
+									<option value="C2H">C2H</option>
+									<option value="contract">Contract</option>
+								</select>
+								<div ng-messages="candidateScform.cjobtype.$error"
+									ng-if="candidateScform.cjobtype.$touched">
+									<div ng-message="required">This field is required</div>
+								</div>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="payrole_cmpny">PayRoll Company Name</label> <input
+									type="text" id="payrole_cmpn"
+									placeholder="Enter PayRoll Company Name" name="pcompany"
+									class="form-control" ng-model="payRollCompanyName" />
+								<!-- <div ng-messages="candidateScform.pcompany.$error"
+									ng-if="candidateScform.pcompany.$touched">
+									<div ng-message="required">This field is required</div>
+								</div> -->
+							</div>
+							<div class="form-group col-md-4">
+								<label for="currentLocation">Current Location</label> <input
+									type="text" id="currentLocation"
+									placeholder="Enter Current Location" name="currentLocation"
+									class="form-control" ng-model="currentLocation" />
+								<!-- <div ng-messages="candidateScform.pcompany.$error"
+									ng-if="candidateScform.pcompany.$touched">
+									<div ng-message="required">This field is required</div>
+								</div> -->
+							</div>
+
+							<div class="form-group col-md-4">
+								<label for="cur_cmpny_name">Current Company Name</label> <input
+									type="text" id="cur_cmpny_name" name="ccompany"
+									class="form-control" placeholder="Enter Current Company Name"
+									ng-model="currentCompanyName" required />
+								<div ng-messages="candidateScform.ccompany.$error"
+									ng-if="candidateScform.ccompany.$touched">
+									<div ng-message="required">This field is required</div>
+								</div>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="pancard">PAN CARD Number</label> <input type="text"
+									name="panno" class="form-control"
+									placeholder="Enter PAN CARD Number" ng-model="pancardnumber" maxlength="10"
+									ng-pattern="/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/" /> <span
+									style="color: red;"
+									ng-show="candidateScform.panno.$dirty && candidateScform.panno.$error.required">This
+									field is required</span> <span style="color: red;"
+									ng-show="candidateScform.panno.$error.pattern">Please
+									enter valid PanNumber</span>
+							</div>
+							<div class="form-group col-md-4">
+								<label for="preferredLocation">Preferred Location<sup>*</sup></label> 
+								<select id="clientclick"
+											ng-model="location" class="form-control"
+											ng-options="items.id as items.locationName for items in locationList">
+										</select>
+										<div ng-messages="formone.preferredLocation.$error"
+											ng-if="formone.preferredLocation.$touched">
+											<div ng-message="required">* Required Preferred sLocation</div>
+										</div>
+							</div>
+							<div class="form-group col-md-3">
+								<label for="primary_skill">Primary Skill<sup>*</sup></label>
+								<div ng-dropdown-multiselect1="" options="primary"
+									selected-model="skillarray" extra-settings="example16settings"
+									required></div>
+								<div ng-messages="candidateScform.skiil-name.$error"
+									ng-if="candidateScform.skiil-name.$touched">
+									<div ng-message="required">This field is required</div>
+								</div>
+							</div>
+
+							<div class="form-group col-md-3">
+								<label for="secondary_skills">Secondary Skills</label>
+								<div ng-dropdown-multiselect1="" options="secondary"
+									selected-model="skillarray1" extra-settings="example16settings"
+									required></div>
+								<!-- <div ng-messages="candidateScform.skiil-name.$error"
+							ng-if="candidateScform.skiil-name.$touched">
+							<div ng-message="required">This field is required</div>
+						</div> -->
+							</div>
+
+							<div class="form-group col-md-3">
+								<label for="certification">Certifications</label> <select
+									id="certification" name="checkvalidations" class="form-control"
+									ng-model="certifications">
+									<option value="" disabled selected>-- Select --</option>
+									<option value="yes">Yes</option>
+									<option value="no">No</option>
+								</select>
+
+
+							</div>
+							<div class="form-group col-md-3" id="certificate"
+								style="display: none">
+								<label for="certificate">Certificate Name</label></br>
+								<div ng-dropdown-multiselect3="" options="certificatname"
+									selected-model="certiarray" extra-settings="example16settings"></div>
+							</div>
+							<!-- 	<div class="form-group col-md-6">
+								<label for="resume">Resume Name<sup>*</sup></label> <input
+									class="form-control" id="name" type="text" name="resumename"
+									placeholder="Enter Resume Name" ng-model="inputParams.name"
+									required />
+								<div ng-messages="candidateScform.resumename.$error"
+									ng-if="candidateScform.resumename.$touched">
+									<div ng-message="required">Name is mandatory</div>
+								</div>
+
+							</div> -->
+
+							<div class="form-group col-md-6">
+								<label for="resume">Upload Resume<sup>*</sup></label>
+								<!-- <button class="file-upload">         -->
+								<input type="file" class="file-input" id="file" name="file"
+									file-model="resume"> <span style="color: red";>{{message}}</span>
+								<div ng-messages="candidateScform.file.$error"
+									ng-if="candidateScform.file.$touched">
+									<div ng-message="required"></div>
+									{{message1}}
+									<!-- {{message2}} -->
+								</div>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="position">Position Applied For</label> <input
+									class="form-control" id="name" type="text"
+									name="positionApplied"
+									placeholder="Enter Position Applying For"
+									ng-model="appliedPossitionFor" />
+								<!-- <div ng-messages="candidateScform.resumename.$error"
+									ng-if="candidateScform.resumename.$touched">
+									<div ng-message="required">Name is mandatory</div>
+								</div> -->
+
+							</div>
+						</div>
+						<div class="form-group col-md-12">
+							<button class="btn btn-success pull-right" ng-click="register()">Create</button>
+							<a href="#!/CandidateList1" class="btn btn-danger pull-right"
+								style="margin-right: 10px;">Cancel</a>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!-- <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-backdrop="static" data-target="#openMapReq">Open Modal</button>	 -->
+
+	<div class="modal fade" id="newModal" role="dialog">
+		<div class="modal-dialog">
+
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Information</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+
+				</div>
+				<div class="modal-body">
+					<h4 class="modal-title">Do you want Map the candidate to
+						Requirement</h4>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-info"
+						ng-click="yesCandidateMap();">Yes</button>
+					<button type="button" class="btn btn-info"
+						ng-click="noCandidateRedirection();">No</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<!-- 	modal starts here -->
+	<div id="openMapReq" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Map Candidate to Requirement</h4>
+					<!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-6">
+							<label>Customer</label> <select id="clienttype" name="clientType"
+								class="form-control" ng-model="clientType" required
+								ng-change="getReq();">
+								<option value="" selected ng-disabled="true">-- Select
+									--</option>
+								<option value="{{customer.id}}"
+									ng-repeat="customer in clientRes">{{customer.clientName}}</option>
+							</select>
+						</div>
+						<div class="col-md-6">
+							<label>Requirement</label> <select id="Requirement"
+								name="Requirement" class="form-control" ng-model="requirement"
+								required>
+								<option value="" selected ng-disabled="true">-- Select
+									--</option>
+								<option value="{{req.id}}" ng-repeat="req in reqList">{{req.nameOfRequirement}}</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<div class="row">
+						<div class="col-md-6">
+							<button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+						</div>
+						<div class="col-md-6">
+							<button type="button" class="btn btn-info"
+								ng-click="candidateMap();">Save</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+	<!--  <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Add Candidate </h3>
+        </li>
+      </ol>
+      <form name="candidateform" class="myForm" required novalidate>
+
+		<fieldset class="well .scheduler-border"
+			style="width: 790px; height: auto; margin: 0px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+			<legend
+				style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+				align="left"> Add Candidate </legend>
+
+			<div class="row">
+				<div class="form-group col-md-4" ng-hide="clientshow">
+					<label for="req_name">Client Name*</label> 
+					<select id="clientName"
+						name="client_name" class="form-control"
+						ng-options="items.id as items.clientName for items in clientl"
+						ng-model="clientName" ng-change="getRequirement(clientName)"
+						required>
+					</select>
+					
+					<select id="clientName" 
+						name="client_name" class="form-control"
+						ng-options="items.id as items.clientName for items in clientl "
+						ng-model="clientName" ng-change="getRequirement(clientName)"
+						required>
+					</select>
+					<div ng-messages="candidateform.client_name.$error"
+						ng-if="candidateform.client_name.$touched">
+						<div ng-message="required">Required ClientName</div>
+					</div>
+				</div>
+				
+				<div class="form-group col-md-4" ng-show="clientshow">
+					<label for="req_name">Client Name*</label> 
+					<input type="text" ng-model="clientName" class="form-control" ng-disabled="true" />
+				</div>
+				
+				<div class="form-group col-md-4" ng-hide=true>
+					<label for="req_name">Client Name*</label> 
+					<input type="text" ng-model="client_id" class="form-control" ng-disabled="true" />
+				</div>
+				
+				<div class="form-group col-md-4" ng-hide="clientshow">
+					<label for="req_name">Requirement Name*</label>
+					<select id="re" class="form-control" name="Requirement_name" ng-disabled="reqshow" ng-model="reqId" required>
+
+						<option value="" disabled selected>Please Select</option>
+						<option ng-repeat="req in requirement" value="{{req.id}}">{{req.nameOfRequirement}}
+						
+					</select>
+					<div ng-messages="candidateform.Requirement_name.$error"
+						ng-if="candidateform.Requirement_name.$touched">
+						<div ng-message="required">required Requirement Name</div>
+					</div>
+
+				</div>
+				
+				<div class="form-group col-md-4" ng-show="clientshow">
+					<label for="req_name">Requirement Name*</label> 
+					<input type="text" ng-model="reqId1" class="form-control" ng-disabled="true" />
+				</div>
+				
+				
+				<div class="form-group col-md-4" ng-hide=true>
+					<label for="req_name">Requirement Name*</label> 
+					<input type="text" ng-model="reqId" class="form-control" ng-disabled="true" />
+				</div>
+				
+				 <div class="form-group col-md-4" ng-hide="true">
+						<label for="user_fname">Date</label>
+						<input type="text" ng-model="date" class="form-control" />
+						<p class="input-group">
+							<input type="text" name="dates1" placeholder="dd/MM/yy" class="form-control"  uib-datepicker-popup="{{format}}"
+							is-open="popup1.opened" datepicker-options="dateOptions" alt-input-formats="altInputFormats" ng-model="subidate" required/>
+ 							 <span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>	 							
+						</p>
+						</div>
+				
+				<div class="form-group col-md-4">
+					<label for="status1">Candidate Status</label> 
+					<input type="text" class="form-control" 
+						name="statusname" ng-model="candidateStatus" readonly />
+					<div ng-messages="candidateform.statusname.$error"
+						ng-if="candidateform.statusname.$touched">
+						<div ng-message="required">This field is required</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+			<div class="form-group col-md-4">
+					<label for="title1">Title</label> <select id="title1"
+						class="form-control" name="titlename" ng-model="title" >
+							<option value="" disabled selected>--Select--</option>
+						<option value="mr">Mr</option>
+						<option value="ms">Ms</option>
+						<option value="miss">Miss</option>
+						<option value="mistress">Mrs</option>
+					</select>
+					
+				</div>
+				<div class="form-group col-md-4">
+					<label for="fname">First Name*</label> <input type="text"
+						name="fname" ng-model="firstName" class="form-control" placeholder="Enter First Name"
+						required />
+					<div ng-messages="candidateform.fname.$error"
+						ng-if="candidateform.fname.$touched">
+						<div ng-message="required">Required First Name</div>
+					</div>
+				</div>
+				<div class="form-group col-md-4">
+					<label for="lname">Last Name*</label> <input type="text"
+						name="lname" class="form-control" ng-model="lastName" placeholder="Enter Last Name" required />
+					<div ng-messages="candidateform.lname.$error"
+						ng-if="candidateform.lname.$touched">
+						<div ng-message="required">Required Last Name</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="form-group col-md-4">
+					<label for="mobile">Mobile*</label> <input type="text"
+						name="userContactNumber" class="form-control" ng-model="mobile" placeholder="Enter Mobile Number"
+						numbers-only
+						ng-pattern="/^[0-9]{10,10}$/" required>
+
+						<span style="color:red;" ng-show="candidateform.userContactNumber.$dirty && candidateform.userContactNumber.$error.required">Please enter mobile number</span>
+			                <span style="color:red;" ng-show="candidateform.userContactNumber.$error.pattern">Invalid number</span>
+		
+					</div>
+					<div class="form-group col-md-4">
+							<label for="mobile">Mobile*</label>
+							<input type="text" name="userContactNumber" placeholder="Enter Contact Number"  class="form-control" ng-model="mobile"  numbers-only ng-pattern="/^[0-9]{10,12}$/" required maxlength="10" />
+					<span style = "color:red" ng-show = "candidateform.userContactNumber.$dirty && userForm.userContactNumber.$error.required">not a valid number</span>
+                    <span style = "color:red" ng-show="candidateform.userContactNumber.$error.pattern"> number should be 10 digits</span>  
+						</div>
+				
+				 <div class="form-group col-md-4">
+					<label for="mobile">Alternate Mobile*</label> <input type="text"
+						name="userContactNumber1" class="form-control" ng-model="altermobile" placeholder="Enter Alternate Mobile Number"
+						numbers-only
+						ng-pattern="/^[0-9]{10,10}$/" required>
+
+						<span style="color:red;" ng-show="candidateform.userContactNumber1.$dirty && candidateform.userContactNumber1.$error.required">Please enter mobile number</span>
+			                <span style="color:red;" ng-show="candidateform.userContactNumber1.$error.pattern">Invalid number</span> 
+			                
+		          
+				</div>
+				<div class="form-group col-md-4">
+							<label for="mobile">Alternate Mobile*</label>
+							<input type="text" name="ContactNumber" placeholder="Enter Contact Number"  class="form-control" ng-model="altermobile"  numbers-only ng-pattern="/^[0-9]{10,12}$/" required maxlength="10" />
+					<span style = "color:red" ng-show = "candidateform.userContactNumber.$dirty && userForm.userContactNumber.$error.required">not a valid number</span>
+                    <span style = "color:red" ng-show="candidateform.ContactNumber.$error.pattern"> number should be 10 digits</span>  
+						</div>
+				<div class="form-group col-md-4">
+					<label for="user_email">Email*</label> <input type="email" placeholder="Enter Email"
+						name="userEmail" ng-model="email" required class="form-control" />
+					<div ng-messages="candidateform.userEmail.$error"
+						ng-if="candidateform.userEmail.$touched">
+						<div ng-message="required">Required Email</div>
+						<div ng-message="email">Enter valid email address</div>
+					</div>
+				</div>
+				
+					
+				
+
+			</div>
+			<div class="row">
+			<div class="form-group col-md-6">
+					<label for="user_email">Alter Email*</label> <input type="email" placeholder="Enter Alternate Email"
+						name="userEmail1" ng-model="alteremail" required class="form-control" />
+					<div ng-messages="candidateform.userEmail1.$error"
+						ng-if="candidateform.userEmail1.$touched">
+						<div ng-message="required">Required Email</div>
+						<div ng-message="email">enter valid email address</div>
+					</div>
+				</div>
+				<div class="form-group col-md-6">
+					<label for="gender">Candidate Source*</label>
+					<select id="source" name="cansource"  ng-change="changefun()"
+						class="form-control" ng-model="candidateSource" required>
+						<option value="" disabled selected>--Select--</option>
+						<option value="naukri">Naukri</option>
+						<option value="monster">Monster</option>
+						<option value="linkedin">Linkedin</option>
+						<option value="timesJobs">TimesJobs</option>
+						<option value="refered">Refered</option>
+					    <option value="other">Other</option>
+					</select>
+					</div>
+					<span ng-if="candidateSource == 'other'">
+					<div class="form-group col-md-4">
+					<label>Enter Resource</label>
+					<input type="text" placeholder="Enter Resource " ng-click="candidateSource = null" ng-model="candidateSource"  class="form-control" required placeholder="Please enter the source"/>
+					<div ng-messages="candidateform.field.$error"
+						ng-if="candidateform.field.$touched">
+						<div ng-message="required">Choose any option</div>											
+					</div>
+					</div>
+					</span>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="gender">Gender</label> <select id="gender" name="field"
+						class="form-control" ng-model="gender">
+							<option value="" disabled selected>Please Select</option>
+						<option value="male">Male</option>
+						<option value="female">Female</option>
+					</select>
+				</div>
+				<div class="form-group col-md-1">
+					<label for="gender">Gender:</label>
+					</div>
+					<div class="form-group col-md-6">
+					<input type="radio" value="male" ng-model="gender">Male
+					<input type="radio" value="female" ng-model="gender">Female
+				</div>
+				
+				
+				
+				<div class="form-group col-md-2">
+					<label for="cand_educ">Education*</label>
+					</div>
+					<div class="form-group col-md-3">
+					<div ng-dropdown-multiselect2="" options="educationdetails" selected-model="qualiarray" 
+						extra-settings="example16settings"></div>						
+						
+					
+					
+					<div ng-messages="candidateform.qualification_Name.$error"
+						ng-if="candidateform.qualification_Name.$touched">
+						<div ng-message="required">This field is required</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="exp_yrs">Total Experience*</label>(Yrs) <input type="text" placeholder="Enter Total Experience"
+						name="experience" class="form-control" 
+						ng-model="totalExperience" ng-change="difference(totalExperience,relevantExperience)" valid-number required />
+					<div ng-messages="candidateform.experience.$error"
+						ng-if="candidateform.experience.$touched">
+						<div ng-message="required">This field is required</div>
+					</div>
+				</div>
+				<div class="form-group col-md-6">
+					<label for="rel_exp_yrs">Relevant Experience*</label>(Yrs)
+					<input type="text" name="rel_experience" class="form-control" placeholder="Enter Relevant Experience"
+						 ng-model="relevantExperience" ng-change="difference(totalExperience,relevantExperience)" valid-number />					
+									<span style="color:#ff4c4c;">{{messege}}</span>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="cur_ctc">Current CTC*</label>(lkh/PA) <input type="text"
+						name="cur_ctc" class="form-control" placeholder="Enter Current CTC" ng-model="currentCTC"
+						valid-number required />
+					<div ng-messages="candidateform.cur_ctc.$error"
+						ng-if="candidateform.cur_ctc.$touched">
+						<div ng-message="required">Enter your current CTC</div>
+					</div>
+				</div>
+				<div class="form-group col-md-6">
+					<label for="exp_ctc">Expected CTC*</label>(lkh/PA)  <input type="text"
+						name="exp_ctc" placeholder="Enter Expected CTC" class="form-control" ng-model="expectedCTC"
+						valid-number required />
+					<div ng-messages="candidateform.exp_ctc.$error"
+						ng-if="candidateform.exp_ctc.$touched">
+						<div ng-message="required">Enter your Expected CTC</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label for="sal_negot">Salary Negotiable</label> <select
+						id="sal_negot" name="salary" class="form-control"
+						ng-model="salaryNegotiable">
+						<option value={{candidateData.salaryNegotiable}} selected >{{candidateData.salaryNegotiable}}</option>
+							<option value="" disabled selected>Please Select</option>
+						<option value="yes">Yes</option>
+						<option value="no">No</option>
+					</select>
+					
+				</div>
+				<div class="form-group col-md-6">
+					<label for="notice_period">Notice Period*</label>(Days)<select
+						id="notice_period" class="form-control" name="notice"
+						ng-model="noticePeriod" required>
+							<option value="" selected ng-disabled=true>Choose Option</option>
+							<option value="0">0</option>
+							<option value="0-7">0-7</option>
+							<option value="0-14">0-14</option>
+							<option value="15-30">15-30</option>
+							<option value="30-60">30-60</option>
+							<option value="60-90">60-90</option>
+						</select>
+					<div ng-messages="candidateform.notice.$error"
+						ng-if="candidateform.notice.$touched">
+						<div ng-message="required">Select any Option</div>
+					</div>
+				</div>	
+			</div>
+			<label>Current Location</label>
+			<div class="row">
+			
+				<div class="form-group col-sm-6 col-md-6">
+					<label>State</label>
+						<input type="text" class="form-control" ng-model="client[1].State" placeholder="Enter State"
+							 ng-disabled="false"/>
+
+				</div>
+				<div class="form-group col-sm-6 col-md-6">
+					<label>District</label>
+
+						<input type="text" ng-model="client[1].City" class="form-control" placeholder="Enter District"
+							 ng-disabled="false"/>
+
+				</div>
+				</div>
+				
+				<div class="row">
+				<div class="form-group col-sm-4 col-md-4">
+					<label>Country</label>
+					
+						<input type="text" class="form-control" placeholder="Enter Country"
+							ng-model="client[1].Country"  ng-disabled="false"/>
+				</div>
+				
+				<div class="form-group col-sm-4 col-md-4">
+					<label>Pincode*</label>
+						<input type="text" ng-model="pincode" class="form-control" name="pincode"
+							placeholder="Enter Pincode" numbers-only ng-pattern="/^[0-9]{6,6}$/" required/ maxlength="6">
+
+
+						<span style="color:red;" ng-show="candidateform.pincode.$dirty && candidateform.pincode.$error.required">Please enter mobile number</span>
+			                <span style="color:red;" ng-show="candidateform.pincode.$error.pattern">required 6 digits pincode</span>
+
+						</div>
+					<div class="form-group col-sm-2 col-md-2">
+					</br>
+						<a href="#!/addCandidate" type="button" class="btn btn-default" style="color:	#1e90ff;"
+							 ng-click="getDetails()" class="form-control">Search </a>
+		
+					</div>
+
+				<div class="form-group col-sm-4 col-md-4">
+
+					<label>Address*</label>
+					
+
+						 <sele id="requirementid"  class="form-control"
+							ng-model="address">
+
+							<option ng-repeat="x in client" value={{x.Address}}>{{x.Address}}</option>
+
+						</select> 
+                  <textarea rows="5" cols="150" class="form-control"  placeholder="Enter Address"  ng-model="address" ng-disabled="hide1"/>
+				</div>
+				</div>
+				
+				
+				
+				
+				
+				<div class="row">
+
+				</div>
+
+				
+
+				<div class="row">
+					<div class="form-group col-md-6">
+						<label for="relocation">Willing to Relocate</label> 
+				
+				<select id="relocation"  name="relocate" class="form-control" ng-model="willingtoRelocate" >
+								<option value="" disabled selected>Please Select</option>
+							<option value="yes">Yes</option>
+							<option value="no">No</option>
+						</select>
+			
+					</div>
+					<div class="form-group col-md-6">
+						<label for="skype_id">Skype ID</label> <input type="text"
+							  name="skypename"class="form-control"  ng-model="skypeID"  />
+			
+					</div>
+				</div>
+				
+				
+				
+				<div class="row">
+					<div class="form-group col-md-6">
+						<label for="cur_job_type">Current Job Type*</label>
+			
+			<select id="cur_job_typ" class="form-control" name="cjobtype"  ng-model="currentJobType" required >
+							 	<option value="" disabled selected>Please Select</option>
+							<option ng-repeat="currentJobTypes in currentJobTypes| unique : 'modeOfHiring' "
+								value={{currentJobTypes.modeOfHiring}} >{{currentJobTypes.modeOfHiring}}</option>
+						</select>
+						
+						<select id="cur_job_typ" class="form-control" name="cjobtype"  ng-model="currentJobType" required >
+								<option value="" disabled selected>Please Select</option>
+							<option value="permanent">permanent</option>
+							<option value="C2H">C2H</option>
+							<option value="contract">contract</option>
+						</select>
+						
+						<div ng-messages="candidateform.cjobtype.$error"
+						ng-if="candidateform.cjobtype.$touched">
+						<div ng-message="required">This field is required</div>
+					</div>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="payrole_cmpny">PayRoll Company Name*</label> <input
+							type="text" id="payrole_cmpn"   name="pcompany" class="form-control"
+							ng-model="payRollCompanyName" required />
+							<div ng-messages="candidateform.pcompany.$error"
+						ng-if="candidateform.pcompany.$touched">
+						<div ng-message="required">This field is required</div>
+					</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-6">
+						<label for="cur_cmpny_name">Current Company Name*</label> <input
+							type="text" id="cur_cmpny_name" name="ccompany" class="form-control"
+							ng-model="currentCompanyName" required/>
+							<div ng-messages="candidateform.ccompany.$error"
+						ng-if="candidateform.ccompany.$touched">
+						<div ng-message="required">This field is required</div>
+					</div>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="pancard">PAN CARD Number</label> <input type="text"
+							name="panno" class="form-control" ng-model="pancardnumber" ng-pattern="/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/"/>
+							<div ng-messages="candidateform.panno.$error"
+						ng-if="candidateform.panno.$touched">
+						<div ng-message="required"></div>
+					</div>
+					
+					
+					<span style="color:red;" ng-show="candidateform.panno.$dirty && candidateform.panno.$error.required">This field is required</span> 
+			                <span style="color:red;" ng-show="candidateform.panno.$error.pattern">Please enter valid PanNumber</span>
+					</div>
+				</div>
+				
+				
+				
+				
+				<div class="row">
+					<div class="form-group col-md-6">
+						<label for="primary_skill">Primary Skill*</label>
+						<div ng-dropdown-multiselect1="" options="primary" selected-model="skillarray" 
+						extra-settings="example16settings" required></div>
+						
+						
+						<div ng-messages="candidateform.skiil-name.$error"
+							ng-if="candidateform.skiil-name.$touched">
+							<div ng-message="required">This field is required</div>
+						</div>
+
+					</div>
+					
+				<div class="form-group col-md-6">
+						<label for="secondary_skills">Secondary Skills</label>
+						<div ng-dropdown-multiselect1="" options="secondary" selected-model="skillarray1" 
+						extra-settings="example16settings"></div>
+					</div>
+
+					
+				</div>
+				<div class="row">
+					<div class="form-group col-md-6">
+						<label for="certification">Certifications</label> <select
+							id="certification" name="checkvalidations" class="form-control" ng-model="certifications" >
+							<option value="" disabled selected>Please Select</option>
+							<option  value="yes">Yes</option>
+							<option value="no">No</option>
+						</select>
+			
+								
+					</div>
+					<div class="form-group col-md-6" id="certificate" style="display:none">
+						<label for="certificate" >Certificate Name</label></br>
+
+						
+						<div ng-dropdown-multiselect3="" options="certificatname" selected-model="certiarray" 
+						extra-settings="example16settings"></div>
+						
+						
+
+					</div>
+				</div>
+				<div class="row">
+						<div class="form-group col-md-6">
+						<label for="resume">Resume Name*</label>
+							<input class="form-control" id="name" type="text" name="resumename"
+								ng-model="inputParams.name" required/>
+							<div ng-messages="candidateform.resumename.$error"
+							ng-if="candidateform.resumename.$touched">
+							<div ng-message="required">Name is mandatory</div>
+							</div>
+								
+						</div>
+						
+						<div class="form-group col-md-6">
+						<label for="resume">Upload Resume*</label>	
+								<button class="file-upload">            
+								<input type="file" class="file-input" id="file" name="file" file-model = "resume">Choose File</button>
+								<span style="color:red";>{{message}}</span>
+								<div ng-messages="candidateform.file.$error"
+							ng-if="candidateform.file.$touched">
+							<div ng-message="required"></div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+					<div class="form-group col-md-1">
+							<a href="#!/CandidateList1" class="btn btn-primary pull-left">Cancel</a>
+					</div>
+							<div class="form-group col-md-1">
+							<button type="reset" class="btn btn-primary pull-left">Reset</button>						
+						</div>
+							
+						<div class="form-group col-md-10">
+							<button class="btn btn-info pull-right" ng-disabled="candidateform.$invalid" ng-click="register()">Register</button>
+							</div>
+							
+							
+					</div>
+
+				</div>
+			</div>
+		</fieldset>
+	</form>
+  </div>
+  </div>
+  
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+
+			Modal content
+
+			<div class="modal-content">
+                 <div class="modal-header">
+					<button type="button" data-dismiss="modal" class="close">&times;</button>
+					<h4>Add Candidate:</h4>
+				</div>
+			<div class="modal-body">
+				<form class="form-horizontal" 
+					name="myForm" onsubmit="return myFun()">
+					<div class="form-group" id="mod">
+						<label class="control-label col-sm-4" for="mode">Add Candidate</label>
+						<p>Your profile is sucessfully submited at {{date| date:'d/MMM/yyyy h:mm a'}}</p>
+						<button class="btn btn-info pull-right" data-dismiss="modal" ng-click="popclosefun()">OK</button>
+				</form>
+			</div>
+			</div>
+			<div class="modal-footer">
+					<button class="btn btn-info pull-right" data-dismiss="modal" ng-click="popclosefun()">OK</button>
+			</div>
+		</div>
+		</div>
+		
+		
+		<div class="modal fade" id="myModal1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			<div class="modal-body">
+				<form class="form-horizontal" 
+					name="myForm" onsubmit="return myFun()">
+					<div class="form-group" id="mod">
+						<label class="control-label col-sm-4" for="mode">Add Candidate</label>
+						<p>Duplicate profiles are not allowed  </p>
+						<button class="btn btn-info pull-right" data-dismiss="modal" >OK</button>
+				</form>
+			</div>
+			</div>
+		</div>
+		</div>
+	 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<style type="text/css">
+/* label {
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+} */
+h2 {
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+select option {
+	font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+/* input[type="text"] {
+	text-transform: uppercase;
+} */
+table, th, td {
+	border: 0px solid black;
+	border-collapse: collapse;
+}
+</style>
+
+	<script>
+		$(document).ready(function() {
+
+			/*$(function() {
+			$('input[type="text"]').keyup(function() {
+			    $(this).val($(this).val().toUpperCase());
+				});
+			});*/
+
+			//on selection of title gender will be updated
+			/*$('#title1').on('change', function() {
+				var x = $('#title1').val();
+				if (x == 'select') {
+					$('#gender').val("select");
+
+				}
+				if (x == 'mr') {
+					$('#gender').val("male");
+
+				}
+				if (x == 'miss' || x == 'ms' || x == 'mistress') {
+					$('#gender').val("female");
+
+				}
+			});*/
+
+			//if Currentjobtype is contract then the payroll company name is highlighted
+			/*$('#cur_job_type').on('click', function() {
+				var value = $('#cur_job_type').val();
+
+				if (value == 'contract') {
+					$('#payrole_cmpny').attr('disabled', false);
+				} else {
+					$('#payrole_cmpny').attr('disabled', true);
+				}
+
+			});*/
+
+			$('.ui.dropdown').multiselect({
+				close : true,
+				selectAll : true
+			});
+		});
+
+		$('#certification').on('change', function() {
+
+			if (this.value == "yes") {
+				$('#certificate').css('display', 'block');
+			} else if (this.value == "no") {
+				$('#certificate').css('display', 'none');
+			}
+
+		});
+	</script>

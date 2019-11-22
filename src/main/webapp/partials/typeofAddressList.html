@@ -1,0 +1,73 @@
+<div ng-include=" 'partials/fotter.html' "></div>
+<div ng-include=" 'partials/header.html' "></div>
+<div class="container">
+  
+	<div class="container list table-responsive panel panel-danger" >
+	<div class="panel-heading"><h4>List Of Address
+	<input class="pull-right"type="search" ng-model="test" placeholder="search here.."></h4>
+	</div>
+	<div class="panel-body" style="padding:5px">
+	<table class="table col-lg-10 table-bordered" id="rec_List">
+		<thead>
+		
+		
+		    <tr>
+    	<th>Address</th>
+    	<th>Edit</th>
+    	<th>Delete</th>
+    </tr>
+    	
+    </thead>
+    <tbody>
+     <tr dir-paginate="detail in AddressList|orderBy:'-id'|filter:test|itemsPerPage:3">
+		<td>{{detail.typeOfAddress}}</td>
+       <!-- <td><a  class="modal-dialog modal-lg" data-toggle="modal" data-target="#myModal" ng-click="popupdata(detail.id)"><span class="glyphicon glyphicon-pencil"></span</a></td>-->
+		<td><button class="btn btn-primary"
+							class="modal-dialog modal-lg" data-toggle="modal"
+							data-target="#myModal" ng-click="popupdata(detail.id)">
+							<span class="glyphicon glyphicon-pencil"></span>
+						</button></td>
+         <td>
+          <button title="" type="button" class="btn btn-danger remove show_tip" data-original-title="Remove from list">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </td>
+	
+		</tbody>
+	</table>
+	</div>
+	<div class="panel-footer" >
+		<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+		 <a href="#!/bdm"  type="button"  class="text-warning"  ><span class="glyphicon glyphicon-hand-left"></span>Back</a>
+		 <a href="#!/typeAdd"  type="button"  class="btn btn-info btn-lg pull-center" style="padding:5px 20px;" >Add</a>		
+
+	</div>
+	</div>
+      
+      
+   
+   <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">      
+      <div class="modal-content">
+        <div class="modal-header">
+		<button type="button" data-dismiss="modal" class="close">&times;</button>
+		<h4>Edit Address Type:</h4>
+         </div>             
+        <div class="modal-body">
+		<form class="form-horizontal">
+		<div class="form-group">
+		<label class="control-label col-sm-4" for="role">Certification Name:</label>
+		<div class="col-sm-6">
+		<input class="form-control" type="text" placeholder="enter your name" id="name" ng-model="editAddressType"></input>
+		</div>
+		</div>
+		</form>
+        </div>
+        <div class="modal-footer">
+			<button class="btn btn-success pull-left" data-dismiss="modal" ng-click="UpdateCerti(editDetails.id)">Update</button>
+	        <button class="btn btn-danger pull-right"data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+      </div>
+	  </div>
+	  </div>

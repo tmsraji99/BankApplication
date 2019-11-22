@@ -1,0 +1,109 @@
+
+<style>
+lable {
+	font-family: "Source Sans Pro", sans-serif;
+	color: #656565;
+}
+</style>
+
+<div ng-show="isLoading" class="Applicationloader">
+	<img src="images/rpoloader.gif">
+</div>
+
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>
+					<i class="fa fa-user-plus"></i> Generate Tracker
+				</h3>
+			</li>
+		</ol>
+		<div class="form-group col-md-12">
+			<form name="formone" novalidate>
+				<div class="row">
+					<div class="form-group col-md-4">
+						<label>Customer Name</label> 
+						<select id="clientclick"
+							ng-model="clientName" class="form-control"
+							ng-options="items.id as items.clientName for items in clientnamesbdm"
+							id="client_name" ng-click="getActiveContacts(clientName)"
+							ng-init="getActiveContacts(clientName)"
+							ng-change="getRequirements(clientName)"
+							style="width: 100%; height: 33.33px">
+						</select>
+						<div ng-messages="formone.client_name.$error"
+							ng-if="formone.client_name.$touched">
+							<div ng-message="required">* Required Customer Name</div>
+						</div>
+					</div>
+					<div class="form-group col-md-4">
+						<label>Requirement Name*</label> 
+						<!-- <select id="clientclick"
+							ng-model="nameOfRequirement" class="form-control"
+							ng-options="items.id as items.nameOfRequirement for items in ListReqData"
+							style="width: 100%; height: 33.33px">
+						</select> -->
+						<div class="row-fluid">
+						    <ui-select ng-model="nameOfRequirement" theme="select2" title="">
+						        <ui-select-match placeholder="Select Requirement Name...">{{$select.selected.nameOfRequirement}}</ui-select-match>
+						        <ui-select-choices repeat="items in ListReqData | filter: $select.search">
+						            <span ng-bind-html="items.nameOfRequirement | highlight: $select.search"></span>
+						        </ui-select-choices>
+						    </ui-select>
+						</div>
+						<div ng-messages="formone.client_name.$error"
+							ng-if="formone.client_name.$touched">
+							<div ng-message="required">* Required Customer Name</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-8">
+			<table class="table table-bordered">
+				<tr>
+				<!-- 	<th>Select All</th> -->
+					<th>Tracker 
+						<span><input type="checkbox" ng-click="toggleAll()" ng-model="isAllSelected"></span>
+					</th>
+					<th>Fields</th>
+				</tr>
+				<!-- <tr>
+						<td><input type="checkbox" ng-model="checked.value1" ng-if="checked.value1==true"></td>
+						<td>Currency</td>{{value1}}
+					</tr> -->
+				<tr ng-repeat="album in albums">
+					<!-- <td><input type="checkbox" ng-model="album"
+						value="{{album.columnName}}" /></td> -->
+					<td><input type="checkbox" ng-model="album.selected"
+						value="{{album.columnName}}" /></td>
+					<td>{{album.columnLable}}</td>
+				</tr>
+				<div class="col-md-12 m-b-10">
+					<div class="col-md-6 text-left">
+						<button class="btn btn-info btn-xs pull-center" ng-click="save()" ng-disabled="!isAllSelected">Generate Excel Tracker</button>
+					</div>
+					<div class="col-md-6 text-right">
+							 <a id='dwnldLnk' download='{{download}}'
+						class="btn btn-info btn-xs pull-center"	href="../Documents/{{download}}" title='download tracker' ng-disabled="!isAllSelected"> Download</a>
+					</div>
+				</div>
+			</table>
+		</div>
+		<div class="clearfix"></div>
+		<!-- <div class="col-md-12">
+		
+		<div ng-init="getByteSteam()">
+			<img src="data:image/png;base64, {{encodedData}}" alt=" Red dot" />
+		</div>
+		
+		</div> -->
+
+	</div>
+</div>
+<script type="text/javascript">
+	
+</script>

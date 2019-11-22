@@ -1,0 +1,295 @@
+<div ng-include="'partials/header.html'"></div>
+ <div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper" ng-init="getReqByReqId();getCandidatesByRole();"> 
+    <div class="container-fluid" style="margin-top: 60px;">
+        <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Candidate Details </h3>
+        </li>
+        
+        </ol>
+        			
+        <div class="col-md-6">
+		<fieldset class="well .scheduler-border"
+			style="width: 790px; height: auto; min-height: 600px; margin: 0px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+			<legend
+				style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+				align="left">Requirement Details </legend>
+				
+				<div class="row">
+					<!-- <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Customer Name</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.client.clientName}}</li>
+					 </div> -->
+					<!-- <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Name Of Requirement</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.nameOfRequirement}}</li>
+					 </div> -->
+					 <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Qualification Name</strong></li>
+					 </div>
+					   <div class="col-md-7">
+					   <li class="list-group-item"><span ng-repeat="e in qualifications">{{e.qualificationName}}, </span></li>
+					 </div>
+					 <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Skills</strong></li>
+					 </div>
+					   <div class="col-md-7">
+					   <li class="list-group-item"><span ng-repeat="y in skills">{{y.skillName}}, </span></li>
+					 </div>
+					<!--  <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Total Experience</strong></li>
+					 </div> -->
+					 <!--   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.totalExperience}}</li>
+					 </div> -->
+					<!--  <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Total Experience</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.totalExperience}}</li>
+					 </div> -->
+					  <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Relevant Experience</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.relavantExperience}}Years</li>
+					 </div>
+					  <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Min Budget</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					<!--    <div style="display:none"> -->
+					    <li class="list-group-item"><span ng-show="typeOfHiring == Contract to Hire">{{reqDetails.minBudgetRate | currency:"₹ "}}</span>
+					    <span ng-show="typeOfHiring == contract">{{reqDetails.minBudget | currency:"₹ "}}</span>
+					    <span ng-show="typeOfHiring == permanent">{{reqDetails.minBudget | currency:"₹ "}}</span></li>
+					  <!--   </div>-->
+					   <!--   <div style="display:none" ng-show="reqDetails.typeOfHiring == Contract to Hire" >
+					    <li class="list-group-item">{{reqDetails.minBudget | currency:"₹ "}}</li>
+					    </div> -->
+					 </div>
+					 
+					 <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Max Budget</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">
+					    <span ng-show="(typeOfHiring == 'Contract to Hire')">{{reqDetails.maxBudgetRate | currency:"₹ "}}</span>
+					    <span ng-show="(typeOfHiring == 'contract')">{{reqDetails.maxBudget | currency:"₹ "}}</span>
+					    <span ng-show="(typeOfHiring == 'permanent')">{{reqDetails.maxBudget | currency:"₹ "}}</span></li>
+					 </div>
+					 <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Type Of Hiring</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.typeOfHiring}}</li>
+					 </div>
+					  <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Job Location</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.location.locationName}}</li>
+					 </div>
+				<!-- 	 <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Number Of Positions</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.numberOfPositions}}</li>
+					 </div> -->
+					 
+					  <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Roles </strong></li>
+					 </div>
+					   <div class="col-md-7">
+					   <li class="list-group-item"><span ng-repeat="o in designations">{{o.designation}}, </span></li>
+					 </div>
+					<!--  <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Number Of Positions</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{reqDetails.numberOfPositions}}</li>
+					 </div -->
+					 <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Requirement Description</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item w-b">{{reqDetails.requirementDescription}}</li>
+					 </div>
+					 <div class="col-md-5 text-right">
+					    <li class="list-group-item "><strong>Job Description</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item w-b">{{reqDetails.jobDes}}</li>
+					 </div>
+				</fieldset>
+				</div>
+				<!--  Candidate Details  -->
+        <div class="col-md-6">
+		<fieldset class="well .scheduler-border"
+			style="width: 790px; min-height: 600px; height: auto; margin: 0px auto; border: 1px solid #ccc; -webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+			<legend
+				style="width: auto; padding: 0 7px; border-bottom: none; font-family: Gotham, 'Helvetica Neue', Helvetica, Arial, 'sans-serif'; font-size: 18px; color: blueviolet"
+				align="left"> Candidate Details </legend>
+				<div class="row">
+				<div class="col-md-12 text-right">
+							</div>
+				
+					<!-- <div class="col-md-5 text-right">					
+					    <li class="list-group-item"><strong>Name</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateData.firstName}} {{candidateData.lastName}}</li>
+					 </div> -->
+					 <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Education</strong></li>
+					 </div>
+					   <div class="col-md-7">
+					    <li class="list-group-item"><span ng-repeat="x in candidateData.education">{{x.qualificationName}} , </span>
+					   <!--   <span  class="glyphicon glyphicon-ok-circle" style="color: #28a745!important;" ng-if="permanent == permanent"></span>
+					   <span  class="glyphicon glyphicon-remove-circle" style="color: #dc3545!important;" ng-if="permanent !== permanent"></span> -->
+					   </li>
+					 </div>
+					 <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Skills</strong></li>
+					 </div>
+					   <div class="col-md-7">
+					   <li class="list-group-item"><span ng-repeat="x in candidateData.skills">{{x.skillName}}, &nbsp;&nbsp;</span>
+					   <span  class="glyphicon glyphicon-ok-circle" style="color: #28a745!important;" ng-if="(getCompareList.skills == true)"></span>
+					   <span  class="glyphicon glyphicon-remove-circle" style="color: #dc3545!important;" ng-if="(getCompareList.skills == false)"></span>
+					   </li>
+					 </div>
+					<!--   <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Total Experience</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateData.totalExperience}}
+					      <span  class="glyphicon glyphicon-ok-circle" style="color: #28a745!important;" ng-if="(getCompareList.totalExperience == true)"></span>
+					   <span  class="glyphicon glyphicon-remove-circle" style="color: #dc3545!important;" ng-if="(getCompareList.totalExperience == false)"></span>
+					 </li>
+					 </div> --> 
+					  <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Relevant Experience</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateData.relevantExperience}} Years&nbsp;&nbsp;
+					    <span  class="glyphicon glyphicon-ok-circle" style="color: #28a745!important;" ng-if="(getCompareList.relevantExperience == true)"></span>
+					   <span  class="glyphicon glyphicon-remove-circle" style="color: #dc3545!important;" ng-if="(getCompareList.relevantExperience == false)"></span>
+					    </li>
+					 </div>
+					 <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Current CTC</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateData.currentCTC | currency:"₹ " }}</li>
+					 </div>
+					 <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Expected CTC</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateData.expectedCTC | currency:"₹ "}} &nbsp;&nbsp;
+					    <span  class="glyphicon glyphicon-ok-circle" style="color: #28a745!important;" ng-if="(getCompareList.expectedCTC == true)"></span>
+					   <span  class="glyphicon glyphicon-remove-circle" style="color: #dc3545!important;" ng-if="(getCompareList.expectedCTC == false)"></span>
+					    </li>
+					 </div>
+					 <!--  <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Current Job Type</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateData.currentJobType}} &nbsp;&nbsp;
+					    <span  class="glyphicon glyphicon-ok-circle" style="color: #28a745!important;" ng-if="permanent == permanent"></span>
+					   <span  class="glyphicon glyphicon-remove-circle" style="color: #dc3545!important;" ng-if="permanent !== permanent"></span>
+					    </li>
+					 </div> -->
+					  <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Willing to Relocate</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateData.willingtoRelocate}}&nbsp;
+					    <span  class="glyphicon glyphicon-ok-circle" style="color: #28a745!important;" ng-if="(getCompareList.willingToRelocate == true)"></span>
+					   <span  class="glyphicon glyphicon-remove-circle" style="color: #dc3545!important;" ng-if="(getCompareList.willingToRelocate == false)"></span>
+					    </li>
+					 </div>
+					  <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Salary Negotiable</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateData.salaryNegotiable}}
+					       <span  class="glyphicon glyphicon-ok-circle" style="color: #28a745!important;" ng-if="(getCompareList.salaryNegotiable == true)"></span>
+					   <span  class="glyphicon glyphicon-remove-circle" style="color: #dc3545!important;" ng-if="(getCompareList.salaryNegotiable == false)"></span></li>
+					 </div>
+					 <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Notice Period</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateData.noticePeriod}}&nbsp;
+					   <!--  <span  class="glyphicon glyphicon-ok-circle" style="color: #28a745!important;" ng-if="permanent == permanent"></span>
+					   <span  class="glyphicon glyphicon-remove-circle" style="color: #dc3545!important;" ng-if="permanent !== permanent"></span> -->
+					    </li>
+					 </div>
+					
+					 <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>PayRoll CompanyName</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateData.payRollCompanyName}}</li>
+					 </div>
+					 <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Current CompanyName</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item">{{candidateData.currentCompanyName}}</li>
+					 </div>
+					 <div class="col-md-5 text-right">
+					    <li class="list-group-item"><strong>Certificates</strong></li>
+					 </div>
+					   <div class="col-md-6">
+					    <li class="list-group-item"><span ng-repeat="x in candidateData.certificates">{{x.certificationName}}, </span></li>
+					 </div>
+					
+				</div>
+				<button type="button" class="btn btn-success pull-right" ng-click=viewResume() data-toggle="modal" data-target="#myModal">Review Resume</button>
+				</fieldset>
+				
+				</div> 
+				  
+	    
+				
+		
+	</div>
+	</div>
+
+ 
+ <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Resume</h4>
+         <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body height-adj">
+      <div id="output" ></div>
+      <!--  <embed ng-src="{{docUrl}}" type="application/docx" width="100%" height="600px" /> --> 
+    <!--   <iframe  src="https://docs.google.com/gview?url=http://localhost:8087/rpo/Resumes/10020.docx&embedded=true"></iframe> -->
+     <!--  <iframe src="{{cvUrlTrusted}}"></iframe>  -->
+    
+      </div>
+      <div class="modal-footer">
+      <label>Remarks<sup>*</sup>:</label>
+      <input type="text" class="form-control" placeholder="Enter Remarks" ng-model="reason" required>
+           <button type="button" class="btn btn-success" ng-click="acceptedAndrejected('Accepted By Lead')" data-dismiss="modal">Accepted</button>
+           <button type="button" class="btn btn-danger"  ng-click="acceptedAndrejected('Rejected By Lead')" data-dismiss="modal">Rejected</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+ 

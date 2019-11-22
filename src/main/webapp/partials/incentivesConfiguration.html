@@ -1,0 +1,68 @@
+<div ng-show="isLoading" class="Applicationloader">
+	<img src="images/rpoloader.gif">
+</div>
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>Incentives Configuration</h3>
+			</li>
+		</ol>
+		<ol class="breadcrumb">
+			<div class="col-md-10">
+				<input class="form-control" style="width: 25%" type="search"
+					ng-model="mobile" placeholder="Search with role" maxlength="10"
+					minlength="10">
+			</div>
+  		<div class="col-md-2 pull-right">
+				<a href="#!/addincentivesConfiguration" type="button"
+					class="btn btn-info btn-md pull-center"><span
+					class="glyphicon glyphicon-plus"></span>Add</a>
+			</div>
+
+		</ol>
+			<table st-table="ListReqData" st-safe-src="rowCollection" class="table">
+		<thead>
+	  <tr >
+		   <th class="text-left" >Id</th>
+            <th class="text-left" >Role</th>
+            <th class="text-left" >Target </th>
+			<th class="text-left" >Amount </th>
+			<th class="text-left" >ValueType</th>
+          <!--   <th class="text-left">Requirement Id </th>
+            <th class="text-left">Requirement Name</th> -->
+			<th class="text-left" >Rule </th>	
+			<th class="text-left">Is countable </th>
+			<th class="text-left">Min ctc</th>
+			<th class="text-left">Max ctc</th>
+			<th class="text-left">Edit</th>	
+			<th class="text-left">Delete</th>			
+          </tr>		
+        </thead>
+        <tbody>
+       <tr ng-repeat="list in lists">
+	     	<td class="text-left">{{list.id}}</td>
+            <td class="text-left">{{list.role}}</td>
+            <td class="text-left"> {{list.target}}</td>
+            <td class="text-left">{{list.amount}}</td>
+            <td class="text-left">{{list.valueType}}</td>
+       <!--      <td class="text-left"> {{list.reqId}}</td>
+            <td class="text-left">{{list.requirementName}}</td>  -->
+            <td class="text-left">{{list.rule}}</td>
+            <td class="text-left">{{list.is_countable}}</td>
+            <td class="text-left">{{list.min_ctc}}</td>
+            <td class="text-left">{{list.max_ctc}}</td>
+            <td class="text-left">	<a href="#!/editincentivesConfiguration/{{list.id}}"
+					class="btn btn-info">
+					<span class="glyphicon glyphicon-pencil" ng-click="getbyidIncentives(list.id)"></span></a></td>
+			<td class="text-left">	<button 
+					class="btn btn-danger">
+					<span class="glyphicon glyphicon-trash" ng-click="deleteIncentives(list.id)"></span></button></td>
+	  </tr>
+        </tbody>
+      </table>
+       <div class="col-md-12 text-center"><h3>{{nodata}}</h3></div> 
+	</div>
+</div>

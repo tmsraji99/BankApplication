@@ -1,0 +1,274 @@
+
+
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+
+ <div class="container list table-responsive panel panel-danger" style="width:95%;" ng-init="getCfun()">
+	<div class="panel-heading"><h4>Client Information
+	<input class="pull-right"type="search" ng-model="test" placeholder="search clients"></h4>
+	</div>
+<div class="panel-body" style="padding:5px" >
+	<table st-table="client1" st-safe-src="rowCollection" class="table table-striped">
+			<thead class="thead-inverse" >
+			        <th st-sort="id">Customer Id</th>
+					<th st-sort="clientName">Customer Name</th>
+					<th st-sort="customer.customerType">Customer Type</th>
+					<th st-sort="date1">Date</th>
+					<th st-sort="phone">Phone</th>
+					<th st-sort="email">Email Id</th>
+					<th>Address</th>
+					<th>Action</th>
+					<th>Client Contact</th>
+					<th>Contact Details</th>
+
+			</thead>
+			<tbody>
+				<tr dir-paginate="x in client1 |filter:test|itemsPerPage:5">
+				    <td>OJAS-C{{x.id}}</td>
+					<td>{{x.clientName}}</td>
+					<td>{{x.customer.customerType}}</td>
+					<td>{{x.date1}}</td>
+					<td>{{x.phone}}</td>
+					<td>{{x.email}}</td>
+					<td><a  data-toggle="modal" data-target="#myModal"  style="color:#0645AD; cursor: pointer;" ng-click="getaddresspopup(x)">Address</a></td>
+					
+					<td><a href={{urlForEdit}}> <button class="btn btn-primary" ng-click="editClientfun(x)">
+					<span class="glyphicon glyphicon-pencil"></span></button></a></td>
+					 
+		         <!--  <td><a  data-toggle="modal" data-target="#myModal2"  style="color:#0645AD; cursor: pointer;" ng-click="addclientfun(x)"><span class="glyphicon glyphicon-plus"></span>Contact person</a></td>-->
+			
+		   <td><a href="#!/addClientContact"  type="button"  class="btn btn-info pull-center" ng-click="addclientfun(x)" ><span class="glyphicon glyphicon-plus"></span>Contact person</a>  </td>
+	 <td><a type="button"  class="btn btn-info btn-md pull-center"  data-toggle="modal" data-target="#main"  ng-click="getcontactClient(x.id)">View Client Contacts</a></td>		   
+		   
+					
+				</tr>
+			</tbody>
+			
+		</table></div>
+		
+	
+<div class="pannel panel-fixed-footer " style="background:linear-gradient(	#FFFFFF);">
+		<dir-pagination-controls class="pull-right"></dir-pagination-controls>
+
+		&nbsp;&nbsp; <button  type="button"  class="btn btn-info btn-md" ng-click="redirect()"><span class="glyphicon glyphicon-home"></span> Home</button>&nbsp;&nbsp;
+		 <a href="#!/client"  type="button"  class="btn btn-info btn-md pull-center"><span class="glyphicon glyphicon-plus"></span>Client</a>
+	
+		 
+		 
+		 
+		 
+	</div>
+	
+	
+	
+<div class="modal fade" id="myModal" role="dialog" >
+		<div class="modal-dialog" style="width:50%;height:auto;">   
+		<div class="modal-content">
+			
+        <div class="modal-header">
+		<button type="button" data-dismiss="modal" class="close">&times;</button>
+		<h4>Address Details</h4>
+         </div>       
+      
+        <div class="modal-body">
+		<form class="form-horizontal">
+			<div class="form-group">
+	
+		<div style="width:45%;height:auto;line-height:3em;overflow:auto;margin:10px; padding:5px;border:1px ridge #000; float: right;" >
+	   <div class="table-responsive" >          
+  	    <table class="table" >
+      	<center><label>{{addressdetails[1].typeOfAddress}} Address</label></center>
+      	<tbody>
+		<tr>
+	        <td>Country:</td>
+	        <td>{{addressdetails[1].country}}</td>
+      	</tr>
+		<tr>
+	        <td>State:</td>
+	        <td>{{addressdetails[1].state}}</td>
+      	</tr>
+		<tr>
+	        <td>District:</td>
+	         <td>{{addressdetails[1].city}}</td>
+      	</tr>
+		<tr>
+	        <td>City:</td>
+	          <td>{{addressdetails[1].addressLane1}}</td>
+      	</tr>
+		<tr>
+	        <td>Address :</td>
+	         <td>{{addressdetails[1].addressLane2}}</td>
+      	</tr>
+		<tr>
+	        <td>Pincode :</td>
+	          <td>{{addressdetails[1].pincode}}</td>
+      	</tr>
+		
+
+    	</tbody>
+  	</table>
+</div>
+</div>
+
+
+		<div style="width:45%;height:auto;line-height:3em;overflow:auto;margin:10px; padding:5px;border:1px ridge #000; float: left;">
+	   <div class="table-responsive" >          
+  	    <table class="table" >
+      	<center><label>{{addressdetails[0].typeOfAddress}} Address</label></center>
+      	<tbody>
+		<tr>
+	        <td>Country:</td>
+	        <td>{{addressdetails[0].country}}</td>
+      	</tr>
+		<tr>
+	        <td>State:</td>
+	        <td>{{addressdetails[0].state}}</td>
+      	</tr>
+		<tr>
+	        <td>District:</td>
+	         <td>{{addressdetails[0].city}}</td>
+      	</tr>
+		<tr>
+	        <td>City:</td>
+	          <td>{{addressdetails[0].addressLane1}}</td>
+      	</tr>
+		<tr>
+	        <td>Address :</td>
+	         <td>{{addressdetails[0].addressLane2}}</td>
+      	</tr>
+		<tr>
+	        <td>Pincode :</td>
+	          <td>{{addressdetails[0].pincode}}</td>
+      	</tr>
+		
+
+    	</tbody>
+  	</table>
+</div>
+</div>
+</div>
+		</form>
+        </div>	
+        <div class="modal-footer">
+        <button class="btn btn-info pull-right"data-dismiss="modal">OK</button>
+        </div>
+		
+      </div>
+      </div>
+	  </div>
+	  
+	  
+	  
+	  <div class="modal fade" id="myModal2" role="dialog" >
+		<div class="modal-dialog" style="width:45%;height:auto;">   
+		<div class="modal-content">
+			
+        <div class="modal-header">
+		<button type="button" data-dismiss="modal" class="close">&times;</button>
+		<h4>Add Contact Person For  {{clientName}}</h4>
+         </div>       
+      
+        <div class="modal-body">
+		<div class="container">
+	<form name="myForm" ng-submit="addContactSave()" novalidate>
+	
+	<div class="row">
+	
+		<div class="form-group col-lg-3" ng-hide=true>
+			<label >Client Name</label>
+			<input type="text" name="clientname1" ng-model="clientName" class="form-control" readonly></input>
+			<!-- <span style="color:red;" ng-show="myForm.contact_name.$touched && myForm.contact_name.$invalid">*The field is required.</span> -->
+		</div>
+		
+		
+		<div class="form-group col-lg-3">
+			<label>Contact Name*</label>
+			<input type="text" placeholder="contact person Name" name="contact_name" ng-model="contact_Name" class="form-control" required></input>
+			<span style="color:red;" ng-show="myForm.contact_name.$touched && myForm.contact_name.$invalid">*The field is required.</span>
+		</div>
+		<div class="form-group col-lg-3">
+			<label for="email">Email Id*</label>
+			<input type="email" placeholder="email id" name="email" ng-model="email" class="form-control" ng-pattern='/^[a-z]+[a-z0-9._]+@[a-z-]+\.[a-z.]{2,5}$/' required></input>
+			<span style="color:red;" ng-show="myForm.email.$touched && myForm.email.$invalid">*The field is required.</span>
+		</div>
+    </div>		
+	
+	<div class="row">
+		<div class="form-group col-lg-3">
+			<label for="phone">Phone*</label>
+			<input type="text" placeholder="phone number" name="phone" ng-model="phone" ng-minlength="10" ng-maxlength="10" class="form-control" numbers-only required></input>
+			<span style="color:red;" ng-show="myForm.phone.$touched && myForm.phone.$invalid">*The field is required.</span>
+			<span style="color:red;" ng-show="myForm.phone.$error.minlength">*Number is Short.</span>
+			<span style="color:red;" ng-show="myForm.phone.$error.maxlength" >*Number is long.</span>
+		</div>
+		<div class="form-group col-lg-3">
+			<label for="mobile">Mobile No</label>
+			<input type="text" placeholder="alternate mobile" name="mobile" ng-minlength="10" ng-maxlength="10" ng-model="mobile" class="form-control" numbers-only></input>
+			<span style="color:red;" ng-show="myForm.mobile.$error.minlength">*Number is Short.</span>
+			<span style="color:red;" ng-show="myForm.mobile.$error.maxlength" >*Number is long.</span>
+		</div>
+
+	</div>
+	
+				   
+	</form>
+	</div>
+        </div>	
+        <div class="modal-footer">
+		<button class="btn btn-info pull-left"data-dismiss="modal">Cancel</button>
+        <button class="btn btn-info pull-right"data-dismiss="modal" >Save</button>
+        </div>
+		
+      </div>
+      </div>
+	  </div>
+	  
+	  
+	  <div class="modal fade" id="main" role="dialog">
+		<div class="modal-dialog" style="width:80%">   
+			<!--content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" data-dismiss="modal" class="close">&times;</button>
+					<h4>Tracker:</h4>
+				</div>       
+      
+				<div class="modal-body">
+				<div class="table-responsive">
+					<table class="table">
+				<thead>
+				<tr>
+					<th>Client Id</th>
+					<th>Client Name</th>
+					<th>Contact Name</th>
+					<th>Email Id</th>
+					<th>Phone No</th>
+					<th>Mobile No</th>
+			     	<!-- <th>Action</th> -->
+
+				</tr>
+				
+			</thead>
+			<tbody>
+				<tr dir-paginate="clientdata in clientdata |filter:test|itemsPerPage:3">
+					<td>OJAS-CC-{{clientdata.client.id}}</td>
+					<td>{{clientdata.client.clientName}}</td>
+					<td>{{clientdata.contact_Name}}</td>
+					<td>{{clientdata.email}}</td>
+					<td>{{clientdata.phone}}</td>
+					<td>{{clientdata.mobile}}</td>
+					<!-- <td><a href="{{getidURL}}" ng-click="getListAddress(value.id)" style="color:#0645AD;">Edit</a></td> -->
+					</tr>
+			</tbody>
+				</table>
+			</div>
+			</div>
+				<div class="modal-footer">
+					<button class="btn btn-info pull-right"data-dismiss="modal">OK</button>
+				</div>
+			</div>
+        </div>   
+   </div>
+	
+	</div>
+			

@@ -1,0 +1,109 @@
+<div ng-include=" 'partials/header.html' "></div>
+<div ng-include=" 'partials/fotter.html' "></div>
+<div class="container">
+
+<table class="table table-striped">
+<thead>
+<tr>
+<td>sr.No</td>
+
+<td>Requirement Name</td>
+<td>View Requirement</td>
+</tr>
+</thead>
+<tbody>
+<tr ng-repeat="details in candidatelist">
+<td>{{$index}}</td>
+<td><a data-toggle="modal" data-target="#candiProfile" ng-click="reqDescription(details.id)">{{details.bdmReq.nameOfRequirement}}</a></td>
+<td><a data-toggle="modal" data-target="#myModal">View</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class=" modal modal-fade" id="candiProfile" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-head">
+<button type="button" data-dismiss="modal" class="close">&times;</button>
+<h4>Candidate Profile</h4>
+
+</div>
+<div class="modal-body">
+<table class="table table-striped table-bordered">
+<thead>
+<tr>
+<td>Requirement Description</td>
+<td>Candidate Profile</td>
+</tr>
+</thead>
+<tbody>
+<tr >
+<td>{{candiDetails.bdmReq.requirementDescription}}</td>
+<td>
+<table class="table table-bordered">
+
+<tbody>
+<tr>
+<td><label>Name:</label></td>
+<td>{{candiDetails.firstName}} {{candiDetails.lastName}}</td>
+</tr>
+<tr>
+<td>Mobile:</td>
+<td>{{candiDetails.mobile}}</td>
+</tr>
+</tbody>
+</table></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="modal-footer">
+			<button class="btn btn-info pull-right" data-dismiss="modal">OK</button>
+		</div>
+</div>
+</div>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" data-dismiss="modal" class="close">&times;</button>
+<h4 class="modal-title">Requirement Details</h4>
+</div>
+<div class="modal-body">
+<form class="form-horizontal">
+		
+		<div class="form-group">
+		<label class="control-label col-sm-3" for="primary_skill">Skills:</label>
+				 <div class="col-sm-9">
+           <ul ng-repeat="skil in ski">{{skil.skillName}}</ul>
+        </div>
+        </div>
+        
+		<div class="form-group">
+		<label class="control-label col-sm-3" for="certification">Certifications:</label>
+						 <div class="col-sm-9">
+						 
+          <ul ng-repeat="certif in certi">{{certif.certificationName}}</ul>
+        </div>
+		</div>
+		<div class="form-group">
+		<label class="control-label col-sm-3" for="notice_period">Notice Period:</label>
+						 <div class="col-sm-9">
+          <p>{{candiDetails.noticePeriod}}</p>
+        </div>
+		</div>
+			
+		<div class="form-group">
+		<div class="modal-footer">
+			<button class="btn btn-info pull-right" data-dismiss="modal">OK</button>
+		</div>
+		<!-- <div class="modal-footer">
+			<button type="btn btn-info" ng-csv="getArray" csv-header="getHeader()" filename="{{ filename }}.csv">Download</button>
+		</div> -->
+		</div>
+</form>
+</div>
+</div>
+</div>
+</div>

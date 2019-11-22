@@ -1,0 +1,112 @@
+
+<!-- <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header pull-right">
+     <img  src="images/ojas-logo.png"   style="width:120px !important;margin-right: 1500px;" alt="ojas logo" class="img-responsive">
+    </div>
+  </div>
+</nav> -->
+
+<!--  <div class="col-md-4">
+<img src="images/login.png" class="img-responsive" style="height: 420px;">
+</div> 
+ <div class="col-md-4">
+            <div class="account-wall" style="eight: 650px;">
+                <img class="profile-img" src="images/user-circle.png"
+                    alt="">
+      
+                
+                  <form name="vm.loginForm" class="form-signin" data-ng-submit="login();">
+                    <div class="col-xs-12  input-group">
+                      
+                        <input id="login-username" autofocus type="text" class="form-control" name="username" placeholder="Username" data-ng-model="username" required>
+                    </div>
+                    <div class="col-xs-12 input-group "style="margin-top:20px">
+                       
+                        <input id="login-password" autofocus type="password" class="form-control" name="password" placeholder="Password" data-ng-model="password" required>
+                    </div>
+                   <br>
+                    <button class="btn btn-lg btn-success btn-block" type="submit">
+                    Sign in</button>
+                    <button class="btn btn-lg btn-info btn-block" type="reset">
+                    Reset</button>
+                <label class="checkbox pull-left">
+                     <input id="login-remember" type="checkbox" name="remember" value="1" ng-model="rememberMe"> Remember me
+                 
+                </label>
+                <a href="" class="pull-right need-help">Forgot Password? </a><span class="clearfix"></span>
+                    <div class="col-xs-12 margin-top-20">
+                        
+                      
+						
+						<div class="alert alert-danger" role="alert" id="alertMsg" ng-show="errorLogin">
+						<strong><label>{{loginError}}</label></strong> 
+						</div>
+                    </div>
+                </form>
+            </div>
+            </div> 
+            <div class="col-md-4">
+            <img src="images/Rpo1.jpg" class="img-responsive" style="height: 420px;">
+            </div> --> 
+            <div class="container-fluid">
+	            <div class="row bodybg" >
+	            <div class="col-sm-9">
+	            
+	            </div>
+		            <div class="col-sm-3 pr-0">
+            <div class="account-wall">
+                <img class="profile-img" src="images/RecruitEx logo.png"
+                    alt="">
+      
+                
+                  <form name="vm.loginForm" class="form-signin" on-load="captcha" data-ng-submit="login()">
+                    <div class="col-xs-12  input-group">
+                      
+                        <input id="login-username" autofocus type="text" class="form-control" name="username" placeholder="Username" data-ng-model="username" required>
+                    </div>
+                    <div class="col-xs-12 input-group "style="margin-top:20px">
+                       
+                        <input id="login-password" autofocus type="password" class="form-control" name="password" placeholder="Password" data-ng-model="password" required>
+                    </div>
+                    <div class="col-xs-12 input-group " id="captchaImage" style="margin-top:20px;background-image:url('images/securityCaptcha.png');color:#001af8;background-size: cover;">
+                      <!-- <input type="text" id="mainCaptcha"/> 
+                      <button class="btn-info" id="refresh" value="Refresh" onclick="Captcha();" style="margin-left:20px">Reset</button><br /> 
+                      <input type="text" id="txtInput" ng-model="c" placeholder ="Enter above Captcha" required style="margin-top:20px"/> <br /> <br />  -->
+                     <!--  <input id="Button1" type="button" value="Check" onclick="alert(ValidCaptcha());" /><br /> -->
+                      	<div id="captchaImage" ng-controller="captchaCtrl" style="margin-left:10px;">
+                      		<h5 style="color:blue"><b>Security Code</b></h5>
+                      		 <simple-captcha valid="captchaValid" ng-keyup="getkeys(captchaValid)" required></simple-captcha>
+						  
+						</div>
+					</div>
+					 
+                   <br>
+              
+                    <button class="btn btn-lg btn-success btn-block" type="submit">
+                    Sign in</button>
+                    <button class="btn btn-lg btn-info btn-block" type="reset">
+                    Reset</button>
+                <label class="checkbox pull-left">
+                     <input id="login-remember" type="checkbox" name="remember" value="1" ng-model="rememberMe">
+                     <span class="remember">Remember me</span> 
+                 
+                </label>
+                <a href="" class="pull-right need-help remember">Forgot Password? </a><span class="clearfix"></span>
+                    <div class="col-xs-12 margin-top-20">	
+						<div class="alert alert-danger" role="alert" id="alertMsg" ng-show="errorLogin">
+						<strong><label>{{loginError}}</label></strong> 
+						</div>
+                    </div>
+                </form>
+            </div>
+            </div> 
+		            
+	            </div>
+            </div>
+            
+    <div class="footer">
+  <p>OJAS Innovative Technologies, Hyderabad</p>
+</div>
+    
+  

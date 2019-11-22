@@ -1,0 +1,29 @@
+<div ng-include="'partials/header.html'"></div>
+ <div ng-include="'partials/fotter.html'"></div>
+  <div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+     
+     <!-- new existin code here -->
+      <!-- Breadcrumbs-->
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Add Qualifications </h3>
+        </li>
+  
+      </ol>
+      
+<form name="myform">
+<div class="col-md-3">
+<input type="text" ng-model="qualificationName.qualificationName" placeholder="Enter Qualification" class="form-control" >
+</div>
+<div class="col-md-1">
+<button class="btn btn-info pull-right" ng-disabled="myform.$invalid"  ng-click="addqualification(qualificationName)">Save</button>
+
+</div>
+</form>
+      </div>
+      </div>
+
+
+
+

@@ -1,0 +1,940 @@
+<div ng-show="isLoading" class="Applicationloader">
+	<img src="images/rpoloader.gif">
+</div>
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+<div class="content-wrapper">
+	<div class="container-fluid" style="margin-top: 60px;">
+		<!-- new existin code here -->
+		<!-- Breadcrumbs-->
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<h3>
+					<i class="fa fa-envelope" aria-hidden="true"></i> &nbsp;Candidates
+					List
+				</h3>
+			</li>
+		</ol>
+		<!-- 	<div class="row"> 
+		    <div class="col-md-3">
+		     	<input class="form-control"  type="search" ng-model="searchtext" placeholder="Search Here..">
+		     </div>
+     		<div class="col-md-3">
+      			<p>Total Number of Records :
+      			<strong class="text text-info">{{candidatelist.length}}</strong><p>
+     		 </div>
+      		 <div class="col-md-6">    
+			      <select class="form-control pull-right" ng-model="pageSize" style="width:120px;margin-bottom: 6px;">
+			      <option>10</option>
+			      <option>15</option>
+			      <option>20</option>
+			      <option>25</option>
+			      </select>
+        		<span style="margin-right: 8px; margin-top: 6px;"class="pull-right text text-info">Items per page</span>
+     		 </div>   
+     	</div> -->
+		<div class="row">
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-sm-6">
+						Search By Category <select class="form-control"
+							ng-model="searchcategory" style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="candidateName">Candidate Name</option>
+							<option value="totalExperience">Experience</option>
+							<option value="email">Email</option>
+						</select>
+					</div>
+					<div class="col-sm-6">
+						<input class="form-control" type="search" ng-model="searchtext"
+							placeholder="Search Here.."
+							style="margin-top: 21px; border-radius: 0">
+						<!--  <span class="glyphicon glyphicon-search"  style="
+			position: absolute;font-size: 17px; color: #337ab7;right: 22px;top: 31px;z-index: 10;cursor: pointer;"></span> -->
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-sm-4">
+						Sort By <select class="form-control" ng-model="order"
+							style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="candidateName">Candidate Name</option>
+							<option value="totalExperience">Experience</option>
+							<option value="submissionDate">Submission Date</option>
+							<option value="email">Email Id</option>
+						</select>
+					</div>
+					<div class="col-sm-4">
+						Order By <select class="form-control" ng-model="by"
+							style="border-radius: 0">
+							<option value="" selected>--Select --</option>
+							<option value="asc">Ascending</option>
+							<option value="desc">Descending</option>
+						</select>
+					</div>
+					<div class="col-sm-2 mt-4 pt-2">
+						<button class="btn btn-primary btn-sm" ng-click="searchText()">Search</button>
+					</div>
+					<div class="col-sm-2  mt-4 pt-2">
+						<button class="btn btn-danger btn-sm" ng-click="clearText()">Reset</button>
+					</div>
+				</div>
+			</div>
+			<!-- <div class="col-md-2">
+      <p class="mt-5">Total Number of Records :
+      <strong class="text text-info">{{ListReqData.length}}</strong><p>
+      </div> -->
+			<div class="col-md-4 mb-4">
+				<div class="row">
+					<div class="col-md-6 mt-4 pt-2">
+						<select class="form-control pull-right" ng-model="pageSize"
+							style="width: 65px; margin-bottom: 6px;">
+							<option>10</option>
+							<option>15</option>
+							<option>20</option>
+							<option>25</option>
+						</select> <span style="margin-right: 8px; margin-top: 6px;"
+							class="pull-right text text-info">Items per
+							page{{totalCount}}</span>
+					</div>
+					<div class="col-md-6 mt-4 pt-2">
+						<a href="#!/addCandidate" class="btn btn-success btn-md right"
+							style="margin-left: 70px;">Add Candidate</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th class="text-left" ng-click="sortData('candidateId')">Candidate
+						Id
+						<div ng-class="getSortClass('candidateId')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('candidateName')">Candidate
+						Name
+						<div ng-class="getSortClass('candidateName')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('submissionDate')">Submission
+						Date
+						<div ng-class="getSortClass('submissionDate')"></div>
+					</th>
+					<!-- <th  class="text-left">Candidate Status</th> -->
+					<th class="text-left" ng-click="sortData('totalExperience')">
+						Experience
+						<div ng-class="getSortClass('totalExperience')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('mobile')">Mobile
+
+						<div ng-class="getSortClass('mobile')"></div>
+					</th>
+					<th class="text-left" ng-click="sortData('email')">Email
+						<div ng-class="getSortClass('email')"></div>
+					</th>
+					<th class="text-left">Mapped Status</th>
+					<!-- 	<th class="text-left">Mapping Status</th> -->
+					<th class="text-left" ng-click="sortData('statusLastUpdatedDate')">Last
+						Updated Date
+						<div ng-class="getSortClass('statusLastUpdatedDate')"></div>
+					</th>
+					<th class="text-left">Edit</th>
+					<th class="text-left">Select File</th>
+					<th class="text-left">Upload Resume</th>
+
+
+				</tr>
+			</thead>
+			<tbody>
+				<!-- | filter:searchText|itemsPerPage:pageSize -->
+				<tr
+					ng-repeat="list in candidatelist|filter:test|orderBy:sortColumn:reverseSort">
+					<td class="text-left"><a data-toggle="modal"
+						data-target="#view" title="view Candidate"
+						ng-click="viewInfo(list.candidateId)"
+						style="color: blue; cursor: pointer;">{{list.candidateId}}</a></td>
+					<td class="text-left">{{list.candidateName}}</td>
+					<td class="text-left">{{list.submissionDate
+						|date:"dd-MM-yyyy"}}</td>
+					<td class="text-left">{{list.totalExperience}}</td>
+					<td class="text-left">{{list.mobile}}</td>
+					<td class="text-left">{{list.email}}</td>
+					<td class="text-left">
+						<button class="btn btn-default btn-xs pull-center"
+							data-dismiss="modal" ng-click="updatedata(list.candidateId)">Map
+							To Requirement</button> <span class="glyphicon glyphicon-eye-open"
+						style="color: green" title="Click here to view mapping status"></span>
+
+					</td>
+					<!-- 					<td class="text-left">	</td>
+ -->
+					<!-- <td class="text-left">
+						<button class="btn btn-default btn-xs pull-center"
+							data-dismiss="modal" ng-click="updatedata(list.candidateId)">Map
+							To Requirement</button>
+					</td> -->
+					<td class="text-left">{{list.statusLastUpdatedDate |
+						date:"dd-MM-yyyy"}}</td>
+					<!-- 	<td><input type="file" class="file-input" id="file"
+						name="file" file-model="resume"
+						ng-click=UploadResume(list.candidateId)> <span
+						style="color: red";>{{message}}</span></td> -->
+					<td class="text-left">
+						<!-- <button class="btn btn-default btn-xs pull-center" ng-click="editCandidate(list.candidateId)">Edit Candidate</button> -->
+						<a href={{urlForEdit}} ng-click="editCandidate(list.candidateId)">
+							<span class="glyphicon glyphicon-pencil" style="color: green"
+							title="Click here to edit Candidate"></span>
+					</a>
+					</td>
+					<td class="text-left">
+						<button class="file-upload btn">
+							<input type="file" class="file-input" id="file" name="file"
+								file-model="resume">
+						</button>
+					</td>
+					<td class="text-left"><a class="btn btn-info"
+						ng-disabled="document.$invalid"
+						ng-click="uploadResume(list.candidateId,resume)"> <span
+							class="text-color">Upload</a></span></td>
+
+				</tr>
+
+				<!-- <tr ng-if="list.expanded" ng-repeat-end="">
+            <td  class="text-left" colspan="12">
+            <div class="col-md-offset-3 col-md-5">
+             <h4 style="color:red" ng-show="!flags">No Candidates Found</h4>
+            </div>
+             <div class="col-md-4">
+             <button ng-click="movetoRequirement(x.id,x.spocName)" ng-show="(!flags && role !='bdmlead')"   type="button" class="btn btn-primary btn-sm pull-right">Map Candidate</button>
+            </div>
+            <div class="clearfix"></div>
+            
+           <div class="col-md-3">
+            <input class="form-control input-sm" type="search" ng-model="searchReq" placeholder="Search"  ng-show="flags">
+            </div>
+            <div class="col-md-6">
+            <h4 style="color:green;"  ng-show="flags" >Requirement Details</h4>
+            </div>
+            <div class="clearfix"></div>
+    <table st-table="ListReqData" class="table table-hover"  ng-show="flags">
+		   <thead style="font-size: 12px;">
+          	<tr>
+            <th  class="text-left" st-sort="nameOfRequirement">Req Name </th>
+             <th  class="text-left" st-sort="client.clientName">Client</th>
+            
+             <th  class="text-left" st-sort="">Open Date </th>
+             <th  class="text-left" st-sort="">Valid Up to </th>
+             <th  class="text-left" st-sort="">SPOC</th>
+             <th  class="text-left" st-sort="">SPOC Mobile</th>
+             <th  class="text-left" st-sort="">Email</th>
+			 <th  class="text-left" st-sort="">Skills</th>
+			 <th  class="text-left" st-sort="status">Status</th>
+			 <th  class="text-left">Location</th>
+             <th>Candidate Map</th>
+          </tr>
+		</thead>
+      
+        <tbody>
+       <tr dir-paginate="y in ListReqDataa|filter:searchReq|itemsPerPage:pageInSize">
+         			 <td  class="text-left">{{y.nameOfRequirement}}</td>
+        		<td  class="text-left">{{y.client.clientName}}</td>
+           
+             <td  class="text-left">{{y.startDate}}</td>
+             <td  class="text-left">{{y.endDate}}</td>
+             <td  class="text-left">{{y.addContact.contact_Name}}</td>
+              <td  class="text-left">{{y.addContact.mobile}}</td>
+              <td  class="text-left">{{y.addContact.email}}</td>
+             	
+              <td  class="text-left">
+            
+              
+              <span ng-repeat="z in y.skills">         
+              {{z.skillName}},
+              </span>
+              
+               
+              </td>
+			
+		
+			<td  class="text-left"><span ng-if="y.status=='Open'" style="color:green;">{{y.status}}</span>
+				<span ng-if="y.status=='closed'" style="color:red;">{{y.status}}</span>
+				<span ng-if="y.status=='Hold'" style="color:orange;">{{y.status}}</span>
+			</td>
+		      <td  class="text-left">{{x.location.locationName}}</td>  
+		      <td><button class="btn btn-info" ng-click="navigationToCandidate(y);">Candidate Map</button></td> 
+					</tr>
+		</tbody>
+		</table>
+		<div class="row">
+		      <div class="col-md-2">
+		      Items Per Page
+		      <select class="form-control" ng-model="pageInSize" style="width:120px">
+		      <option value = "" selected disabled>--Select--</option>
+		      <option>5</option>
+		      <option>15</option>
+		      <option>20</option>
+		      <option>25</option>
+		      </select>
+		      </div>
+		      <div class="col-md-2">
+		      <p style="margin-top:20px">Total Number of Records
+		      <strong>{{ListReqDataa.length}}</strong><p>
+		      </div>
+		      <div class="col-md-8">
+		      
+		      <dir-pagination-controls class="pull-right"></dir-pagination-controls>
+		      </div>
+      </div>
+            </td>
+            </tr> -->
+			</tbody>
+		</table>
+		<div class="col-md-12 text-center">
+			<p>
+				<b>{{noData}}</b>
+			</p>
+		</div>
+		<div class="col-md-12" ng-show="candidatelist.length>0">
+			<div class="float-right">
+				<ul uib-pagination total-items="totalCount" max-size="maxSize"
+					items-per-page="pageSizeSelected" boundary-links="true"
+					rotate="false" num-pages="numPages" direction-links="true"
+					ng-model="pageIndex" ng-change="pageChanged()"></ul>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="modal fade" id="view" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">View Candidate Details:</h4>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Candidate Id:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.id}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Applying as:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.applyingAs}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Position Applied For:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.appliedPossitionFor}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Candidate Name:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.firstName}}&nbsp;&nbsp;{{candidatelist1.lastName}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Candidate Source:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.candidateSource}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Email:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.email}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Alternate Email:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.altenateEmail}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Mobile:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.mobile}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Alternate Mobile:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.alternateMobile}}</div>
+					</div>
+					<!-- <div class="row">
+						<div class="col-sm-6">
+							<label>Related Requirement:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.bdmReq.nameOfRequirement}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Related Client:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.client.clientName}}</div>
+					</div> -->
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Total Experience:(Yrs)</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.totalExperience +
+							"years" + "-" + candidatelist1.noOfMonths + "months"}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Preferred Location</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.location.locationName}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Current Location</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.currentLocation}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Relevant Experience:(Yrs)</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.relevantExperience}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Current CTC:(PA)</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.currentCTC}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Expected CTC:(PA)</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.expectedCTC}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Salary Negotiable:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.salaryNegotiable}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Notice Period:(Days)</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.noticePeriod}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Address:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.address}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>City:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.city}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>State:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.state}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Country:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.country}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Pincode:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.pincode}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Willing to Relocate:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.willingtoRelocate}}</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<label>Preferred location:</label>
+						</div>
+						<div class="col-md-6">{{candidatelist1.preferredLocation}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Skype ID:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.skypeID}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Current Job Type:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.currentJobType}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>PayRoll Company Name:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.payRollCompanyName}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Current Company Name:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.currentCompanyName}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>PAN CARD Number:</label>
+						</div>
+						<div class="col-lg-6">{{candidatelist1.pancardNumber}}</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Education:</label>
+						</div>
+						<div class="col-lg-6">
+							<ol>
+								<li ng-repeat="ca in candidatelist1.education">{{ca.qualificationName}}</li>
+							</ol>
+
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Skills:</label>
+						</div>
+						<div class="col-lg-6">
+							<ol>
+								<li ng-repeat="candi in candidatelist1.skills">{{candi.skillName}}</li>
+							</ol>
+
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-6">
+							<label>Certificate Name:</label>
+						</div>
+
+						<div class="col-lg-6">
+							<ol>
+								<li ng-repeat="candidat in candidatelist1.certificates">{{candidat.certificationName}}</li>
+							</ol>
+
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="modal-footer">
+							<button class="btn btn-info pull-right" data-dismiss="modal">OK</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- <div class="modal fade" id="myModal" role="dialog">
+	<div class="modal-dialog" style="width:80%;height:400px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" data-dismiss="modal" class="close">&times;</button>
+				<h4 class="modal-title">Edit User</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" name="editform" novalidate>
+					
+					<div class="row">
+						<label class="control-label col-sm-2" for="name">ClientName:</label>
+						<div class="form-group col-lg-2">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="clintname"
+								ng-model="newUserlist.client.clientName" disabled="disabled"></input>
+						
+					</div>
+					
+						<label class="control-label col-sm-2" for="lastname">Requirement
+							Name:</label>
+						<div class="form-group col-lg-2">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="lastname"
+								ng-model="newUserlist.bdmReq.nameOfRequirement"
+								disabled="disabled"></input>
+						</div>
+
+						<label class="control-label col-sm-2" for="user_fname">Date</label>
+						
+						 <div class="form-group col-lg-2" >
+						
+						<input class="form-control" type="text"
+								
+								ng-model="newUserlist.profileDate"
+								disabled="disabled"></input>
+						</div>
+					
+                      </div>
+					<div class="row">
+						<label class="control-label col-sm-2" for="lastname">First
+							Name:</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="text" name="fname"
+								placeholder="enter your name" id="lastname"
+								ng-model="newUserlist.firstName" required ></input>
+								<div ng-messages="editform.fname.$error"
+						ng-if="editform.fname.$touched">
+						<div ng-message="required">required First Name</div>
+					</div>
+						</div>
+					
+					
+						<label class="control-label col-sm-2" for="lastname">Last
+							Name:</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="text" name="lname"
+								placeholder="enter your name" id="lastname"
+								ng-model="newUserlist.lastName"></input>
+								<div ng-messages="editform.lname.$error"
+						ng-if="editform.lname.$touched">
+						<div ng-message="required">required Last Name</div>
+					</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<label class="control-label col-sm-2" for="mobile">Mobile:</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="enter mobile number" id="mobile" name="userContactNumber"
+								ng-model="newUserlist.mobile" ng-pattern="/^[0-9]{10,10}$/" numbers-only  required></input>
+								 <span style="color:red;" ng-show="editform.userContactNumber.$error.pattern">Invalid number</span>
+						</div>
+						
+						
+					<label class="control-label col-sm-2" for="mobile">Alternate Mobile*</label> 
+					
+					<div class="form-group col-lg-4">
+					<input type="text" name="userContactNumber1" class="form-control" ng-model="newUserlist.alternateMobile"
+						numbers-only
+						ng-pattern="/^[0-9]{10,10}$/" required>
+
+						<span style="color:red;" ng-show="editform.userContactNumber1.$dirty && editform.userContactNumber1.$error.required">Please enter mobile number</span>
+			                <span style="color:red;" ng-show="editform.userContactNumber1.$error.pattern">Invalid number</span>
+		
+				</div>
+					
+					
+						<label class="control-label col-sm-2" for="email">E-mail:</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="email"
+								placeholder="enter your mail id" id="email" name="userEmail"
+								ng-model="newUserlist.email"></input>
+								<div ng-messages="editform.userEmail.$error"
+						ng-if="editform.userEmail.$touched">
+						<div ng-message="required">required Email</div>
+						<div ng-message="email">enter valid email address</div>
+					</div>
+						</div>
+						
+					
+					<label class="control-label col-sm-2" for="user_email">Alter Email*</label>
+						<div class="form-group col-lg-4"> <input type="email"
+						name="userEmail1" ng-model="newUserlist.altenateEmail" required class="form-control" />
+					<div ng-messages="editform.userEmail1.$error"
+						ng-if="editform.userEmail1.$touched">
+						<div ng-message="required">required Email</div>
+						<div ng-message="email">enter valid email address</div>
+					</div>
+				</div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-2" for="name">Education</label>
+				
+						
+						
+						<div class="form-group col-lg-4" ng-dropdown-multiselect2="" options="educationdetails" selected-model="qualiarray" 
+						extra-settings="example16settings"></div>
+						
+					
+					
+						<label class="control-label col-sm-2" for="name">Total
+							Experience:(Yrs)</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="change status" id="name" name="experience"
+								ng-model="newUserlist.totalExperience" ng-change="difference(newUserlist.totalExperience,newUserlist.relevantExperience)" valid-number required></input>
+								<div ng-messages="editform.experience.$error"
+						ng-if="editform.experience.$touched">
+						<div ng-message="required">This field is required</div>
+					</div>
+						</div>
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-2" for="name">Relevant
+							Experience:(Yrs)</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.relevantExperience" ng-change="difference(newUserlist.totalExperience,newUserlist.relevantExperience)" valid-number ></input>
+								<span style="color:#ff4c4c;">{{messege}}</span>
+					</div>
+					
+						<label class="control-label col-sm-2" for="name">Current
+							CTC(lkh/PA):</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name" name="cur_ctc"
+								ng-model="newUserlist.currentCTC" valid-number required></input>
+								<div ng-messages="editform.cur_ctc.$error"
+						ng-if="editform.cur_ctc.$touched">
+						<div ng-message="required">Enter your current CTC</div>
+					</div>
+						</div>
+						
+					</div>
+				
+						
+					
+					<div class="row">
+					<label class="control-label col-sm-2" for="name">Expected
+							CTC(lkh/PA):</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name" name="exp_ctc"
+								ng-model="newUserlist.expectedCTC" valid-number required></input>
+								<div ng-messages="editform.exp_ctc.$error"
+						ng-if="editform.exp_ctc.$touched">
+						<div ng-message="required">Enter your Expected CTC</div>
+					</div>
+						</div>
+						<label class="control-label col-sm-2" for="name">Salary
+							Negotiable:</label>
+					<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.salaryNegotiable"></input>
+						
+					</div>
+					
+						
+					</div>
+					<div class="row">
+					<label class="control-label col-sm-2" for="name">Notice
+							Period:(Days)</label>
+						 <div class="form-group col-lg-4">
+							     <option ng-repeat="noticePeriodes in noticePeriodes| unique : 'noticePeriod'| orderBy : 'noticePeriod' "
+							value={{noticePeriodes.noticePeriod}} >{{noticePeriodes.noticePeriod}}</option>							
+					</select>
+							
+						</div> 
+					<div ng-messages="candidateform.notice.$error"
+						ng-if="candidateform.notice.$touched">
+						<div ng-message="required">Select any Option</div>
+					</div>
+			
+				<label class="control-label col-sm-2" for="name">Pincode:</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.pincode" readonly></input>
+						
+					
+						
+					</div>
+						</div>
+				<div class="row">
+						<label class="control-label col-sm-2" for="name">State:</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.state" readonly></input>
+						</div>
+				
+					
+						<label class="control-label col-sm-2" for="name">Country:</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.country" readonly></input>
+						</div>
+					</div>
+					<div class="row">
+					<label class="control-label col-sm-2" for="name">City:</label>
+							<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.city" readonly></input>
+						</div>
+					<label class="control-label col-sm-2" for="name">Address:</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.address" readonly></input>
+						
+					</div>
+					
+						
+					
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-2" for="name">Skype ID:</label>
+					<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.skypeID"></input>
+						
+					</div>
+					
+						<label class="control-label col-sm-2" for="name">Current
+							Job Type:</label>
+						<div class="form-group col-lg-4">
+							
+						
+						<select id="cur_job_typ" class="form-control" name="cjobtype"  ng-model="newUserlist.currentJobType" required >
+								<option value="" selected>Please Select</option>
+							<option value="permanent">permanent</option>
+							<option value="C2H">C2H</option>
+							<option value="contract">contract</option>
+						</select>
+						</div>
+						
+						
+						
+					</div>
+					<div class="row">
+						<label class="control-label col-sm-2" for="name">PayRoll
+							Company Name:</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.payRollCompanyName"></input>
+					
+					</div>
+				
+						<label class="control-label col-sm-2" for="name">Current
+							Company Name:</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.currentCompanyName"></input>
+						</div>
+					</div>
+						<div class="row">
+						<label class="control-label col-sm-2" for="name">PAN CARD
+							Number:</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name" name="panno"
+								ng-model="newUserlist.pancardNumber" ng-pattern="/^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/" required></input>
+						<div ng-messages="editform.panno.$error"
+						ng-if="editform.panno.$touched">
+						<div ng-message="required"></div>
+					</div>
+		
+					<span style="color:red;" ng-show="editform.panno.$dirty && editform.panno.$error.required">This field is required</span> 
+			                <span style="color:red;" ng-show="editform.panno.$error.pattern">Please enter valid PanNumber</span>
+						
+						</div>
+						
+						<label class="control-label col-sm-2" for="name">Willing
+							to Relocate:</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" type="text"
+								placeholder="enter your name" id="name"
+								ng-model="newUserlist.willingtoRelocate"></input>
+						</div>
+					
+					</div>
+				<div class="row">
+				
+						<label class="control-label col-sm-2" for="name">PrimarySkills:</label>
+						
+						
+						 <div class="form-group col-lg-4" ng-dropdown-multiselect1="" options="primary" selected-model="skillarray1" 
+						extra-settings="example16settings"></div>
+						<label class="control-label col-sm-2" for="name">SecondarySkills:</label>
+						
+						
+					<div class="form-group col-lg-4"  ng-dropdown-multiselect1="" options="secondary" selected-model="skillarray2" 
+						extra-settings="example16settings"></div>
+					
+						<label class="control-label col-sm-2" for="name">Certificate
+							Name:</label>						
+						<div class="form-group col-lg-4" ng-dropdown-multiselect3="" options="certificatname" selected-model="certiarray" 
+						extra-settings="example16settings"></div>
+					</div>
+					
+					
+					<div class="row">
+						
+						<label class="control-label col-sm-2"  for="resume">Resume Name*</label>
+						<div class="form-group col-lg-4">
+							<input class="form-control" id="name" type="text" name="resumename"
+								ng-model="newUserlist.filename" required/>
+							<div ng-messages="editform.resumename.$error"
+							ng-if="editform.resumename.$touched">
+							<div ng-message="required">Name is mandatory</div>
+							</div>
+							</div>
+								
+						
+						
+
+						<label class="control-label col-sm-2" for="resume">Upload Resume*</label>	
+						<div class="form-group col-lg-4">
+								<button class="file-upload">            
+								<input type="file" class="file-input" id="file" name="file" fileread="inputParams.file">Choose File</button>
+								<div ng-messages="editform.file.$error"
+							ng-if="editform.file.$touched">
+							<div ng-message="required">Name is mandatory</div>
+							</div>
+						</div>
+						
+					</div>
+					
+					
+					
+					<div class="row">
+						<div class="form-group col-lg-12" >
+							
+								<button type="submit" class="btn btn-info pull-right" data-dismiss="modal"
+									ng-disabled="editform.$invalid" ng-click="updateCandidatelist()" >Update</button>
+									
+									
+								<button type="submit" class="btn btn-danger pull-left"
+									data-dismiss="modal" >Cancel</button>
+							
+						</div>
+
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div> -->
+
+
+
+<!-- end of the code -->
+
+

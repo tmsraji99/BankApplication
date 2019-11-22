@@ -1,0 +1,343 @@
+<div ng-include="'partials/header.html'"></div>
+<div ng-include="'partials/fotter.html'"></div>
+
+
+<script>
+		$(document).ready(function(){					
+			
+			$("ul li").click(function(){
+				var className = $(this).attr("class");
+				if(className == undefined){
+					$("ul li#view").removeClass("activeBtn");
+				}
+			});
+			
+			$('#view').ready(function() {
+				$('#viewdis').css('display','block');
+				$('#editdetails').css('display','none');
+				$('#changepass').css('display','none');
+			});
+			$('#view').on('click',function() {
+				$('#viewdis').css('display','block');
+				$('#editdetails').css('display','none');
+				$('#changepass').css('display','none');
+			});
+
+			$('#change').on('click',function() {
+				$('#changepass').css('display','block');
+				$('#viewdis').css('display','none');
+				$('#editdetails').css('display','none');
+			});
+		
+			$('#edit').on('click',function() {
+				$('#editdetails').css('display','block');
+				$('#viewdis').css('display','none');
+				$('#changepass').css('display','none');
+			});
+
+		});
+</script>
+<div class="content-wrapper">
+    <div class="container-fluid" style="margin-top: 60px;">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <h3>Your Profile Details </h3>
+        </li>
+      </ol>
+<div class="col-lg-2 nav-collapse">		
+				<ul class="nav" id="bgWhite">
+					<li><a ng-click="redirect()">Dashboard</a></li>
+					<li id="view" class="activeBtn"><a href="#!/profile" class="active">View Profile</a></li>
+					<li id="edit"><a href="#!/profile">Edit Profile</a></li>
+                    <li id="change"><a href="#!/profile">Change Password</a></li>					
+				</ul>			
+</div>
+
+
+		<div class="container" >
+		<div id="viewdis" style="display:none">
+				<form name="userForm" class="myForm" >
+					<div class="row">
+						<div class="form-group col-lg-6">
+							<label for="user_name">User Name:</label>
+							<span>{{userdata.name}}</span>										
+						</div>
+											
+						<div class="form-group col-lg-6">
+							<label for="user_fname">Name:</label>
+							<span>{{userdata.firstName}} {{userdata.lastName}}</span>	
+						</div>
+											
+					</div>
+									
+					
+					
+					<div class="row">
+						<div class="form-group col-lg-6">
+							       <label for="user_email">Email: </label>
+							<span>{{userdata.email}}</span>					
+						</div>	
+						
+						<div class="form-group col-lg-6">
+							<label for="user_contact">Contact Number: </label>
+							<span>{{userdata.contactNumber}}</span>							
+						</div>				
+					</div>	
+					
+					
+					<div class="row">
+						<div class="form-group col-lg-6">
+							         <label for="user_contact">DOB: </label>
+							<span>{{userdata.dob1}}</span>						
+						</div>
+						
+						<div class="form-group col-lg-6">
+							               
+							   <label for="user_email">DOJ: </label>
+							<span>{{userdata.doj1}}</span>			
+						</div>	
+					</div>
+						
+						
+					<div class="row">
+						<div class="form-group col-lg-6">
+							         <label for="user_email">Role: </label>
+							<span>{{userdata.role}}</span>					
+						</div>
+						
+						<div class="form-group col-lg-6">
+							        <label for="user_email">Designation: </label>
+							<span>{{userdata.designation}}</span>					
+						</div>
+					</div>
+					<div class="row">	
+						<div class="form-group col-lg-6">
+						</div>
+						<div class="form-group col-lg-6">
+							<label for="user_contact">Extension Number: </label>
+							<span>{{userdata.extension}}</span>							
+						</div>
+					</div>	
+				</form>
+				</div>
+			</div>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+					<div id="editdetails" style="display:none">
+						<div class="col-lg-10">
+					<div class="navbar navbar-default navbar-static-top">
+						<div class="container">
+							<div class="navbar-brand">Edit Details</div>
+						</div>
+					</div>
+				
+				
+				<form name="userForm1" class="myForm" >
+					<div class="row">											
+						<div class="form-group col-lg-4">
+							<label for="user_fname">First Name</label>
+							<input type="text" ng-model="userdata.firstName" name="userFirstName" placeholder="Enter First Name" class="form-control" readonly/>
+						</div>
+						
+						<div class="form-group col-lg-4">
+							<label for="user_fname">Last Name</label>
+							<input type="text" ng-model="userdata.lastName" name="userFirstName" placeholder="Enter Last Name" class="form-control" readonly/>
+						</div>
+
+						<div class="form-group col-lg-4">
+							<label for="user_email">Email</label>
+							<input type="email" ng-model="userdata.email" name="userEmail1" placeholder="Enter Email" class="form-control" required/>					
+						     
+							 <div ng-messages="userForm1.userEmail1.$error" ng-if="userForm1.userEmail1.$touched">
+                             <div ng-message="required">This field is required</div>
+                             <div ng-message="email">Your email address is invalid</div>
+                      </div>
+							 
+						</div>						
+					</div>
+									
+					
+					
+					<div class="row">
+						<div class="form-group col-lg-4">
+							<label for="user_contact">Mobile Number</label>
+							<input type="text" ng-model="userdata.contactNumber" name="userContactNumber1" placeholder="Enter Mobile Number"  class="form-control" ng-maxlength="10" ng-minlength="10" ng-pattern="/^[1-9][0-9]{0,2}(?:,?[0-9]{3}){0,3}(?:\.[0-9]{1,2})?$/" required maxlength="10" /> 						
+						
+						   <div ng-messages="userForm1.userContactNumber1.$error" ng-if="userForm1.userContactNumber1.$touched">
+                           <div ng-message="required">This field is required</div>
+                           <div ng-message="pattern">Must be a valid 10 digits phone number</div>
+                           <div ng-message="maxlength">Contact Number must be 10 digits in length</div>
+	                       <div ng-message="minlength">Contact Number must be 10 digits in length</div>
+						   </div>
+						
+						</div>
+						
+						<div class="form-group col-lg-4">
+							<label for="user_contact">Extension Number</label>
+							<input type="text" ng-model="userdata.extension" name="userExtensiontNumber1" placeholder="Enter Extension Number"  class="form-control" ng-maxlength="3" ng-minlength="3" ng-pattern="/^[0-9][0-9]{0,2}(?:,?[0-9]{3}){0,3}(?:\.[0-9]{1,2})?$/" required maxlength="3"/> 						
+						
+							<div ng-messages="userForm1.userExtensiontNumber1.$error" ng-if="userForm1.userExtensiontNumber1.$touched">
+							<div ng-message="required">This field is required</div>
+							<div ng-message="pattern">Must be a valid 3 digits phone number</div>
+							<div ng-message="maxlength">Contact Number must be 3 digits in length</div>
+							<div ng-message="minlength">Contact Number must be 3 digits in length</div>
+							</div>
+						</div>
+							
+						
+						<div class="form-group col-lg-4" ng-hide="dateshow">
+						<label for="user_fname">DOB</label>
+						<p class="input-group">
+							
+							<input type="text" name="doj" placeholder="dd/MM/yy" class="form-control"  uib-datepicker-popup="{{format}}"
+							is-open="popup1.opened" datepicker-options="dateOptions" alt-input-formats="altInputFormats" ng-model="userdata.dob" readonly/>
+							 <span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>							
+						</p>
+						</div>
+						
+						<div class="form-group col-lg-3" ng-hide="datehide">
+						<label for="user_fname">DOB</label>
+						<p class="input-group">
+							
+							<input type="text" class="form-control" placeholder="dd/MM/yy" ng-model="ListData.doj1" ng-click="open1()" />
+							<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>	
+
+						</div>
+					</div>
+						
+						
+					<div class="row">						
+						<div class="form-group col-lg-4">
+							<label for="user_email">Designation</label>
+							<input type="email" ng-model="userdata.designation" name="userEmail" placeholder="Enter Designation" class="form-control" readonly />					
+						</div>
+						<div class="form-group col-lg-4">
+							<label for="user_contact">DOJ</label>
+							<input type="text" ng-model="userdata.doj1" name="userContactNumber" placeholder="dd/MM/yy" class="form-control" readonly /> 						
+						</div>
+						<div class="form-group col-lg-4">
+							<label for="user_contact">Role</label>
+							<input type="text" ng-model="userdata.role" name="userContactNumber"  class="form-control" readonly /> 						
+						</div>
+						
+						
+					</div>
+					
+					
+					<div class="row" >
+						<div class="form-group col-lg-4">
+							<label for="security_question" >Security Question</label>
+	
+											<div>
+ 
+					
+							<select name="userQuestion1" ng-options="s.name for s in sample" class="form-control" ng-model="userdata.question" style="width:100%;height:33.33px" required>
+								<option value="">Choose a Question</option>
+						
+								</select>
+										
+							<div ng-messages="userForm1.userQuestion1.$error" ng-if="userForm1.userQuestion1.$touched">
+                        <div ng-message="required">Choose any Option</div>
+                      </div>
+							</div>
+							</br>
+							
+					</div>
+						<div class="form-group col-lg-4">
+						<label for="answer">Answer</label>
+							<input type="text" name="userAnswer1" placeholder="Enter your Answer" ng-model="userdata.answer" required class="form-control"/>
+					
+						<div ng-messages="userForm1.userAnswer1.$error" ng-if="userForm1.userAnswer1.$touched">
+					<div ng-message="required">This field is required</div>
+                           </div>
+					</div>					
+					</div>
+
+					<div class="row">
+                       <div class="form-group col-lg-12">						  
+								<button type="button" class="btn btn-success pull-right "  ng-disabled="userForm1.$invalid"  ng-click="updateUserProfile(userdata)">Update</button>
+								<button type="button" class="btn btn-info pull-left" ng-click="cancelfun()">Cancel</button>
+                       </div>  
+					</div>
+					
+				</form>
+			</div>
+			</div>
+
+
+
+
+            
+
+
+
+
+            <div id="changepass" style="display:none">
+				<div class="col-lg-10">
+					
+				
+				
+				<form name="userForm" class="myForm" >
+
+									
+					
+					
+					
+				
+						
+				
+					<fieldset class="well .scheduler-border"
+	style="width: 370px; height: 400px; margin: 0px auto; border: 1px solid #ccc; 
+	-webkit-box-shadow: 0px 0px 0px 0px #000; box-shadow: 0px 0px 0px 0px #000;">
+<legend  style=" width:auto; padding:0 5px;border-bottom:none;" align="left">
+Change Password
+</legend>
+
+<form name="Certificate" ng-submit="addCerti()" novalidate>
+<label>Current Password:</label>
+<input type="password" name="text1" ng-model="password" class="form-control" ><br>
+
+
+
+
+<label>New Password:</label>
+<input type="password" name="text1" ng-model="newPassword" class="form-control" ><br>
+
+
+<label>Re-Enter New Password:</label>
+<input type="password" name="text1" ng-model="newPassword1" class="form-control" ><p style="color:red">{{message}}</p><br>
+
+
+<div class="row">
+            <div class="form-group col-lg-12">						  
+					<button type="button" class="btn btn-success pull-right" ng-click="passwordfun()">Save</button>
+					<button type="button" type="button" class="btn btn-info pull-left" ng-click="cancelfun()">Cancel</button>
+             </div>
+
+</form>
+</fieldset>
+					
+					
+
+
+					
+				</form>
+				</div>
+			</div>
+</div>

@@ -1,0 +1,83 @@
+
+
+<script>
+
+ <script src="js\angular.js"></script>
+<script type='text/javascript'>
+
+ <script src="../js/angular.js"></script>
+<script type='text/javascript'>
+
+$(document).ready(function(){
+$(function () {
+    $("table#rec_List").on("click", ".remove", function () {
+        $(this).closest('tr').remove();
+    });
+});
+$(function () {
+    $(".show_tip").tooltip({
+        container: 'body'
+    });
+});
+$(document).click(function () {
+    $('.tooltip').remove();
+    $('[title]').tooltip();
+});
+});
+</script>
+<div ng-include=" 'header&footer.html' "></div>
+<h2>ListOfRole:</h2>
+  <table class="table  table-bordered"
+    id="rec_List">
+    <thead>
+      <tr>
+        <th>RoleType</th>
+        <th> </th>
+        <th> </th>
+     </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="items in rolelists track by $index">
+				<td>{{items.roleName}}</td>>
+         <td><a  class="modal-dialog modal-lg" data-toggle="modal" data-target="#myModal"><i class="fa fa-pencil fa-1x" ng-click="pushrole(items)" ><!-- <span class="glyphicon glyphicon-pencil"></span> -->
+         <td>
+          <button title="" type="button" class="btn btn-danger remove show_tip" data-original-title="Remove from list">
+            <i class="fa fa-trash-o"></i>
+          </button>
+        </td>
+      </tr>
+       </tbody>
+  </table>
+    <form action="recruitmentType.html">
+  <div class="form-inline">
+       <div class="control-label col-sm-2">
+        <button type="submit"  class="btn btn-primary">Back</button>
+      </div>
+      </div>
+    </form>
+    <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+   <div class="modal-content">
+        <div class="modal-header">
+		<button type="button" data-dismiss="modal" class="close">&times;</button>
+		<h4>Edit Role:</h4>
+         </div>
+           <div class="modal-body">
+		<form class="form-horizontal">
+		<div class="form-group">
+		<label class="control-label col-sm-4" for="role">Role Name:</label>
+		<div class="col-sm-6">
+		<input class="form-control" type="text" placeholder="enter your name" id="name" ng-model="clickedUser.roleName" ></input>
+		</div>
+		</div>
+		</form>
+        </div>
+        <div class="modal-footer">
+		<button class="btn btn-success pull-left"data-dismiss="modal"  ng-click="editSkill12()">Update</button>
+          <button class="btn btn-danger pull-right"data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+      </div>
+	  </div>
+
+	  
