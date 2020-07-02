@@ -17,7 +17,7 @@
 		<orm.hibernate.validator>6.0.18.Final</orm.hibernate.validator>
 		<orm.hibernate.jpa.version>1.0.0.Final</orm.hibernate.jpa.version>
 		<org.springfreamwork.version>5.2.0.RELEASE</org.springfreamwork.version>
-		<mysql-connector.version>5.1.47</mysql-connector.version>
+		<mysql-connector.version>8.0.16</mysql-connector.version>
 		<version.com.sun.jersey.contribs>1.19.1</version.com.sun.jersey.contribs>
 	</properties>
 	<dependencies>
