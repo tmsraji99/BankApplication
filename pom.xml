@@ -7,7 +7,7 @@
 	<version>0.3.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<properties>
-		<version.org.springframework.security>4.0.4.RELEASE</version.org.springframework.security>
+		<version.org.springframework.security>5.2.10.RELEASE</version.org.springframework.security>
 		<version.org.springframework>4.2.5.RELEASE</version.org.springframework>
 		<version.com.sun.jersey.contribs>1.19.1</version.com.sun.jersey.contribs>
 		<version.org.hibernate>4.3.10.Final</version.org.hibernate>
